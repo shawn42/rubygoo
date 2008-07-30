@@ -55,5 +55,12 @@ class Container < Widget
     end
   end
 
+  # pass on the key release to our widgets
+  def key_released(event)
+    @widgets.each do |w|
+      w.key_released event if w.focussed?
+    end
+  end
+
 end
 

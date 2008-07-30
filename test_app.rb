@@ -14,6 +14,9 @@ if $0 == __FILE__
   end
   app.add button
 
+  text_field = TextField.new "someday, you can edit this text", {:x=>70, :y=>130}
+  app.add text_field
+
 #  pulldown = Pulldown.new {:x=>70, :y=>80}
 #  pulldown.on :changed do |*opts|
 #    label.set_text(opts.first)
@@ -39,7 +42,7 @@ if $0 == __FILE__
         case event
         when KeyDownEvent
           case event.key
-          when K_Q
+          when K_ESCAPE
             throw :rubygame_quit
           end
         when QuitEvent

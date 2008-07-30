@@ -58,6 +58,8 @@ class App < Container
   # happen
   def on_event(event)
     case event
+    when KeyUpEvent
+      key_released event
     when KeyDownEvent
       case event.key
       when K_TAB

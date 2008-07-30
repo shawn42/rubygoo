@@ -60,6 +60,10 @@ class Widget
   def key_pressed(event)
   end
 
+  # called when a key release is sent to us
+  def key_released(event)
+  end
+
   def focus()
     @focussed = true
   end
