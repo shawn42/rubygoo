@@ -1,28 +1,31 @@
-
 require 'publisher'
 class Widget
   extend Publisher
   can_fire :clicked
   attr_accessor :enabled, :parent, :container, 
-    :x, :y, :w, :h, :app
+    :x, :y, :w, :h, :app, :x_pad, :y_pad
 
   DEFAULT_PARAMS = {
     :x => 0,
     :y => 0,
     :w => 1,
     :h => 1,
+    :x_pad => 2,
+    :y_pad => 2,
   }
   def initialize(opts={})
     merged_opts = DEFAULT_PARAMS.merge opts
     @x = merged_opts[:x]
     @y = merged_opts[:y]
+    @x_pad = merged_opts[:x_pad]
+    @y_pad = merged_opts[:y_pad]
     @w = merged_opts[:w]
     @h = merged_opts[:h]
     update_rect
   end
 
   def update_rect()
-    @rect = Rect.new [@x,@y,@w,@h]
+    @rect = Rect.new [@x,@y,@w+@x_pad,@h+@y_pad]
   end
 
   # called when the widget is added to a container
@@ -87,6 +90,7 @@ class Container < Widget
   # draw ourself and our children
   def draw(screen)
     # any container specific code here (borders?)
+    screen.fill @theme['App'][:bg_color]
 
     # draw kiddies 
     @widgets.each do |w|
@@ -96,7 +100,6 @@ class Container < Widget
 
   # called when there is a mouse click
   def clicked(event)
-#    p event
     @widgets.each do |w|
       w.clicked event if w.contains? event.pos 
     end
@@ -165,6 +168,9 @@ class Label < Widget
     font = @app.theme[class_key][:font]
     font_size = @app.theme[class_key][:font_size]
     @color = @app.theme[class_key][:color]
+    @bg_color = @app.theme[class_key][:bg_color]
+    @border = @app.theme[class_key][:border]
+
     @font = TTF.new(File.join(@app.theme_dir,font), font_size)
     set_text @text
   end
@@ -172,7 +178,7 @@ class Label < Widget
   def set_text(text)
     @text = text
     @rendered_text = @font.render @text, true, @color
-    @rect = @rendered_text.make_rect
+    @rect = Rect.new [@x,@y,@rendered_text.width+@x_pad,@rendered_text.height+@y_pad]
   end
 
   def undraw(screen)
@@ -181,6 +187,19 @@ class Label < Widget
   end
 
   def draw(screen)
+    # draw the bg box if color is set
+    if @bg_color
+      screen.fill @bg_color, @rect
+    end
+
+    if @border
+      x1 = @rect[0]
+      y1 = @rect[1]
+      x2 = @rect[2] + x1
+      y2 = @rect[3] + y1
+      screen.draw_box [x1,y1],[x2,y2], @border
+    end
+
     @rendered_text.blit screen, [@x,@y]
   end
 end
@@ -197,9 +216,13 @@ class Button < Widget
     font = @app.theme[class_key][:font]
     font_size = @app.theme[class_key][:font_size]
     @color = @app.theme[class_key][:color]
+    @bg_color = @app.theme[class_key][:bg_color]
+    @border = @app.theme[class_key][:border]
     @font = TTF.new(File.join(@app.theme_dir,font), font_size)
+
     @rendered_text = @font.render @text, true, @color
-    @rect = Rect.new [@x,@y,@rendered_text.width,@rendered_text.height]
+
+    @rect = Rect.new [@x-@x_pad,@y-@y_pad,@rendered_text.width+2*@x_pad,@rendered_text.height+2*@y_pad]
   end
 
   # called when there is a mouse click
@@ -208,6 +231,17 @@ class Button < Widget
   end
 
   def draw(screen)
+    if @bg_color
+      screen.fill @bg_color, @rect
+    end
+    if @border
+      x1 = @rect[0]
+      y1 = @rect[1]
+      x2 = @rect[2] + x1
+      y2 = @rect[3] + y1
+      screen.draw_box [x1,y1],[x2,y2], @border
+    end
+
     @rendered_text.blit screen, [@x,@y]
   end
 end

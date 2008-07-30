@@ -1,4 +1,5 @@
 require 'rubygems'
+$: << './lib'
 require 'rubygoo'
 
 if $0 == __FILE__
@@ -7,7 +8,7 @@ if $0 == __FILE__
   label = Label.new "I am a label", {:x=>20, :y=>30}
   app.add label
 
-  button = Button.new "Click Me!", {:x=>70, :y=>80}
+  button = Button.new "Click Me!", {:x=>70, :y=>80, :x_pad=>20, :y_pad=>20}
   button.on :clicked do |*opts|
     label.set_text(opts.first.pos.inspect)
   end

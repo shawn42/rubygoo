@@ -1,4 +1,10 @@
 --- 
+App: 
+  :bg_color:
+    - 30
+    - 30
+    - 30
+    - 255
 Label: 
   :font: Vera.ttf
   :font_size: 20
@@ -7,6 +13,16 @@ Label:
     - 255
     - 255
     - 255
+  :bg_color:
+    - 30
+    - 30
+    - 230
+    - 255
+  :border:
+    - 130
+    - 250
+    - 230
+    - 255
 Button: 
   :font: Vera.ttf
   :font_size: 20
@@ -14,4 +30,14 @@ Button:
     - 255
     - 255
     - 255
+    - 255
+  :bg_color:
+    - 130
+    - 30
+    - 30
+    - 255
+  :border:
+    - 130
+    - 250
+    - 230
     - 255
