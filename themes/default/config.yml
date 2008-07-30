@@ -1,0 +1,17 @@
+--- 
+Label: 
+  :font: Vera.ttf
+  :font_size: 20
+  :color:
+    - 255
+    - 255
+    - 255
+    - 255
+Button: 
+  :font: Vera.ttf
+  :font_size: 20
+  :color:
+    - 255
+    - 255
+    - 255
+    - 255
