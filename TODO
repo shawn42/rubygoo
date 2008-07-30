@@ -1,5 +1,7 @@
 TODO
- - hover colors
+ - add key presses
+ - add focus/hover colors
+ - add tab focus switching
  - add more listener types (when mouse_enter, mouse_leave, mouse_click, focus, key_pressed...)
  - image icons for buttons
  - tabbing around components

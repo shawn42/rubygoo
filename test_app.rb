@@ -5,12 +5,12 @@ require 'rubygoo'
 if $0 == __FILE__
   app = App.new 
 
-  label = Label.new "I am a label", {:x=>20, :y=>30}
+  label = Label.new "click the button to set the time", {:x=>20, :y=>30}
   app.add label
 
   button = Button.new "Click Me!", {:x=>70, :y=>80, :x_pad=>20, :y_pad=>20}
-  button.on :clicked do |*opts|
-    label.set_text(opts.first.pos.inspect)
+  button.on :pressed do |*opts|
+    label.set_text(Time.now.to_s)
   end
   app.add button
 
