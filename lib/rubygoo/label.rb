@@ -23,11 +23,6 @@ class Label < Widget
     @rect = Rect.new [@x,@y,@rendered_text.width+@x_pad,@rendered_text.height+@y_pad]
   end
 
-  def undraw(screen)
-    # not sure about this yet
-    @old_background.blit screen, [@x,@y]
-  end
-
   def draw(screen)
     if @focussed
       screen.fill @focus_color, @rect

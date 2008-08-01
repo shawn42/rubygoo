@@ -35,6 +35,7 @@ class App < Container
 
   def add_tabbed_widget(w)
     w.focus_priority = @tabbed_widgets.size unless w.focus_priority
+    @focussed_widget = 1
     w.focus if @tabbed_widgets.empty?
     @tabbed_widgets << w 
     @tabbed_widgets.sort_by {|w| w.focus_priority}

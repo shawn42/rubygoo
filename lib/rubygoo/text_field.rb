@@ -1,6 +1,9 @@
 class TextField < Widget
   # a-z
   ABCS = (97..123)
+  ACCEPTABLE_KEYS = [
+    K_SPACE
+  ]
 
   attr_accessor :text
   def initialize(text, opts={})
@@ -17,23 +20,30 @@ class TextField < Widget
     @border = theme_property :border
 
     @font = TTF.new(File.join(@app.theme_dir,font), font_size)
+    
+    if @w == 1
+      # we have the default from widget, we want to set the
+      # default to 6 chars wide and 1 char tall
+      size_text = @font.render "MMMMMM", true, @color
+      @min_w,@min_h = size_text.size
+    end
+
     set_text @text
   end
 
   def set_text(text)
     @text = text
     if text.nil? or text.empty?
-      @rendered_text = Surface.new [@x_pad, @y_pad]
-      @rect = Rect.new [@x,@y,@x_pad,@y_pad]
+      w = [@w,@min_w].max + @x_pad
+      h = [@h,@min_h].max + @y_pad
+      @rendered_text = nil
+      @rect = Rect.new [@x,@y,w,h]
     else
       @rendered_text = @font.render @text, true, @color
-      @rect = Rect.new [@x,@y,@rendered_text.width+@x_pad,@rendered_text.height+@y_pad]
+      w = [@rendered_text.width,@min_w].max + @x_pad
+      h = [@rendered_text.height,@min_h].max + @y_pad
+      @rect = Rect.new [@x,@y,w,h]
     end
-  end
-
-  def undraw(screen)
-    # not sure about this yet
-    @old_background.blit screen, [@x,@y]
   end
 
   def key_released(event)
@@ -57,8 +67,11 @@ class TextField < Widget
     else
       # TODO how do I get shifted values? like !@#$%^&*()
       key = event.key
-      key -= 32 if @upcasing and ABCS.include? key
-      set_text("#{@text}#{key.chr}")
+      abc = ABCS.include? key
+      if abc or ACCEPTABLE_KEYS.include? key
+        key -= 32 if @upcasing and abc
+        set_text("#{@text}#{key.chr}")
+      end
     end
   end
 
@@ -78,6 +91,6 @@ class TextField < Widget
       screen.draw_box [x1,y1],[x2,y2], @border
     end
 
-    @rendered_text.blit screen, [@x,@y]
+    @rendered_text.blit screen, [@x,@y] if @rendered_text
   end
 end
