@@ -53,7 +53,15 @@ class Widget
   end
 
   # called when there is a mouse click
-  def clicked(event)
+  def mouse_down(event)
+  end
+
+  # called when there is a mouse motion
+  def mouse_motion(event)
+  end
+
+  # called when there is a mouse release
+  def mouse_up(event)
   end
 
   # called when a key press is sent to us
@@ -64,12 +72,22 @@ class Widget
   def key_released(event)
   end
 
+  # called when the widget receives focus
+  def on_focus()
+  end
+
   def focus()
     @focussed = true
+    on_focus
+  end
+
+  # called when the widget loses focus
+  def on_unfocus()
   end
 
   def unfocus()
     @focussed = false
+    on_unfocus
   end
   
   def focussed?()

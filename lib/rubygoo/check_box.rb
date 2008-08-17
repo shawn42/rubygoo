@@ -36,7 +36,7 @@ class CheckBox < Widget
   end
 
   # called when there is a mouse click
-  def clicked(event)
+  def mouse_up(event)
     toggle
   end
 

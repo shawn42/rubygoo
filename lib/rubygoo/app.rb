@@ -73,7 +73,11 @@ class App < Container
         key_pressed event
       end
     when MouseUpEvent
-      clicked event
+      mouse_up event
+    when MouseDownEvent
+      mouse_down event
+    when MouseMotionEvent
+      mouse_motion event
     end
   end
 

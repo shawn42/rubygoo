@@ -34,19 +34,45 @@ Button:
     - 30
     - 30
     - 255
+CheckBox:
+  :checked_color:
+    - 40
+    - 40
+    - 40
+    - 255
 TextField:
   :color:
     - 30
     - 30
     - 230
     - 255
+  :fg_color:
+    - 55
+    - 255
+    - 55
+    - 255
   :bg_color:
     - 255
     - 255
     - 255
     - 255
+  :bg_select:
+    - 55
+    - 55
+    - 255
+    - 255
+  :fg_select:
+    - 55
+    - 155
+    - 25
+    - 255
   :focus_color:
     - 245
     - 245
     - 245
+    - 255
+  :border:
+    - 25
+    - 25
+    - 25
     - 255

@@ -1,5 +1,7 @@
 TODO
- - add text field component
+ - should rubygoo take control of the screen & events?
+   - just provide callbacks?
+ - make clicking on a component focus it
  - add more listener types (when mouse_enter, mouse_leave, mouse_click, focus, key_pressed...)
  - image icons for buttons
  - modal dialogs

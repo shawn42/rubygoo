@@ -41,10 +41,24 @@ class Container < Widget
     end
   end
 
-  # called when there is a mouse click
-  def clicked(event)
+  # called when there is a mouse motion
+  def mouse_motion(event)
     @widgets.each do |w|
-      w.clicked event if w.contains? event.pos 
+      w.mouse_motion event if w.contains? event.pos 
+    end
+  end
+
+  # called when there is a mouse click
+  def mouse_down(event)
+    @widgets.each do |w|
+      w.mouse_down event if w.contains? event.pos 
+    end
+  end
+
+  # called when there is a mouse release
+  def mouse_up(event)
+    @widgets.each do |w|
+      w.mouse_up event if w.contains? event.pos 
     end
   end
 
