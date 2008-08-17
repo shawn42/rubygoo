@@ -157,7 +157,7 @@ class TextField < Widget
   end
 
   def mouse_down(event)
-    return 0 unless contains? (event.pos)
+    return 0 unless contains?(event.pos)
 
     #    TODO rework focus and mouse events
     #    getFocus()

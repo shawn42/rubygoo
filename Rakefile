@@ -20,3 +20,13 @@ end
 task :uninstall do
 	sh "sudo gem uninstall rubygoo"
 end
+
+STATS_DIRECTORIES = [
+  %w(Source         lib/)
+].collect { |name, dir| [ name, "#{dir}" ] }.select { |name, dir| File.directory?(dir) }
+
+desc "Report code statistics (KLOCs, etc) from the application"
+task :stats do
+  require 'code_statistics'
+  CodeStatistics.new(*STATS_DIRECTORIES).to_s
+end
