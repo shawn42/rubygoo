@@ -3,7 +3,7 @@ Gem::manage_gems
 require 'rake/gempackagetask'
 spec = Gem::Specification.new do |s|
   s.name = "rubygoo"
-  s.version = "0.0.1"
+  s.version = "0.0.2"
   s.author = "Shawn Anderson"
   s.email = "shawn42@gmail.com"
   s.homepage = "http://rubygoo.googlecode.com"
