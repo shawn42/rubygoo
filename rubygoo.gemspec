@@ -14,6 +14,8 @@ spec = Gem::Specification.new do |s|
   s.autorequire = "rubygoo.rb"
   s.has_rdoc = true
 end
+spec.add_dependency 'publisher'
+spec.add_dependency 'constructor'
 
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.need_tar = true
