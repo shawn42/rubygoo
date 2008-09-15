@@ -5,8 +5,3 @@ TODO
  - add more listener types (when mouse_enter, mouse_leave, mouse_click, focus, key_pressed...)
  - image icons for buttons
  - modal dialogs
-
-Widgets:
- - can be clicked
- - can be drawn
- - can be updated

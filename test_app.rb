@@ -23,12 +23,36 @@ if $0 == __FILE__
     puts "BOO-YAH"
   end
 
+  modal_button = Button.new "Modal dialogs", :x=>270, :y=>280, :x_pad=>20, :y_pad=>20
+  modal_button.on :pressed do |*opts|
+    msg = "I AM MODAL"
+
+    # TODO make some of this stuff relative and/or make Dialog's
+    # constructor take a layout to use
+    modal = Dialog.new :modal => true, :x=>10, :y=>70, :w=>250, :h=>350
+
+    modal.add Label.new("Message Here", :x=>90, :y=>280, :x_pad=>20, :y_pad=>20)
+    ok_butt = Button.new("OK", :x=>70, :y=>280, :x_pad=>20, :y_pad=>20)
+    ok_butt.on :pressed do |*opts|
+      # TODO not sure about this yet
+      app.remove(modal)
+    end
+    modal.add ok_butt
+
+    # modal to the whole app, could just be for a particular
+    # container
+#    modal.do_modal app, msg do |d|
+      # optional block
+#      puts "modal dialog finished, do your saving/updating now"
+#    end
+    app.add modal
+  end
 
   # implicit tab ordering based on order of addition, can
   # specify if you want on widget creation
 
   # can add many or one at a time
-  app.add text_field, label, button
+  app.add text_field, label, button, modal_button
   app.add check
 
 #  pulldown = Pulldown.new {:x=>70, :y=>80}

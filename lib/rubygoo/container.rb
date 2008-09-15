@@ -4,20 +4,32 @@ class Container < Widget
 
   def initialize(opts={})
     super opts
-    @bg_color = theme_property :bg_color
+    # cannot get this if we don't have an app yet
+    @bg_color = theme_property :bg_color if self.app
+    @queued_widgets = []
     @widgets = []
+  end
+
+  # called when we are added to another container
+  def added() 
+    add *@queued_widgets
+    @queued_widgets = []
   end
 
   # Add widget(s) to the container.
   def add(*widgets)
     widgets.uniq.each do |w|
       unless @widgets.include? w
-        w.container = self
-        w.parent = self
-        w.app = self.app
-        w.app.add_tabbed_widget w
-        w.added
-        @widgets << w
+        if self.app
+          w.container = self
+          w.parent = self
+          w.app = self.app
+          w.app.add_tabbed_widget w
+          w.added
+          @widgets << w
+        else
+          @queued_widgets << w
+        end
       end
     end
     widgets
@@ -26,14 +38,24 @@ class Container < Widget
   # Remove widget(s) to the container.
   def remove(*widgets)
     widgets.uniq.each do |w|
-      @widgets.delete(w).removed
+      widget = @widgets.delete(w)
+      if widget
+        widget.removed
+      else
+        widget = @queued_widgets.delete(w)
+        widget.removed if widget
+      end
     end
   end
 
   # draw ourself and our children
   def draw(screen)
     # any container specific code here (borders?)
-    screen.fill @bg_color
+    if self.app == self
+      screen.fill @bg_color
+    else
+      screen.fill @bg_color, @rect
+    end
 
     # draw kiddies 
     @widgets.each do |w|

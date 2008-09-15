@@ -19,6 +19,7 @@ class CheckBox < Widget
   def checked?()
     @checked
   end
+
   def toggle()
     if checked?
       uncheck
@@ -26,10 +27,12 @@ class CheckBox < Widget
       check
     end
   end
+
   def check()
     @checked = true
     fire :checked
   end
+
   def uncheck()
     @checked = false
     fire :checked
