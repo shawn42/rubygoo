@@ -1,18 +1,10 @@
 --- 
 App: 
-  :bg_color:
-    - 30
-    - 30
-    - 30
-    - 255
+  :bg_color: :DarkGray
 Widget: 
   :font: Vera.ttf
   :font_size: 20
-  :color:
-    - 255
-    - 255
-    - 255
-    - 255
+  :color: :Snow
   :focus_color:
     - 140
     - 140
@@ -23,7 +15,7 @@ Widget:
     - 30
     - 230
     - 255
-  :border:
+  :border_color:
     - 130
     - 250
     - 230
@@ -51,11 +43,7 @@ TextField:
     - 255
     - 55
     - 255
-  :bg_color:
-    - 255
-    - 255
-    - 255
-    - 255
+  :bg_color: :Snow
   :bg_select:
     - 55
     - 55
@@ -71,7 +59,7 @@ TextField:
     - 245
     - 245
     - 255
-  :border:
+  :border_color:
     - 25
     - 25
     - 25

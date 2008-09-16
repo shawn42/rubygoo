@@ -35,7 +35,7 @@ class TextField < Widget
     @bg_select = theme_property :bg_select
     @fg_select = theme_property :fg_select
     @focus_color = theme_property :focus_color
-    @border = theme_property :border
+    @border_color = theme_property :border_color
 
     @font = TTF.new(File.join(@app.theme_dir,font), font_size)
 
@@ -81,12 +81,12 @@ class TextField < Widget
   def draw(screen)
     screen.fill @fg_color, @rect
     screen.fill @bg_color, [@rect[0]+2,@rect[1]+2,@rect[2]-4,@rect[3]-4]
-    if @border
+    if @border_color
       x1 = @rect[0]
       y1 = @rect[1]
       x2 = @rect[2] + x1
       y2 = @rect[3] + y1
-      screen.draw_box [x1,y1],[x2,y2], @border
+      screen.draw_box [x1,y1],[x2,y2], @border_color
     end
     defaultY = @font.size_text(@text.slice(0,1))[1]
     x,y,w,h = @rect

@@ -1,4 +1,5 @@
 require 'publisher'
+require 'css_colors'
 class Widget
   extend Publisher
   can_fire :clicked
@@ -110,8 +111,30 @@ class Widget
       end
       parent = parent.superclass
     end
-    prop
+    if prop_key.to_s.match /color/i
+      get_color prop
+    else
+      prop
+    end
+  end
+
+  def get_color(color)
+    if color.is_a? Array
+      if color.size > 3
+        return color
+      else
+        # fill in zeros for all other colors
+        3-color.size.times do
+          color << 0
+        end
+        # fill in alpha as 255
+        color << 255
+      end
+    elsif color.is_a? Symbol
+      CSS_COLORS[color]
+    else
+      raise "invalid color"
+    end
   end
 
 end
-

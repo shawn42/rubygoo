@@ -9,7 +9,7 @@ class CheckBox < Widget
     @checked = false
     @color = theme_property :color
     @bg_color = theme_property :bg_color
-    @border = theme_property :border
+    @border_color = theme_property :border_color
     @focus_color = theme_property :focus_color
     @checked_color = theme_property :checked_color
 
@@ -62,12 +62,12 @@ class CheckBox < Widget
       screen.fill @checked_color, @rect.inflate(-@x_pad,-@y_pad)
     end
 
-    if @border
+    if @border_color
       x1 = @rect[0]
       y1 = @rect[1]
       x2 = @rect[2] + x1
       y2 = @rect[3] + y1
-      screen.draw_box [x1,y1],[x2,y2], @border
+      screen.draw_box [x1,y1],[x2,y2], @border_color
     end
   end
 end

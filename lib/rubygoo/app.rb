@@ -60,7 +60,7 @@ class App < Container
   def on_event(event)
     case event
     when KeyUpEvent
-      key_released event
+      modal_keyboard_call :key_released, event
     when KeyDownEvent
       case event.key
       when K_TAB
@@ -70,14 +70,14 @@ class App < Container
           focus_forward
         end
       else
-        key_pressed event
+        modal_keyboard_call :key_pressed, event
       end
     when MouseUpEvent
-      mouse_up event
+      modal_mouse_call :mouse_up, event
     when MouseDownEvent
-      mouse_down event
+      modal_mouse_call :mouse_down, event
     when MouseMotionEvent
-      mouse_motion event
+      modal_mouse_call :mouse_motion, event
     end
   end
 

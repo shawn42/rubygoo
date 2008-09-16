@@ -26,10 +26,9 @@ if $0 == __FILE__
   modal_button = Button.new "Modal dialogs", :x=>270, :y=>280, :x_pad=>20, :y_pad=>20
   modal_button.on :pressed do |*opts|
     msg = "I AM MODAL"
-
     # TODO make some of this stuff relative and/or make Dialog's
     # constructor take a layout to use
-    modal = Dialog.new :modal => true, :x=>10, :y=>70, :w=>250, :h=>350
+    modal = Dialog.new :modal => app, :x=>10, :y=>70, :w=>250, :h=>350
 
     modal.add Label.new("Message Here", :x=>90, :y=>280, :x_pad=>20, :y_pad=>20)
     ok_butt = Button.new("OK", :x=>70, :y=>280, :x_pad=>20, :y_pad=>20)
@@ -39,13 +38,7 @@ if $0 == __FILE__
     end
     modal.add ok_butt
 
-    # modal to the whole app, could just be for a particular
-    # container
-#    modal.do_modal app, msg do |d|
-      # optional block
-#      puts "modal dialog finished, do your saving/updating now"
-#    end
-    app.add modal
+    modal.show
   end
 
   # implicit tab ordering based on order of addition, can

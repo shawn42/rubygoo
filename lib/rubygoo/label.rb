@@ -11,7 +11,7 @@ class Label < Widget
     @color = theme_property :color
     @bg_color = theme_property :bg_color
     @focus_color = theme_property :focus_color
-    @border = theme_property :border
+    @border_color = theme_property :border_color
 
     @font = TTF.new(File.join(@app.theme_dir,font), font_size)
     set_text @text
@@ -30,12 +30,12 @@ class Label < Widget
       screen.fill @bg_color, @rect
     end
 
-    if @border
+    if @border_color
       x1 = @rect[0]
       y1 = @rect[1]
       x2 = @rect[2] + x1
       y2 = @rect[3] + y1
-      screen.draw_box [x1,y1],[x2,y2], @border
+      screen.draw_box [x1,y1],[x2,y2], @border_color
     end
 
     @rendered_text.blit screen, [@x,@y]
