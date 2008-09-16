@@ -32,8 +32,8 @@ class TextField < Widget
     @color = theme_property :color
     @fg_color = theme_property :fg_color
     @bg_color = theme_property :bg_color
-    @bg_select = theme_property :bg_select
-    @fg_select = theme_property :fg_select
+    @bg_select_color = theme_property :bg_select_color
+    @fg_select_color = theme_property :fg_select_color
     @focus_color = theme_property :focus_color
     @border_color = theme_property :border_color
 
@@ -80,12 +80,12 @@ class TextField < Widget
 
   def draw(screen)
     screen.fill @fg_color, @rect
-    screen.fill @bg_color, [@rect[0]+2,@rect[1]+2,@rect[2]-4,@rect[3]-4]
+    screen.fill @bg_color, [@rect[0]-2,@rect[1]-2,@rect[2]+4,@rect[3]+4]
     if @border_color
-      x1 = @rect[0]
-      y1 = @rect[1]
-      x2 = @rect[2] + x1
-      y2 = @rect[3] + y1
+      x1 = @rect[0] - 2
+      y1 = @rect[1] - 2
+      x2 = @rect[2] + x1 + 4
+      y2 = @rect[3] + y1 + 4
       screen.draw_box [x1,y1],[x2,y2], @border_color
     end
     defaultY = @font.size_text(@text.slice(0,1))[1]
@@ -99,7 +99,7 @@ class TextField < Widget
         selectX1 = [caretX, selectX].max
         if selectX0 < selectX1
           # TODO cache this height
-          screen.fill(@bg_select, [x+1+selectX0, y+1, selectX1-selectX0, defaultY])
+          screen.fill(@bg_select_color, [x+1+selectX0, y+1, selectX1-selectX0, defaultY])
         end
       end
     end
@@ -111,7 +111,7 @@ class TextField < Widget
 
     # draw caret        
     if @focussed
-      screen.fill(@fg_select, [x+1+caretX, y+1, 1, defaultY])
+      screen.fill(@fg_select_color, [x+1+caretX, y+1, 1, defaultY])
     end
 
     # don't really need this??

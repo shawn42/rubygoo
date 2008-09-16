@@ -1,66 +1,20 @@
 --- 
 App: 
-  :bg_color: :DarkGray
+  :bg_color: :Black
 Widget: 
   :font: Vera.ttf
   :font_size: 20
-  :color: :Snow
-  :focus_color:
-    - 140
-    - 140
-    - 140
-    - 255
-  :bg_color:
-    - 30
-    - 30
-    - 230
-    - 255
-  :border_color:
-    - 130
-    - 250
-    - 230
-    - 255
+  :color: :Black
+  :focus_color: :FireBrick
+  :bg_color: :Gray
+  :border_color: :FireBrick
 Button: 
-  :bg_color:
-    - 130
-    - 30
-    - 30
-    - 255
+  :bg_color: :DimGray
 CheckBox:
-  :checked_color:
-    - 40
-    - 40
-    - 40
-    - 255
+  :checked_color: :FireBrick
 TextField:
-  :color:
-    - 30
-    - 30
-    - 230
-    - 255
-  :fg_color:
-    - 55
-    - 255
-    - 55
-    - 255
-  :bg_color: :Snow
-  :bg_select:
-    - 55
-    - 55
-    - 255
-    - 255
-  :fg_select:
-    - 55
-    - 155
-    - 25
-    - 255
-  :focus_color:
-    - 245
-    - 245
-    - 245
-    - 255
-  :border_color:
-    - 25
-    - 25
-    - 25
-    - 255
+  :fg_color: :FireBrick
+  :bg_color: :Gray
+  :bg_select_color: :FireBrick
+  :fg_select_color: :Snow
+  :border_color: :Black

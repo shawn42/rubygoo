@@ -28,10 +28,10 @@ if $0 == __FILE__
     msg = "I AM MODAL"
     # TODO make some of this stuff relative and/or make Dialog's
     # constructor take a layout to use
-    modal = Dialog.new :modal => app, :x=>10, :y=>70, :w=>250, :h=>350
+    modal = Dialog.new :modal => app, :x=>10, :y=>110, :w=>250, :h=>250
 
-    modal.add Label.new("Message Here", :x=>90, :y=>280, :x_pad=>20, :y_pad=>20)
-    ok_butt = Button.new("OK", :x=>70, :y=>280, :x_pad=>20, :y_pad=>20)
+    modal.add Label.new("Message Here", :x=>70, :y=>180, :x_pad=>20, :y_pad=>20)
+    ok_butt = Button.new("OK", :x=>90, :y=>280, :x_pad=>20, :y_pad=>20)
     ok_butt.on :pressed do |*opts|
       # TODO not sure about this yet
       app.remove(modal)
