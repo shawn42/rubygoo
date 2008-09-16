@@ -1,5 +1,6 @@
 class Button < Widget
-  attr_accessor :text
+  attr_accessor :text, :color, :bg_color, :border_color,
+    :font, :focus_color, :rendered_text, :rect
   can_fire :pressed
   def initialize(text, opts={})
     super opts
@@ -12,9 +13,10 @@ class Button < Widget
     @color = theme_property :color
     @bg_color = theme_property :bg_color
     @border_color = theme_property :border_color
-    @font = TTF.new(File.join(@app.theme_dir,font), font_size)
+    @font = app.renderer.build_font(File.join(@app.theme_dir,font), font_size)
     @focus_color = theme_property :focus_color
 
+    # TODO pull this into the renderer
     @rendered_text = @font.render @text, true, @color
 
     @rect = Rect.new [@x-@x_pad,@y-@y_pad,@rendered_text.width+2*@x_pad,@rendered_text.height+2*@y_pad]
@@ -34,20 +36,7 @@ class Button < Widget
   end
 
   def draw(screen)
-    if @focussed
-      screen.fill @focus_color, @rect
-    elsif @bg_color
-      screen.fill @bg_color, @rect
-    end
-    if @border_color
-      x1 = @rect[0]
-      y1 = @rect[1]
-      x2 = @rect[2] + x1
-      y2 = @rect[3] + y1
-      screen.draw_box [x1,y1],[x2,y2], @border_color
-    end
-
-    @rendered_text.blit screen, [@x,@y]
+    app.renderer.draw_button self, screen
   end
 end
 

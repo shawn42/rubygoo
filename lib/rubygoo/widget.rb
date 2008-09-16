@@ -119,9 +119,10 @@ class Widget
   end
 
   def get_color(color)
+    new_color = nil
     if color.is_a? Array
       if color.size > 3
-        return color
+        new_color = color
       else
         # fill in zeros for all other colors
         3-color.size.times do
@@ -131,10 +132,11 @@ class Widget
         color << 255
       end
     elsif color.is_a? Symbol
-      CSS_COLORS[color]
+      new_color = CSS_COLORS[color]
     else
       raise "invalid color"
     end
+    app.renderer.build_color new_color
   end
 
 end

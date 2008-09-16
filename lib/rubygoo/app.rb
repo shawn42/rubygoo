@@ -1,7 +1,7 @@
 class App < Container
 
-  DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:width=>600,:height=>480,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes")}
-  attr_accessor :theme_name, :theme, :data_dir, :theme_dir
+  DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:width=>600,:height=>480,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:renderer=>'rubygame'}
+  attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer
 
   def initialize(opts={})
     merged_opts = DEFAULT_PARAMS.merge opts
@@ -12,6 +12,9 @@ class App < Container
     @data_dir = merged_opts[:data_dir]
     @theme_name = theme_name
     @theme = load_theme theme_name
+    renderer = merged_opts[:renderer]
+    require "#{renderer}_renderer"
+    app.renderer = ObjectSpace.const_get("#{renderer.capitalize}Renderer").new
 
     TTF.setup
 
@@ -28,9 +31,8 @@ class App < Container
   end
 
   def draw(screen)
-    screen.fill @bg_color
     super screen
-    screen.update
+    @renderer.flip screen
   end
 
   def add_tabbed_widget(w)

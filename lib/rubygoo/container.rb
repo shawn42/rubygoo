@@ -1,6 +1,6 @@
 class Container < Widget
 
-  attr_accessor :widgets
+  attr_accessor :widgets, :bg_color, :rect
 
   def initialize(opts={})
     super opts
@@ -56,11 +56,7 @@ class Container < Widget
   # draw ourself and our children
   def draw(screen)
     # any container specific code here (border_colors?)
-    if self.app == self
-      screen.fill @bg_color
-    else
-      screen.fill @bg_color, @rect
-    end
+    app.renderer.draw_container self, screen
 
     # draw kiddies 
     @widgets.each do |w|
