@@ -2,7 +2,7 @@ $: << File.dirname(__FILE__)
 $: << File.join(File.dirname(__FILE__),"rubygoo")
 $: << File.join(File.dirname(__FILE__),"rubygoo","adapters")
 class Rubygoo
-  VERSION = '0.0.1'
+  VERSION = '0.0.3'
 end
 
 require 'goo_event'

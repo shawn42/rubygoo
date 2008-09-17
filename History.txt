@@ -1,7 +1,6 @@
 === 0.0.3 / 2008-09-16
 
 * Rubygoo hits useable state
-
   * added modal dialogs
   * added named css colors
   * changed default colorscheme

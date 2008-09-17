@@ -11,7 +11,7 @@ Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.email = 'boss@topfunky.com'
   p.summary = "Beautiful graphs for one or multiple datasets."
   p.url = "http://rubygoo.googlecode.com"
-#  p.changes = p.paragraphs_of('CHANGELOG', 0..1).join("\n\n")
+  p.changes = p.paragraphs_of('History.txt', 0..2).join("\n\n")
   p.remote_rdoc_dir = '' # Release to root
   p.extra_deps = ['constructor','publisher']
 end
