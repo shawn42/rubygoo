@@ -1,5 +1,6 @@
 require 'publisher'
 require 'css_colors'
+require 'goo_color'
 class Widget
   extend Publisher
   can_fire :clicked
@@ -136,7 +137,8 @@ class Widget
     else
       raise "invalid color"
     end
-    app.renderer.build_color new_color
+
+    GooColor.new *new_color 
   end
 
 end

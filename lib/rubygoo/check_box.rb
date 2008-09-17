@@ -45,7 +45,7 @@ class CheckBox < Widget
 
   # called when a key press is sent to us
   def key_pressed(event)
-    case event.key
+    case event.data[:key]
     when K_SPACE
       toggle
     end
@@ -67,7 +67,7 @@ class CheckBox < Widget
       y1 = @rect[1]
       x2 = @rect[2] + x1
       y2 = @rect[3] + y1
-      screen.draw_box [x1,y1],[x2,y2], @border_color
+      screen.draw_box x1, y1, x2, y2, @border_color
     end
   end
 end

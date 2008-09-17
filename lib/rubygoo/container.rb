@@ -56,7 +56,13 @@ class Container < Widget
   # draw ourself and our children
   def draw(screen)
     # any container specific code here (border_colors?)
-    app.renderer.draw_container self, screen
+    if @bg_color
+      if app == self
+        screen.fill @bg_color
+      else
+        screen.fill @bg_color, @rect
+      end
+    end
 
     # draw kiddies 
     @widgets.each do |w|
@@ -67,21 +73,21 @@ class Container < Widget
   # called when there is a mouse motion
   def mouse_motion(event)
     @widgets.each do |w|
-      w.mouse_motion event if w.contains? event.pos 
+      w.mouse_motion event if w.contains? [event.data[:x],event.data[:y]] 
     end
   end
 
   # called when there is a mouse click
   def mouse_down(event)
     @widgets.each do |w|
-      w.mouse_down event if w.contains? event.pos 
+      w.mouse_down event if w.contains? [event.data[:x],event.data[:y]] 
     end
   end
 
   # called when there is a mouse release
   def mouse_up(event)
     @widgets.each do |w|
-      w.mouse_up event if w.contains? event.pos 
+      w.mouse_up event if w.contains? [event.data[:x],event.data[:y]] 
     end
   end
 
@@ -103,7 +109,7 @@ class Container < Widget
   def modal_mouse_call(meth, event)
     if @modal_widgets.empty?
       @widgets.each do |w|
-        w.send meth, event if w.contains? event.pos 
+        w.send meth, event if w.contains? [event.data[:x],event.data[:y]] 
       end
     else
       @modal_widgets.last.send meth, event

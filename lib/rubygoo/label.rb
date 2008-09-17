@@ -1,5 +1,4 @@
 class Label < Widget
-  attr_accessor :text
   def initialize(text, opts={})
     super opts
     @text = text
@@ -7,19 +6,19 @@ class Label < Widget
 
   def added()
     font = theme_property :font
-    font_size = theme_property :font_size
+    @font_size = theme_property :font_size
     @color = theme_property :color
     @bg_color = theme_property :bg_color
     @focus_color = theme_property :focus_color
     @border_color = theme_property :border_color
+    @font_file = File.join(@app.theme_dir,font)
 
-    @font = TTF.new(File.join(@app.theme_dir,font), font_size)
     set_text @text
   end
 
   def set_text(text)
     @text = text
-    @rendered_text = @font.render @text, true, @color
+    @rendered_text = @app.renderer.render_text @text, @font_file, @font_size, @color
     @rect = Rect.new [@x,@y,@rendered_text.width+@x_pad,@rendered_text.height+@y_pad]
   end
 
@@ -35,9 +34,9 @@ class Label < Widget
       y1 = @rect[1]
       x2 = @rect[2] + x1
       y2 = @rect[3] + y1
-      screen.draw_box [x1,y1],[x2,y2], @border_color
+      screen.draw_box x1, y1, x2, y2, @border_color
     end
 
-    @rendered_text.blit screen, [@x,@y]
+    screen.draw_image @rendered_text, @x, @y
   end
 end

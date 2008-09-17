@@ -28,7 +28,7 @@ class TextField < Widget
 
   def added()
     font = theme_property :font
-    font_size = theme_property :font_size
+    @font_size = theme_property :font_size
     @color = theme_property :color
     @fg_color = theme_property :fg_color
     @bg_color = theme_property :bg_color
@@ -37,13 +37,14 @@ class TextField < Widget
     @focus_color = theme_property :focus_color
     @border_color = theme_property :border_color
 
-    @font = TTF.new(File.join(@app.theme_dir,font), font_size)
+    @font_file = File.join(@app.theme_dir,font)
 
     if @w == 1
       # we have the default from widget, we want to set the
       # default to 6 chars wide and 1 char tall
-      size_text = @font.render "MMMMMM", true, @color
-      @min_w,@min_h = size_text.size
+      size = @app.renderer.size_text "MMMMMM", @font_file, @font_size
+      @min_w = size[0]
+      @min_h = size[1]
     end
 
     set_text @text
@@ -56,7 +57,7 @@ class TextField < Widget
       @rendered_text = nil
       @rect = Rect.new [@x,@y,w,h]
     else
-      @rendered_text = @font.render @text, true, @color
+      @rendered_text = @app.renderer.render_text @text, @font_file, @font_size, @color
       w = [@rendered_text.width,@min_w].max + @x_pad
       h = [@rendered_text.height,@min_h].max + @y_pad
       @rect = Rect.new [@x,@y,w,h]
@@ -86,15 +87,15 @@ class TextField < Widget
       y1 = @rect[1] - 2
       x2 = @rect[2] + x1 + 4
       y2 = @rect[3] + y1 + 4
-      screen.draw_box [x1,y1],[x2,y2], @border_color
+      screen.draw_box x1, y1, x2, y2, @border_color
     end
-    defaultY = @font.size_text(@text.slice(0,1))[1]
+    defaultY = @app.renderer.size_text(@text.slice(0,1),@font_file,@font_size)[1]
     x,y,w,h = @rect
     if @focussed
-      caretX = @font.size_text(@text.slice(0,@caret_pos))[0]
+      caretX = @app.renderer.size_text(@text.slice(0,@caret_pos),@font_file,@font_size)[0]
       unless @select_pos.nil?
         # draw selection highlight
-        selectX = @font.size_text(@text.slice(0,@select_pos))[0]
+        selectX = @app.renderer.size_text(@text.slice(0,@select_pos),@font_file,@font_size)[0]
         selectX0 = [caretX, selectX].min
         selectX1 = [caretX, selectX].max
         if selectX0 < selectX1
@@ -105,8 +106,8 @@ class TextField < Widget
     end
 
     unless @text.nil? or @text.empty?
-      @rendered_text = @font.render @text, true, @color
-      @rendered_text.blit screen, [x+1,y+1]
+      @rendered_text = @app.renderer.render_text @text, @font_file, @font_size, @color
+      screen.draw_image @rendered_text, x+1, y+1
     end
 
     # draw caret        
@@ -157,11 +158,13 @@ class TextField < Widget
   end
 
   def mouse_down(event)
-    return 0 unless contains?(event.pos)
+    x = event.data[:x]
+    y = event.data[:y]
+    return 0 unless contains?([x,y])
 
     #    TODO rework focus and mouse events
     #    getFocus()
-    @caret_pos = find_mouse_position(event.pos)
+    @caret_pos = find_mouse_position([x,y])
     @select_pos = @caret_pos
     @dragging = true
     render
@@ -169,7 +172,9 @@ class TextField < Widget
 
   def mouse_motion(event)
     return 0 unless @dragging
-    @caret_pos = find_mouse_position(event.pos)
+    x = event.data[:x]
+    y = event.data[:y]
+    @caret_pos = find_mouse_position([x,y])
     render
   end
 
@@ -177,7 +182,9 @@ class TextField < Widget
     if not @dragging
       return 0
     end
-    @caret_pos = find_mouse_position(event.pos)
+    x = event.data[:x]
+    y = event.data[:y]
+    @caret_pos = find_mouse_position([x,y])
     @dragging = false
     render
   end
@@ -198,8 +205,8 @@ class TextField < Widget
     return if not @focussed
     @dragging = false
 
-    mods = event.mods
-    handlers = @key_handlers[event.key]
+    mods = event.data[:mods]
+    handlers = @key_handlers[event.data[:key]]
     unless handlers.nil?
       for handler in handlers
         handler.call event
@@ -209,7 +216,7 @@ class TextField < Widget
       return
     end
 
-    case event.key
+    case event.data[:key]
     when K_LEFT
       if @caret_pos > 0
         @caret_pos -= 1
@@ -272,16 +279,17 @@ class TextField < Widget
         @select_pos = @caret_pos
       end
 
+      # TODO these key numbers are Rubygame specific
     when (32..127)
       # add regular text to the box
       if @caret_pos == @select_pos
-        @text = @text.slice(0,@caret_pos) + event.string + @text.slice(@caret_pos,@text.length-@caret_pos)
+        @text = @text.slice(0,@caret_pos) + event.data[:string] + @text.slice(@caret_pos,@text.length-@caret_pos)
         @caret_pos += 1
       else
         positions = [@caret_pos,@select_pos]
         min = positions.min
         max = positions.max
-        @text = @text.slice(0,min) + event.string + @text.slice(max,@text.length-max)
+        @text = @text.slice(0,min) + event.data[:string] + @text.slice(max,@text.length-max)
         @caret_pos = min + 1
       end
 

@@ -2,8 +2,8 @@ require 'rubygems'
 $: << './lib'
 require 'rubygoo'
 
-if $0 == __FILE__
-  app = App.new 
+def create_gui(renderer)
+  app = App.new :renderer => renderer
 
   label = Label.new "click the button to set the time", :x=>20, :y=>30
 
@@ -54,6 +54,17 @@ if $0 == __FILE__
 #  end
 #
 #  app.add pulldown
+  app
+end
+
+if $0 == __FILE__
+
+  screen = Screen.new [600,480]
+
+  factory = AdapterFactory.new
+  render_adapter = factory.renderer_for :rubygame, screen
+  app = create_gui(render_adapter)
+  app_adapter = factory.app_for :rubygame, app
   
   # rubygame standard stuff below here
   queue = EventQueue.new
@@ -64,7 +75,6 @@ if $0 == __FILE__
   clock = Clock.new
   clock.target_framerate = 20
 
-  screen = Screen.new [600,480]
   catch(:rubygame_quit) do
     loop do
       queue.each do |event|
@@ -79,11 +89,11 @@ if $0 == __FILE__
         end
 
         # pass on our events to the GUI
-        app.on_event event
+        app_adapter.on_event event
       end
 
-      app.update clock.tick
-      app.draw screen
+      app_adapter.update clock.tick
+      app_adapter.draw render_adapter
     end
   end
 end

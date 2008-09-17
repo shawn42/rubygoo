@@ -1,6 +1,6 @@
 class App < Container
 
-  DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:width=>600,:height=>480,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:renderer=>'rubygame'}
+  DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:width=>600,:height=>480,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes")}
   attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer
 
   def initialize(opts={})
@@ -12,12 +12,7 @@ class App < Container
     @data_dir = merged_opts[:data_dir]
     @theme_name = theme_name
     @theme = load_theme theme_name
-    renderer = merged_opts[:renderer]
-    require "#{renderer}_renderer"
-    app.renderer = ObjectSpace.const_get("#{renderer.capitalize}Renderer").new
-
-    TTF.setup
-
+    @renderer = merged_opts[:renderer]
     super merged_opts
   end
 
@@ -31,8 +26,9 @@ class App < Container
   end
 
   def draw(screen)
+    screen.start_drawing
     super screen
-    @renderer.flip screen
+    screen.finish_drawing
   end
 
   def add_tabbed_widget(w)
@@ -60,13 +56,13 @@ class App < Container
   # this is where all the rubygame to rubygoo event mapping will
   # happen
   def on_event(event)
-    case event
-    when KeyUpEvent
+    case event.event_type
+    when :key_released
       modal_keyboard_call :key_released, event
-    when KeyDownEvent
-      case event.key
+    when :key_pressed
+      case event.data[:key]
       when K_TAB
-        if event.mods.include? K_LSHIFT or event.mods.include? K_RSHIFT
+        if event.data[:mods].include? K_LSHIFT or event.data[:mods].include? K_RSHIFT
           focus_back
         else
           focus_forward
@@ -74,12 +70,9 @@ class App < Container
       else
         modal_keyboard_call :key_pressed, event
       end
-    when MouseUpEvent
-      modal_mouse_call :mouse_up, event
-    when MouseDownEvent
-      modal_mouse_call :mouse_down, event
-    when MouseMotionEvent
-      modal_mouse_call :mouse_motion, event
+    else
+      # ALL mouse events go here
+      modal_mouse_call event.event_type, event
     end
   end
 
