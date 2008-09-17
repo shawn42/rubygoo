@@ -1,5 +1,5 @@
 require 'rubygems'
-$: << '../lib'
+$: << './lib'
 require 'rubygoo'
 
 require 'gosu'
