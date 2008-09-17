@@ -1,6 +1,8 @@
 require 'rubygems'
 $: << './lib'
 require 'rubygoo'
+require 'rubygame'
+include Rubygame
 
 def create_gui(renderer)
   app = App.new :renderer => renderer
