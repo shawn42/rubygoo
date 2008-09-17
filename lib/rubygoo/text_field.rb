@@ -107,7 +107,7 @@ class TextField < Widget
 
     unless @text.nil? or @text.empty?
       @rendered_text = @app.renderer.render_text @text, @font_file, @font_size, @color
-      screen.draw_image @rendered_text, x+1, y+1
+      screen.draw_image @rendered_text, x+1, y+1, @color
     end
 
     # draw caret        

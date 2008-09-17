@@ -46,7 +46,7 @@ class Button < Widget
     end
 
 
-    adapter.draw_image @rendered_text, @x, @y
+    adapter.draw_image @rendered_text, @x, @y, @color
 
   end
 end

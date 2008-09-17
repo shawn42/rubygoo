@@ -35,9 +35,13 @@ class GosuRenderAdapter
 
   def finish_drawing(); end
 
-  def draw_image(img, x, y)
+  def draw_image(img, x, y, color=nil)
     # z is unused here
-    img.draw x, y, 1
+    if color
+      img.draw x, y, 1,1,1,convert_color(color)
+    else
+      img.draw x, y, 1
+    end
   end
 
   def size_text(text, font_file, font_size)
@@ -54,7 +58,7 @@ class GosuRenderAdapter
     font = @font_cache[font_file][font_size] ||= Font.new(@window, font_file, font_size)
 
     # TODO how do you set the color here?
-    text_image = Image.from_text(@window, text, font_file, font_size, 2, 9999, :left)
+    text_image = Image.from_text(@window, text, font_file, font_size, 2, font.text_width(text).ceil+text.length*2, :left)
   end
 
 

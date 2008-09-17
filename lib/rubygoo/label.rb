@@ -37,6 +37,6 @@ class Label < Widget
       screen.draw_box x1, y1, x2, y2, @border_color
     end
 
-    screen.draw_image @rendered_text, @x, @y
+    screen.draw_image @rendered_text, @x, @y, @color
   end
 end
