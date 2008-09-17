@@ -16,9 +16,10 @@ Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.extra_deps = ['constructor','publisher']
 end
 
-# run test_app
+# run rubygame_app
 task :run do
-  sh "rsdl samples/test_app.rb"
+  # this is for convenience on os x
+  sh "rsdl samples/rubygame_app.rb"
 end
 
 STATS_DIRECTORIES = [
