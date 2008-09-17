@@ -4,17 +4,25 @@ class GosuRenderAdapter
     @window = window
   end
 
-  def draw_box(x1,y1,x2,y2,color)
+  def draw_box_filled(x1,y1,x2,y2,color)
     c = convert_color(color)
     @window.draw_quad x1, y1, c, x2, y1, c, x1, y2, c, x2, y2, c
+  end
+
+  def draw_box(x1,y1,x2,y2,color)
+    c = convert_color(color)
+    @window.draw_line x1, y1, c, x2, y1, c
+    @window.draw_line x2, y1, c, x2, y2, c
+    @window.draw_line x2, y2, c, x1, y2, c
+    @window.draw_line x1, y2, c, x1, y1, c
   end
 
   # fill in a rect with color or full screen if no color
   def fill(color,rect=nil)
     if rect.nil? 
-      draw_box 0, 0, @window.width, @window.height, color
+      draw_box_filled 0, 0, @window.width, @window.height, color
     else
-      draw_box rect[0], rect[1], rect[2], rect[3], color
+      draw_box_filled rect[0], rect[1], rect[2], rect[3], color
     end
   end
 
