@@ -1,0 +1,11 @@
+=== 0.0.3 / 2008-09-16
+
+* Rubygoo hits useable state
+
+  * added modal dialogs
+  * added named css colors
+  * changed default colorscheme
+  * refactored rubygame input/rendering into adapters
+  * started adding support for gosu applications
+
+

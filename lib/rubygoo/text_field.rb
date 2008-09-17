@@ -139,7 +139,7 @@ class TextField < Widget
     c = 0
     while l < r
       c = (l + r + 1) / 2
-      w = @font.size_text(@text.slice(l,c-l))[0]
+      w = @app.renderer.size_text(@text.slice(l,c-l), @font_file, @font_size)[0]
       if x >= w
         l = c
         x -= w

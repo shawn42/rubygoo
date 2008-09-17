@@ -1,9 +1,9 @@
 $: << File.dirname(__FILE__)
 $: << File.join(File.dirname(__FILE__),"rubygoo")
 $: << File.join(File.dirname(__FILE__),"rubygoo","adapters")
-# TODO move this into RubygameAppAdapter
-require 'rubygame'
-include Rubygame
+class Rubygoo
+  VERSION = '0.0.1'
+end
 
 require 'goo_event'
 require 'goo_color'
