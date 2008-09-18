@@ -28,7 +28,7 @@ class RubygameRenderAdapter
     @screen.flip
   end
 
-  def draw_image(img, x, y)
+  def draw_image(img, x, y, color=nil)
     img.blit @screen, [x,y]
   end
 
