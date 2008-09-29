@@ -18,3 +18,6 @@ TextField:
   :bg_select_color: :FireBrick
   :fg_select_color: :Snow
   :border_color: :Black
+MouseCursor:
+  :color: :Snow
+  :mouse_cursor: cursor.png

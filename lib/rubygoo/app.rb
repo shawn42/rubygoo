@@ -14,6 +14,12 @@ class App < Container
     @theme = load_theme theme_name
     @renderer = merged_opts[:renderer]
     super merged_opts
+
+    # should this go here?
+    @mouse = MouseCursor.new
+    @mouse.parent = self
+    @mouse.app = self.app
+    @mouse.added
   end
 
   def app()
@@ -28,6 +34,7 @@ class App < Container
   def draw(screen)
     screen.start_drawing
     super screen
+    @mouse.draw screen
     screen.finish_drawing
   end
 
@@ -53,8 +60,6 @@ class App < Container
     @tabbed_widgets[@focussed_widget].focus
   end
 
-  # this is where all the rubygame to rubygoo event mapping will
-  # happen
   def on_event(event)
     case event.event_type
     when :key_released
@@ -73,6 +78,10 @@ class App < Container
     else
       # ALL mouse events go here
       modal_mouse_call event.event_type, event
+
+      if event.event_type == :mouse_motion
+        @mouse.mouse_motion event
+      end
     end
   end
 

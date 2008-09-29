@@ -1,6 +1,7 @@
 require 'publisher'
 require 'css_colors'
 require 'goo_color'
+require 'rect'
 class Widget
   extend Publisher
   can_fire :clicked

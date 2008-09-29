@@ -279,8 +279,7 @@ class TextField < Widget
         @select_pos = @caret_pos
       end
 
-      # TODO these key numbers are Rubygame specific
-    when (32..127)
+    when *KEY2ASCII.keys
       # add regular text to the box
       if @caret_pos == @select_pos
         @text = @text.slice(0,@caret_pos) + event.data[:string] + @text.slice(@caret_pos,@text.length-@caret_pos)

@@ -3,13 +3,19 @@ $: << './lib'
 require 'rubygoo'
 
 require 'gosu'
-require 'rubygame'
 include Gosu
-include Rubygame
 
-class GameWindow < Window
+class RubygooWindow < Window
   def initialize()
+
     super(640, 480, false)
+
+    # TODO, how can I do this cleaner?
+    %w{a b c d e f g h i j k l m n o p q r s t u v w x y z}.each do |letter|
+      eval "::Kb#{letter.upcase} = #{self.char_to_button_id(letter)}"
+    end
+    # how do I get rid of this?
+    require 'gosu_app_adapter'
     factory = AdapterFactory.new
     @render_adapter = factory.renderer_for :gosu, self
     app = create_gui(@render_adapter)
@@ -96,7 +102,7 @@ end
 
 if $0 == __FILE__
 
-  window = GameWindow.new 
+  window = RubygooWindow.new 
   window.show
 
 end

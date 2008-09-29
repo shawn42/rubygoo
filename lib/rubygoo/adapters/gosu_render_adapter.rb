@@ -22,7 +22,7 @@ class GosuRenderAdapter
     if rect.nil? 
       draw_box_filled 0, 0, @window.width, @window.height, color
     else
-      draw_box_filled rect[0], rect[1], rect[2], rect[3], color
+      draw_box_filled rect[0], rect[1], rect[2]+rect[0], rect[3]+rect[1], color
     end
   end
 

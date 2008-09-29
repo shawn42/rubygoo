@@ -73,7 +73,7 @@ class Container < Widget
   # called when there is a mouse motion
   def mouse_motion(event)
     @widgets.each do |w|
-      w.mouse_motion event if w.contains? [event.data[:x],event.data[:y]] 
+      w.mouse_motion event #if w.contains? [event.data[:x],event.data[:y]] 
     end
   end
 

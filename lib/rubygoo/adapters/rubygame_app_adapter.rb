@@ -1,3 +1,8 @@
+require 'rubygame'
+include Rubygame
+include Mouse
+include Key
+
 class RubygameAppAdapter
 
   def initialize(app)
@@ -32,6 +37,5 @@ class RubygameAppAdapter
         :x => event.pos[0], :y => event.pos[1]})
     end
   end
-
-
 end
+

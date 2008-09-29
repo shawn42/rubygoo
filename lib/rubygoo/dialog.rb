@@ -8,9 +8,6 @@ class Dialog < Container
   
   def added()
     super
-    font = theme_property :font
-    font_size = theme_property :font_size
-    @font = TTF.new(File.join(@app.theme_dir,font), font_size)
 
     @bg_color = theme_property :bg_color
     @color = theme_property :color

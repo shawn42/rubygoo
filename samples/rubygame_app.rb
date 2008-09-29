@@ -62,6 +62,7 @@ end
 if $0 == __FILE__
 
   screen = Screen.new [600,480]
+  screen.show_cursor = false
 
   factory = AdapterFactory.new
   render_adapter = factory.renderer_for :rubygame, screen
