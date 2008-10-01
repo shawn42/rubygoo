@@ -1,4 +1,5 @@
 include Gosu
+module Rubygoo
 
 enum = 0
 MOUSE_LEFT = enum += 1
@@ -549,3 +550,4 @@ class GosuAppAdapter
   end
 end
 
+end

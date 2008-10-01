@@ -11,4 +11,5 @@
 
 * Rubygoo gets better Gosu support
   * keys work now in Gosu
+  * properly namespaced in Rubygoo module
 

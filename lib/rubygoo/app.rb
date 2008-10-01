@@ -33,10 +33,10 @@ module Rubygoo
     end
 
     def draw(screen)
-      screen.start_drawing
-      super screen
-      @mouse.draw screen
-      screen.finish_drawing
+      @renderer.start_drawing
+      super @renderer
+      @mouse.draw @renderer
+      @renderer.finish_drawing
     end
 
     def add_tabbed_widget(w)
