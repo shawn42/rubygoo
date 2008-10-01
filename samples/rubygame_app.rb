@@ -3,6 +3,7 @@ $: << './lib'
 require 'rubygoo'
 require 'rubygame'
 include Rubygame
+include Rubygoo
 
 def create_gui(renderer)
   app = App.new :renderer => renderer

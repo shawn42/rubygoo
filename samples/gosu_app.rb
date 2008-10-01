@@ -4,6 +4,7 @@ require 'rubygoo'
 
 require 'gosu'
 include Gosu
+include Rubygoo
 
 class RubygooWindow < Window
   def initialize()

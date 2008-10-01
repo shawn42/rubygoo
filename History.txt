@@ -7,4 +7,8 @@
   * refactored rubygame input/rendering into adapters
   * started adding support for gosu applications
 
+=== 0.0.4 / 2008-09-30
+
+* Rubygoo gets better Gosu support
+  * keys work now in Gosu
 

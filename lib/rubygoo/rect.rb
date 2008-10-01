@@ -1,3 +1,4 @@
+module Rubygoo
 #--
 #	Rubygame -- Ruby code and bindings to SDL to facilitate game creation
 #	Copyright (C) 2004-2007  John Croisant
@@ -598,12 +599,4 @@ class Rect < Array
 
 end # class Rect
 
-
-class Surface
-	# Return a Rect with the same width and height as the Surface, positioned
-	# at (0,0).
-	def make_rect()
-		return Rect.new(0,0,self.width,self.height)
-	end
 end
-
