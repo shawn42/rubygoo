@@ -142,6 +142,11 @@ module Rubygoo
 
       GooColor.new *new_color 
     end
+    
+    # called each update cycle with the amount of time that has passed.  useful
+    # for animations, etc
+    def update(time)
+    end
 
   end
 end

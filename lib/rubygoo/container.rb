@@ -127,6 +127,14 @@ module Rubygoo
         @modal_widgets.last.send meth, event
       end
     end
+
+    # called each update cycle with the amount of time that has passed.  useful
+    # for animations, etc
+    def update(time)
+      @widgets.each do |w|
+        w.update time
+      end
+    end
   end
 end
 
