@@ -1,7 +1,7 @@
 module Rubygoo
   class App < Container
 
-    DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:width=>600,:height=>480,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes")}
+    DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:width=>600,:height=>480,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:mouse_cursor => true}
     attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer
 
     def initialize(opts={})
@@ -17,10 +17,13 @@ module Rubygoo
       super merged_opts
 
       # should this go here?
-      @mouse = MouseCursor.new
-      @mouse.parent = self
-      @mouse.app = self.app
-      @mouse.added
+      @mouse_opt = merged_opts[:mouse_cursor]
+      if @mouse_opt
+        @mouse = MouseCursor.new
+        @mouse.parent = self
+        @mouse.app = self.app
+        @mouse.added
+      end
     end
 
     def app()
@@ -35,7 +38,7 @@ module Rubygoo
     def draw(screen)
       @renderer.start_drawing
       super @renderer
-      @mouse.draw @renderer
+      @mouse.draw @renderer if @mouse_opt
       @renderer.finish_drawing
     end
 
@@ -81,7 +84,7 @@ module Rubygoo
         modal_mouse_call event.event_type, event
 
         if event.event_type == :mouse_motion
-          @mouse.mouse_motion event
+          @mouse.mouse_motion event if @mouse_opt
         end
       end
     end
