@@ -13,3 +13,7 @@
   * keys work now in Gosu
   * properly namespaced in Rubygoo module
 
+=== 0.0.5 / 2008-10-13
+
+* Minor API tweaks
+  * fixing gem deps

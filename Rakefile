@@ -2,8 +2,10 @@
 
 require 'rubygems'
 require 'hoe'
-require './lib/rubygoo.rb'
 
+module Rubygoo
+  VERSION = '0.0.5'
+end
 Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.developer('Shawn Anderson', 'shawn42@gmail.com')
   p.author = "Shawn Anderson"
@@ -13,7 +15,8 @@ Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.url = "http://rubygoo.googlecode.com"
   p.changes = p.paragraphs_of('History.txt', 0..2).join("\n\n")
   p.remote_rdoc_dir = '' # Release to root
-  p.extra_deps = ['constructor','publisher']
+  p.extra_deps << ['constructor']
+  p.extra_deps << ['publisher']
 end
 
 # run rubygame_app
