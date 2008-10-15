@@ -52,23 +52,28 @@ module Rubygoo
       end
     end
 
-    def draw(screen)
+    def draw(adapter)
+      x1 = @rect[0]
+      y1 = @rect[1]
+      x2 = @rect[2] + x1
+      y2 = @rect[3] + y1
       if @focussed
-        screen.fill @focus_color, @rect
+        adapter.fill x1, y1, x2, y2, @focus_color
       elsif @bg_color
-        screen.fill @bg_color, @rect
+        adapter.fill x1, y1, x2, y2, @bg_color
       end
 
       if @checked
-        screen.fill @checked_color, @rect.inflate(-@x_pad,-@y_pad)
+        rect = @rect.inflate(-@x_pad,-@y_pad)
+        cx1 = rect[0]
+        cy1 = rect[1]
+        cx2 = rect[2] + x1
+        cy2 = rect[3] + y1
+        adapter.fill cx1, cy1, cx2, cy2, @checked_color
       end
 
       if @border_color
-        x1 = @rect[0]
-        y1 = @rect[1]
-        x2 = @rect[2] + x1
-        y2 = @rect[3] + y1
-        screen.draw_box x1, y1, x2, y2, @border_color
+        adapter.draw_box x1, y1, x2, y2, @border_color
       end
     end
   end

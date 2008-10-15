@@ -55,19 +55,23 @@ module Rubygoo
     end
 
     # draw ourself and our children
-    def draw(screen)
+    def draw(adapter)
       # any container specific code here (border_colors?)
       if @bg_color
         if app == self
-          screen.fill @bg_color
+          adapter.fill_screen @bg_color
         else
-          screen.fill @bg_color, @rect
+          x1 = @rect[0]
+          y1 = @rect[1]
+          x2 = @rect[2] + x1
+          y2 = @rect[3] + y1
+          adapter.fill x1, y1, x2, y2, @bg_color
         end
       end
 
       # draw kiddies 
       @widgets.each do |w|
-        w.draw screen
+        w.draw adapter
       end
     end
 

@@ -5,11 +5,6 @@ module Rubygoo
       @window = window
     end
 
-    def draw_box_filled(x1,y1,x2,y2,color)
-      c = convert_color(color)
-      @window.draw_quad x1, y1, c, x2, y1, c, x1, y2, c, x2, y2, c
-    end
-
     def draw_box(x1,y1,x2,y2,color)
       c = convert_color(color)
       @window.draw_line x1, y1, c, x2, y1, c
@@ -18,16 +13,16 @@ module Rubygoo
       @window.draw_line x1, y2, c, x1, y1, c
     end
 
-    # fill in a rect with color or full screen if no color
-    def fill(color,rect=nil)
-      if rect.nil? 
-        draw_box_filled 0, 0, @window.width, @window.height, color
-      else
-        draw_box_filled rect[0], rect[1], rect[2]+rect[0], rect[3]+rect[1], color
-      end
+    def fill_screen(color)
+      c = convert_color(color)
+      @window.draw_quad 0, 0, c, @window.width, 0, c, 0, @window.height, c, @window.width, @window.height, c
     end
 
-    # make static for now for migration ease of rendering fonts
+    def fill(x1,y1,x2,y2,color)
+      c = convert_color(color)
+      @window.draw_quad x1, y1, c, x2, y1, c, x1, y2, c, x2, y2, c
+    end
+
     def convert_color(goo_color)
       Gosu::Color.new goo_color.a,goo_color.r,goo_color.g,goo_color.b
     end

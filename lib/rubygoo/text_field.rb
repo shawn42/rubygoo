@@ -80,18 +80,19 @@ module Rubygoo
 
     end
 
-    def draw(screen)
-      screen.fill @fg_color, @rect
-      screen.fill @bg_color, [@rect[0]-2,@rect[1]-2,@rect[2]+4,@rect[3]+4]
+    def draw(adapter)
+      x1 = @rect[0] - 2
+      y1 = @rect[1] - 2
+      x2 = @rect[2] + x1 + 4
+      y2 = @rect[3] + y1 + 4
+
+      adapter.fill x1, y1, x2, y2, @fg_color
+      adapter.fill x1-2, y1-2, x2+2, y2+2, @bg_color
       if @border_color
-        x1 = @rect[0] - 2
-        y1 = @rect[1] - 2
-        x2 = @rect[2] + x1 + 4
-        y2 = @rect[3] + y1 + 4
-        screen.draw_box x1, y1, x2, y2, @border_color
+        adapter.draw_box x1, y1, x2, y2, @border_color
       end
       defaultY = @app.renderer.size_text(@text.slice(0,1),@font_file,@font_size)[1]
-      x,y,w,h = @rect
+
       if @focussed
         caretX = @app.renderer.size_text(@text.slice(0,@caret_pos),@font_file,@font_size)[0]
         unless @select_pos.nil?
@@ -101,19 +102,23 @@ module Rubygoo
           selectX1 = [caretX, selectX].max
           if selectX0 < selectX1
             # TODO cache this height
-            screen.fill(@bg_select_color, [x+1+selectX0, y+1, selectX1-selectX0, defaultY])
+            x = x1+1+selectX0
+            y = y1+1
+            adapter.fill x, y, x+selectX1-selectX0, y+defaultY, @bg_select_color
           end
         end
       end
 
       unless @text.nil? or @text.empty?
         @rendered_text = @app.renderer.render_text @text, @font_file, @font_size, @color
-        screen.draw_image @rendered_text, x+1, y+1, @color
+        adapter.draw_image @rendered_text, x1+1, y1+1, @color
       end
 
       # draw caret        
       if @focussed
-        screen.fill(@fg_select_color, [x+1+caretX, y+1, 1, defaultY])
+        x = x1+1+caretX
+        y = y1+1
+        adapter.fill x, y, x+1, y+defaultY, @fg_select_color
       end
 
       # don't really need this??

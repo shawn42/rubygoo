@@ -33,16 +33,16 @@ module Rubygoo
     end
 
     def draw(adapter)
+      x1 = @rect[0]
+      y1 = @rect[1]
+      x2 = @rect[2] + x1
+      y2 = @rect[3] + y1
       if @focussed
-        adapter.fill @focus_color, @rect
+        adapter.fill x1, y1, x2, y2, @focus_color
       elsif @bg_color
-        adapter.fill @bg_color, @rect
+        adapter.fill x1, y1, x2, y2, @bg_color
       end
       if @border_color
-        x1 = @rect[0]
-        y1 = @rect[1]
-        x2 = @rect[2] + x1
-        y2 = @rect[3] + y1
         adapter.draw_box x1, y1, x2, y2, @border_color
       end
 

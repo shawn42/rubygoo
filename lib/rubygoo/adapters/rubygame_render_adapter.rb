@@ -10,13 +10,12 @@ module Rubygoo
       @screen.draw_box [x1,y1], [x2,y2], convert_color(color)
     end
 
-    # fill in a rect with color or full screen if no color
-    def fill(color,rect=nil)
-      if rect.nil? 
-        @screen.fill convert_color(color)
-      else
-        @screen.fill convert_color(color), rect
-      end
+    def fill_screen(color)
+      @screen.draw_box_s [0,0], [@screen.width,@screen.height], convert_color(color)
+    end
+
+    def fill(x1,y1,x2,y2,color)
+      @screen.draw_box_s [x1,y1], [x2,y2], convert_color(color)
     end
 
     def convert_color(goo_color)
