@@ -60,12 +60,20 @@ module Rubygoo
     def mouse_down(event)
     end
 
-    # called when there is a mouse motion
+    # called when there is a mouse motion and no button pressed
     def mouse_motion(event)
     end
+    #
+    # called when there is a mouse motion and a button pressed
+    def mouse_dragging(event)
+    end
 
-    # called when there is a mouse release
+    # called when there is a mouse release w/o drag
     def mouse_up(event)
+    end
+
+    # called when there is a mouse release at the end of a drag
+    def mouse_drag(event)
     end
 
     # called when a key press is sent to us

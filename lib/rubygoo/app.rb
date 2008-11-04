@@ -1,7 +1,7 @@
 module Rubygoo
   class App < Container
 
-    DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:width=>600,:height=>480,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:mouse_cursor => true}
+    DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:mouse_cursor => true}
     attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer
 
     def initialize(opts={})
@@ -17,13 +17,14 @@ module Rubygoo
       super merged_opts
 
       # should this go here?
-      @mouse_opt = merged_opts[:mouse_cursor]
-      if @mouse_opt
+      @mouse_cursor = merged_opts[:mouse_cursor]
+      if @mouse_cursor
         @mouse = MouseCursor.new
         @mouse.parent = self
         @mouse.app = self.app
         @mouse.added
       end
+      @mouse_dragging = false
     end
 
     def app()
@@ -38,7 +39,7 @@ module Rubygoo
     def draw(screen)
       @renderer.start_drawing
       super @renderer
-      @mouse.draw @renderer if @mouse_opt
+      @mouse.draw @renderer if @mouse_cursor
       @renderer.finish_drawing
     end
 
@@ -79,13 +80,31 @@ module Rubygoo
         else
           modal_keyboard_call :key_pressed, event
         end
-      else
-        # ALL mouse events go here
-        modal_mouse_call event.event_type, event
-
-        if event.event_type == :mouse_motion
-          @mouse.mouse_motion event if @mouse_opt
+      when :mouse_down
+        modal_mouse_call :mouse_down, event
+        # TODO: I know this is simplistic and doesn't account for which button
+        # is being pressed/released
+        @mouse_start_x = event.data[:x]
+        @mouse_start_y = event.data[:y]
+      when :mouse_up
+        x = event.data[:x]
+        y = event.data[:y]
+        if @mouse_start_x == x and @mouse_start_y == y
+          modal_mouse_call :mouse_up, event
+        else
+          modal_mouse_call :mouse_drag, event
         end
+        @mouse_start_x = x
+        @mouse_start_y = y
+      when :mouse_motion
+        x = event.data[:x]
+        y = event.data[:y]
+        if @mouse_start_x == x and @mouse_start_y == y
+          modal_mouse_call :mouse_dragging, event
+        else
+          modal_mouse_call :mouse_motion, event
+        end
+        @mouse.mouse_motion event if @mouse_cursor
       end
     end
 

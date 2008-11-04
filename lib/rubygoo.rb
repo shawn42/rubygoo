@@ -1,6 +1,7 @@
 $: << File.dirname(__FILE__)
 $: << File.join(File.dirname(__FILE__),"rubygoo")
 $: << File.join(File.dirname(__FILE__),"rubygoo","adapters")
+require 'rubygems'
 require 'rubygoo/goo_event'
 require 'rubygoo/goo_color'
 require 'rubygoo/adapters/adapter_factory'

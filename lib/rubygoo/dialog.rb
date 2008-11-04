@@ -25,15 +25,6 @@ module Rubygoo
       @modal_target.add_modal self
     end
 
-  #  def on_mouse_dragging(x,y,event); end
-  #  def on_mouse_motion(event); end
-  #  def on_mouse_drag(start_x, start_y, event); end
-  #  def on_click(event); end
-  #  def on_key_up(event); end
-  #  def draw(destination); end
-  #  def on_network(event); end
-  #  def update(time);end
-
   end
 end
 

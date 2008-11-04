@@ -44,6 +44,11 @@ module Rubygoo
       toggle
     end
 
+    # called when there is a mouse click at the end of a drag
+    def mouse_drag(event)
+      toggle
+    end
+
     # called when a key press is sent to us
     def key_pressed(event)
       case event.data[:key]

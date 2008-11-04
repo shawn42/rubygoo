@@ -96,6 +96,13 @@ module Rubygoo
       end
     end
 
+    # called when there is a mouse release after dragging
+    def mouse_drag(event)
+      @widgets.each do |w|
+        w.mouse_drag event if w.contains? [event.data[:x],event.data[:y]] 
+      end
+    end
+
     # pass on the key press to our widgets
     def key_pressed(event)
       @widgets.each do |w|

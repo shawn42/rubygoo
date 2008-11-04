@@ -1,8 +1,7 @@
 TODO
  - KEYTOASCII in gosu adapter
+ - image icons for buttons
+ - double-check the tab focus stuff on modal dialogs (tab focus of containers?)
  - make mouse cursor injectable
  - make clicking on a component focus it
  - add more listener types (when mouse_enter, mouse_leave, mouse_click, focus, key_pressed...)
- - image icons for buttons
-
- - double-check the tab focus stuff on modal dialogs
