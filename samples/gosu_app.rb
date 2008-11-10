@@ -56,8 +56,7 @@ class RubygooWindow < Window
       modal.add Label.new("Message Here", :x=>70, :y=>180, :x_pad=>20, :y_pad=>20)
       ok_butt = Button.new("OK", :x=>90, :y=>280, :x_pad=>20, :y_pad=>20)
       ok_butt.on :pressed do |*opts|
-        # TODO not sure about this yet
-        app.remove(modal)
+        app.remove_modal(modal)
       end
       modal.add ok_butt
 

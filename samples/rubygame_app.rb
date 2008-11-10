@@ -10,7 +10,8 @@ def create_gui(renderer)
 
   label = Label.new "click the button to set the time", :x=>20, :y=>30
 
-  button = Button.new "Click Me!", :x=>70, :y=>80, :x_pad=>20, :y_pad=>20
+  icon = Surface.load File.dirname(__FILE__) + "/icon.png"
+  button = Button.new "Click Me!", :x=>70, :y=>80, :x_pad=>20, :y_pad=>20, :icon => icon
   button.on :pressed do |*opts|
     label.set_text(Time.now.to_s)
   end
@@ -28,7 +29,6 @@ def create_gui(renderer)
 
   modal_button = Button.new "Modal dialogs", :x=>270, :y=>280, :x_pad=>20, :y_pad=>20
   modal_button.on :pressed do |*opts|
-    msg = "I AM MODAL"
     # TODO make some of this stuff relative and/or make Dialog's
     # constructor take a layout to use
     modal = Dialog.new :modal => app, :x=>10, :y=>110, :w=>250, :h=>250
@@ -36,8 +36,7 @@ def create_gui(renderer)
     modal.add Label.new("Message Here", :x=>70, :y=>180, :x_pad=>20, :y_pad=>20)
     ok_butt = Button.new("OK", :x=>90, :y=>280, :x_pad=>20, :y_pad=>20)
     ok_butt.on :pressed do |*opts|
-      # TODO not sure about this yet
-      app.remove(modal)
+      app.remove_modal(modal)
     end
     modal.add ok_butt
 

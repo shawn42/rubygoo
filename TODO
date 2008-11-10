@@ -1,7 +1,8 @@
 TODO
  - KEYTOASCII in gosu adapter
  - image icons for buttons
+   - create GooImage for agnostic access to image sizes, have renderer handle loading of images?
  - double-check the tab focus stuff on modal dialogs (tab focus of containers?)
- - make mouse cursor injectable
+   - can still tab through other widgets when modal dialog is up
  - make clicking on a component focus it
  - add more listener types (when mouse_enter, mouse_leave, mouse_click, focus, key_pressed...)
