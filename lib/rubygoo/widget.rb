@@ -150,6 +150,15 @@ module Rubygoo
 
       GooColor.new *new_color 
     end
+
+    # does this widget want tabbed focus? Widget do usually
+    def tab_to?()
+      true
+    end
+
+    def modal?()
+      false
+    end
     
     # called each update cycle with the amount of time that has passed.  useful
     # for animations, etc

@@ -19,6 +19,10 @@ module Rubygoo
       @rect = Rect.new [@x-@x_pad,@y-@y_pad,@w+2*@x_pad,@h+2*@y_pad]
     end
 
+    def modal?()
+      @modal_target
+    end
+
     # show the dialog by adding it to the @modal_target and
     # intercepting all of its events
     def show()

@@ -3,6 +3,9 @@ module Rubygoo
     can_fire :pressed
     def initialize(text, opts={})
       super opts
+
+      @icon = opts[:icon]
+
       @text = text
     end
 
@@ -14,7 +17,6 @@ module Rubygoo
       @border_color = theme_property :border_color
       @focus_color = theme_property :focus_color
       @font_file = File.join(@app.theme_dir,font)
-
       @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color
       @rect = Rect.new [@x-@x_pad,@y-@y_pad,@rendered_text.width+2*@x_pad,@rendered_text.height+2*@y_pad]
     end
@@ -42,6 +44,8 @@ module Rubygoo
       y1 = @rect[1]
       x2 = @rect[2] + x1
       y2 = @rect[3] + y1
+      
+
       if @focussed
         adapter.fill x1, y1, x2, y2, @focus_color
       elsif @bg_color
@@ -49,6 +53,12 @@ module Rubygoo
       end
       if @border_color
         adapter.draw_box x1, y1, x2, y2, @border_color
+      end
+      if @icon
+        # TODO center icon
+        ix = x1#+((x2-x1)-@icon.w)
+        iy = y1#+((y2-y1)-@icon.h)
+        adapter.draw_image @icon, ix,iy
       end
 
 

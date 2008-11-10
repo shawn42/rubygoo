@@ -2,13 +2,14 @@ module Rubygoo
   class App < Container
 
     DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:mouse_cursor => true}
-    attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer
+    attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer, :tab_groups
 
     def initialize(opts={})
       merged_opts = DEFAULT_PARAMS.merge opts
       @widgets = []
-      @tabbed_widgets = []
-      @focussed_widget = 0
+      @tab_groups = []
+      @tab_groups << TabGroup.new
+
       theme_name = merged_opts[:theme]
       @data_dir = merged_opts[:data_dir]
       @theme_name = theme_name
@@ -44,25 +45,19 @@ module Rubygoo
     end
 
     def add_tabbed_widget(w)
-      w.focus_priority = @tabbed_widgets.size unless w.focus_priority
-      @focussed_widget = 1
-      w.focus if @tabbed_widgets.empty?
-      @tabbed_widgets << w 
-      @tabbed_widgets.sort_by {|w| w.focus_priority}
+      @tab_groups[0].add(w)
+    end
+
+    def add_tab_group(tg)
+      @tab_groups << tg
     end
 
     def focus_back()
-      @tabbed_widgets[@focussed_widget].unfocus
-      @focussed_widget += 1
-      @focussed_widget %= @tabbed_widgets.size
-      @tabbed_widgets[@focussed_widget].focus
+      @tab_groups.last.previous
     end
 
     def focus_forward()
-      @tabbed_widgets[@focussed_widget].unfocus
-      @focussed_widget -= 1
-      @focussed_widget %= @tabbed_widgets.size
-      @tabbed_widgets[@focussed_widget].focus
+      @tab_groups.last.next
     end
 
     def on_event(event)
@@ -105,6 +100,46 @@ module Rubygoo
           modal_mouse_call :mouse_motion, event
         end
         @mouse.mouse_motion event if @mouse_cursor
+      end
+    end
+
+    # redirects all events to this widget
+    def add_modal(widget)
+      @modal_widgets << widget
+      tg = TabGroup.new
+      tg.add(widget)
+      self.app.add_tab_group tg
+      add widget
+    end
+
+    def remove_modal(widget)
+      self.app.pop_tab_group
+      remove widget
+    end
+
+    def pop_tab_group()
+      @tab_groups.pop
+    end
+
+    # distribute our mouse events to our modals first
+    def modal_mouse_call(meth, event)
+      if @modal_widgets.empty?
+        @widgets.each do |w|
+          w.send meth, event if w.contains? [event.data[:x],event.data[:y]] 
+        end
+      else
+        @modal_widgets.last.send meth, event
+      end
+    end
+
+    # distribute our keyboard events to our modals first
+    def modal_keyboard_call(meth, event)
+      if @modal_widgets.empty?
+        @widgets.each do |w|
+          w.send meth, event if w.focussed?
+        end
+      else
+        @modal_widgets.last.send meth, event
       end
     end
 

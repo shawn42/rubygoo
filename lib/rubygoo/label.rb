@@ -40,5 +40,9 @@ module Rubygoo
 
       adapter.draw_image @rendered_text, @x, @y, @color
     end
+
+    def tab_to?()
+      false
+    end
   end
 end

@@ -1,7 +1,7 @@
 module Rubygoo
   class Container < Widget
 
-    attr_accessor :widgets, :bg_color, :rect
+    attr_accessor :widgets, :bg_color, :rect, :queued_widgets
 
     def initialize(opts={})
       super opts
@@ -18,11 +18,6 @@ module Rubygoo
       @queued_widgets = []
     end
 
-    def add_modal(widget)
-      @modal_widgets << widget
-      add widget
-    end
-
     # Add widget(s) to the container.
     def add(*widgets)
       widgets.uniq.each do |w|
@@ -31,7 +26,9 @@ module Rubygoo
             w.container = self
             w.parent = self
             w.app = self.app
-            w.app.add_tabbed_widget w
+            if !modal? and w.tab_to? and !w.modal?
+              w.app.add_tabbed_widget w 
+            end
             w.added
             @widgets << w
           else
@@ -117,27 +114,6 @@ module Rubygoo
       end
     end
 
-    # distribute our mouse events to our modals first
-    def modal_mouse_call(meth, event)
-      if @modal_widgets.empty?
-        @widgets.each do |w|
-          w.send meth, event if w.contains? [event.data[:x],event.data[:y]] 
-        end
-      else
-        @modal_widgets.last.send meth, event
-      end
-    end
-
-    # distribute our keyboard events to our modals first
-    def modal_keyboard_call(meth, event)
-      if @modal_widgets.empty?
-        @widgets.each do |w|
-          w.send meth, event if w.focussed?
-        end
-      else
-        @modal_widgets.last.send meth, event
-      end
-    end
 
     # called each update cycle with the amount of time that has passed.  useful
     # for animations, etc
@@ -145,6 +121,11 @@ module Rubygoo
       @widgets.each do |w|
         w.update time
       end
+    end
+
+    # does this widget want tabbed focus? Containers don't usually
+    def tab_to?
+      false
     end
   end
 end
