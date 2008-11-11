@@ -54,9 +54,8 @@ module Rubygoo
       font = @font_cache[font_file][font_size] ||= Font.new(@window, font_file, font_size)
 
       # TODO how do you set the color here?
-      text_image = Image.from_text(@window, text, font_file, font_size, 2, font.text_width(text).ceil+text.length*2, :left)
+      text_image = Image.from_text(@window, text, font_file, font_size, 2, font.text_width(text).ceil, :left)
     end
-
 
   end
 end
