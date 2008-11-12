@@ -44,8 +44,12 @@ module Rubygoo
       @renderer.finish_drawing
     end
 
+    def focus(w)
+      @tab_groups.last.focus w
+    end
+
     def add_tabbed_widget(w)
-      @tab_groups[0].add(w)
+      @tab_groups[0].add w
     end
 
     def add_tab_group(tg)
@@ -89,12 +93,12 @@ module Rubygoo
         else
           modal_mouse_call :mouse_drag, event
         end
-        @mouse_start_x = x
-        @mouse_start_y = y
+        @mouse_start_x = nil
+        @mouse_start_y = nil
       when :mouse_motion
         x = event.data[:x]
         y = event.data[:y]
-        if @mouse_start_x == x and @mouse_start_y == y
+        if @mouse_start_x
           modal_mouse_call :mouse_dragging, event
         else
           modal_mouse_call :mouse_motion, event

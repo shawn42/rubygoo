@@ -21,7 +21,7 @@ def create_gui(renderer)
     label.set_text("CHECKED [#{check.checked?}]")
   end
 
-  text_field = TextField.new "initial text", :x => 70, :y => 170
+  text_field = TextField.new "initial text", :x => 70, :y => 170, :max_length => 20, :min_length => 6
 
   text_field.on_key K_RETURN, K_KP_ENTER do |evt|
     puts "BOO-YAH"

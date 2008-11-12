@@ -45,6 +45,15 @@ module Rubygoo
       rotate -1
     end
 
+    def focus(w)
+      index = @widgets.index w
+      if index
+        @widgets[@selected_index].unfocus if @widgets[@selected_index]
+        @selected_index = index
+        @widgets[@selected_index].focus
+      end
+    end
+
     def rotate(dir)
       if @widgets.size > 0
         @widgets[@selected_index].unfocus if @widgets[@selected_index]

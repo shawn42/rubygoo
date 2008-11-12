@@ -47,9 +47,9 @@ module Rubygoo
     def draw_image(img, x, y, color=nil)
       # z is unused here
       if color
-        img.draw x, y, 1,1,1,convert_color(color)
+        img.draw x, y, 0,1,1,convert_color(color)
       else
-        img.draw x, y, 1
+        img.draw x, y, 0
       end
     end
 

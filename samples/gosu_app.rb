@@ -11,10 +11,11 @@ class RubygooWindow < Window
 
     super(640, 480, false)
 
-    # TODO, how can I do this cleaner?
+    # TODO, how can I do this more cleanly?
     %w{a b c d e f g h i j k l m n o p q r s t u v w x y z}.each do |letter|
       eval "::Kb#{letter.upcase} = #{self.char_to_button_id(letter)}"
     end
+
     # how do I get rid of this?
     require 'gosu_app_adapter'
     factory = AdapterFactory.new
@@ -40,7 +41,7 @@ class RubygooWindow < Window
       label.set_text("CHECKED [#{check.checked?}]")
     end
 
-    text_field = TextField.new "initial text", :x => 70, :y => 170
+    text_field = TextField.new "initial text", :x => 70, :y => 170, :max_length => 20, :min_length => 6
 
     text_field.on_key K_RETURN, K_KP_ENTER do |evt|
       puts "BOO-YAH"
@@ -84,14 +85,12 @@ class RubygooWindow < Window
   end
 
   def draw
-    # possibly need to set something like GosuRenderer vs
-    # RubygameRenderer that each know how to draw a textbox in
-    # its own way?
     @app_adapter.draw @render_adapter
   end
 
   # in gosu this captures mouse and keyboard events
   def button_down(id)
+    close if id == Gosu::Button::KbEscape
     @app_adapter.button_down id
   end
 

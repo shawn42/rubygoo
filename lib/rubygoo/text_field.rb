@@ -6,9 +6,9 @@ module Rubygoo
       super opts
       @text = text
 
-      # TODO make widget respect these?
       @max_length = opts[:max_length]
       @min_length = opts[:min_length]
+      @min_length ||= 1
 
       @key_handlers = {}
     end
@@ -40,12 +40,17 @@ module Rubygoo
 
       @font_file = File.join(@app.theme_dir,font)
 
-      if @w == 1
-        # we have the default from widget, we want to set the
-        # default to 6 chars wide and 1 char tall
-        size = @app.renderer.size_text "MMMMMM", @font_file, @font_size
-        @min_w = size[0]
-        @min_h = size[1]
+      # we have the default from widget, we want to set the
+      # default to 6 chars wide and 1 char tall
+      # wow, this is REALLY bad, but I think M is the widest char
+      size = @app.renderer.size_text "M"*@min_length, @font_file, @font_size
+      @min_w = size[0]
+      @min_h = size[1]
+
+      if @max_length
+      size = @app.renderer.size_text "M"*@max_length, @font_file, @font_size
+        @max_w = size[0]
+        @max_h = size[1]
       end
 
       set_text @text
@@ -61,6 +66,10 @@ module Rubygoo
         @rendered_text = @app.renderer.render_text @text, @font_file, @font_size, @color
         w = [@rendered_text.width,@min_w].max + @x_pad
         h = [@rendered_text.height,@min_h].max + @y_pad
+        if @max_length
+          w = [w,@max_w].min
+          h = [h,@max_h].min
+        end
         @rect = Rect.new [@x,@y,w,h]
       end
     end
@@ -166,18 +175,22 @@ module Rubygoo
     def mouse_down(event)
       x = event.data[:x]
       y = event.data[:y]
-      return 0 unless contains?([x,y])
 
-      #    TODO rework focus and mouse events
-      #    getFocus()
+      self.app.focus self
+
       @caret_pos = find_mouse_position([x,y])
       @select_pos = @caret_pos
-      @dragging = true
       render
     end
 
-    def mouse_motion(event)
-      return 0 unless @dragging
+    def mouse_dragging(event)
+      x = event.data[:x]
+      y = event.data[:y]
+      @caret_pos = find_mouse_position([x,y])
+      render
+    end
+
+    def mouse_drag(event)
       x = event.data[:x]
       y = event.data[:y]
       @caret_pos = find_mouse_position([x,y])
@@ -185,13 +198,9 @@ module Rubygoo
     end
 
     def mouse_up(event)
-      if not @dragging
-        return 0
-      end
       x = event.data[:x]
       y = event.data[:y]
       @caret_pos = find_mouse_position([x,y])
-      @dragging = false
       render
     end
 
@@ -288,8 +297,11 @@ module Rubygoo
       when *KEY2ASCII.keys
         # add regular text to the box
         if @caret_pos == @select_pos
-          @text = @text.slice(0,@caret_pos) + event.data[:string] + @text.slice(@caret_pos,@text.length-@caret_pos)
-          @caret_pos += 1
+          event_string = event.data[:string]
+          unless event_string.nil? or event_string == ""
+            @text = @text.slice(0,@caret_pos) + event_string + @text.slice(@caret_pos,@text.length-@caret_pos)
+            @caret_pos += 1
+          end
         else
           positions = [@caret_pos,@select_pos]
           min = positions.min
