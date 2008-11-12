@@ -1,4 +1,17 @@
 module Rubygoo
+  class DelayedText
+    def initialize(font, text)
+      @font, @text = font, text
+    end
+    def draw(x, y, z, r, g, b); @font.draw(@text, x, y, z); end; 
+    def width()
+      @width ||= @font.text_width(@text).ceil
+    end
+    def height()
+      @height ||= @font.height
+    end
+  end
+
   class GosuRenderAdapter
 
     def initialize(window)
@@ -54,7 +67,9 @@ module Rubygoo
       font = @font_cache[font_file][font_size] ||= Font.new(@window, font_file, font_size)
 
       # TODO how do you set the color here?
-      text_image = Image.from_text(@window, text, font_file, font_size, 2, font.text_width(text).ceil, :left)
+#      text_image = Image.from_text(@window, text, font_file, font_size, 2, font.text_width(text).ceil, :left)
+      DelayedText.new font, text
+#      text_image = font.draw(text, 0, 0, 1)
     end
 
   end
