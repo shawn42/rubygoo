@@ -203,8 +203,8 @@ K_DOWN = KbDown
 K_RIGHT = KbRight
 K_LEFT = KbLeft
 K_INSERT = enum += 1
-K_HOME = enum += 1
-K_END = enum += 1
+K_HOME = KbHome
+K_END = KbEnd
 K_PAGEUP = enum += 1
 K_PAGEDOWN = enum += 1
 
