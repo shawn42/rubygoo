@@ -31,7 +31,8 @@ class RubygooWindow < Window
 
     label = Label.new "click the button to set the time", :x=>20, :y=>30
 
-    button = Button.new "Click Me!", :x=>70, :y=>80, :x_pad=>20, :y_pad=>20
+    icon = Image.new self, File.dirname(__FILE__) + "/icon.png"
+    button = Button.new "Click Me!", :x=>70, :y=>80, :x_pad=>20, :y_pad=>20, :icon => icon
     button.on :pressed do |*opts|
       label.set_text(Time.now.to_s)
     end
