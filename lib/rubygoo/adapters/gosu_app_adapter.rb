@@ -521,13 +521,16 @@ class GosuAppAdapter
       mods << K_RALT if @main_window.button_down? KbRightAlt
       mods << K_LCTRL if @main_window.button_down? KbLeftControl
       mods << K_RCTRL if @main_window.button_down? KbRightControl
-      mods << K_LSHIFT if @main_window.button_down? KbLeftShift
-      mods << K_RSHIFT if @main_window.button_down? KbRightShift
+      left_shift = @main_window.button_down? KbLeftShift
+      right_shift = @main_window.button_down? KbRightShift
+      mods << K_LSHIFT if right_shift
+      mods << K_RSHIFT if right_shift
+
       button_string = @main_window.button_id_to_char(id)
-
-
-      # TODO add caps
       button_string ||= "?"
+
+      button_string.upcase! if left_shift or right_shift
+
       @app.on_event GooEvent.new(:key_pressed, { 
         :key => id, :mods => mods, :string => button_string})
     end
