@@ -43,9 +43,9 @@ module CreateGui
 
     panel = Container.new :x=>10, :y=>380, :x_pad=>20, :y_pad=>20, :w=> 500, :h=>80
     panel_label = Label.new "On a scale of one to three", :x=>40, :y=>10, :w=>20, :h=>20, :relative=>true
-    panel_check_one = CheckBox.new :x=>40, :y=>40, :w=>20, :h=>20, :relative=>true
-    panel_check_two = CheckBox.new :x=>90, :y=>40, :w=>20, :h=>20, :relative=>true
-    panel_check_three = CheckBox.new :x=>140, :y=>40, :w=>20, :h=>20, :relative=>true
+    panel_check_one = RadioButton.new :x=>40, :y=>40, :w=>20, :h=>20, :relative=>true
+    panel_check_two = RadioButton.new :x=>90, :y=>40, :w=>20, :h=>20, :relative=>true
+    panel_check_three = RadioButton.new :x=>140, :y=>40, :w=>20, :h=>20, :relative=>true
 
     panel_check_one.when :checked do
       if panel_check_one.checked?

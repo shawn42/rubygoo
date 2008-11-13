@@ -26,6 +26,25 @@ module Rubygoo
       @window.draw_line x1, y2, c, x1, y1, c
     end
 
+    CIRCLE_STEP = 10
+    def draw_circle(cx,cy,r,color)
+      c_color = convert_color(color)
+      
+      0.step(360, CIRCLE_STEP) { |a1| 
+        a2 = a1 + CIRCLE_STEP
+        @window.draw_line cx + offset_x(a1, r), cy + offset_y(a1, r), c_color, cx + offset_x(a2, r), cy + offset_y(a2, r), c_color, 0 
+      }
+    end
+
+    def draw_circle_filled(cx,cy,r,color)
+      c_color = convert_color(color)
+
+      0.step(360, CIRCLE_STEP) { |a1| 
+        a2 = a1 + CIRCLE_STEP
+        @window.draw_triangle cx + offset_x(a1, r), cy + offset_y(a1, r), c_color, cx + offset_x(a2, r), cy + offset_y(a2, r), c_color, cx, cy, c_color, 0 
+      }
+    end
+
     def fill_screen(color)
       c = convert_color(color)
       @window.draw_quad 0, 0, c, @window.width, 0, c, 0, @window.height, c, @window.width, @window.height, c

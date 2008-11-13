@@ -15,6 +15,7 @@ module Rubygoo
 
     # called when we are added to another container
     def added() 
+      @bg_color = theme_property :bg_color
       add *@queued_widgets
       @queued_widgets = []
     end
