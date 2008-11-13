@@ -2,8 +2,6 @@ require 'publisher'
 module Rubygoo
   class Container < Widget
     extend Publisher
-    can_fire :resized
-
     attr_accessor :widgets, :bg_color, :rect, :queued_widgets
 
     def initialize(opts={})
@@ -38,6 +36,11 @@ module Rubygoo
               w.app.add_tabbed_widget w 
             end
             w.added
+
+            w.when :resized do |resized_widget|
+              resize resized_widget
+            end
+
             @widgets << w
           else
             @queued_widgets << w
@@ -134,6 +137,22 @@ module Rubygoo
     # does this widget want tabbed focus? Containers don't usually
     def tab_to?
       false
+    end
+
+    # called when we need to update our size
+    def resize(w)
+      # check the rects of all our children?
+      max_w = 1
+      max_h = 1
+      @widgets.each do |w|
+        w_width = w.x + w.w
+        w_height = w.y + w.h
+        max_w = w_width if w_width > max_w
+        max_h = w_height if w_height > max_h
+      end
+      @w = max_w - @x + 2*@x_pad
+      @h = max_h - @y + 2*@y_pad
+      update_rect
     end
   end
 end

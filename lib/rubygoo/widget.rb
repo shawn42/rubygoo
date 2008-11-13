@@ -5,7 +5,10 @@ require 'rect'
 module Rubygoo
   class Widget
     extend Publisher
-    can_fire :clicked
+
+    # fire resized whenever a dimensional variable changes
+    can_fire :clicked, :resized
+
     attr_accessor :enabled, :parent, :container, 
       :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed,
       :focus_priority, :relative
@@ -32,7 +35,7 @@ module Rubygoo
     end
 
     def update_rect()
-      @rect = Rect.new [@x,@y,@w+@x_pad,@h+@y_pad]
+      @rect = Rect.new [@x,@y,@w,@h]
     end
 
     # called when the widget is added to a container
@@ -162,10 +165,34 @@ module Rubygoo
       false
     end
     
-    # called each update cycle with the amount of time that has passed.  useful
-    # for animations, etc
+    # called each update cycle with the amount of time that has
+    # passed.  useful for animations, etc
     def update(time)
     end
 
+    def x=(val)
+      @x = val
+      fire :resized, self
+    end
+    def y=(val)
+      @y = val
+      fire :resized, self
+    end
+    def w=(val)
+      @w = val
+      fire :resized, self
+    end
+    def h=(val)
+      @h = val
+      fire :resized, self
+    end
+    def x_pad=(val)
+      @x_pad = val
+      fire :resized, self
+    end
+    def y_pad=(val)
+      @y_pad = val
+      fire :resized, self
+    end
   end
 end

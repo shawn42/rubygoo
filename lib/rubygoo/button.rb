@@ -18,7 +18,12 @@ module Rubygoo
       @focus_color = theme_property :focus_color
       @font_file = File.join(@app.theme_dir,font)
       @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color
-      @rect = Rect.new [@x-@x_pad,@y-@y_pad,@rendered_text.width+2*@x_pad,@rendered_text.height+2*@y_pad]
+      @w = @rendered_text.width+2*@x_pad
+      @h = @rendered_text.height+2*@y_pad
+      @x = @x - @x_pad
+      @y = @y - @y_pad
+
+      update_rect
     end
 
     # called when there is a mouse click
@@ -58,11 +63,10 @@ module Rubygoo
         # TODO center icon
         ix = x1#+((x2-x1)-@icon.w)
         iy = y1#+((y2-y1)-@icon.h)
-        adapter.draw_image @icon, ix,iy
+        adapter.draw_image @icon, ix+@x_pad,iy+@y_pad
       end
 
-
-      adapter.draw_image @rendered_text, @x, @y, @color
+      adapter.draw_image @rendered_text, @x+@x_pad, @y+@y_pad, @color
 
     end
   end
