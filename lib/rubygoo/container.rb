@@ -1,5 +1,8 @@
+require 'publisher'
 module Rubygoo
   class Container < Widget
+    extend Publisher
+    can_fire :resized
 
     attr_accessor :widgets, :bg_color, :rect, :queued_widgets
 
@@ -23,6 +26,11 @@ module Rubygoo
       widgets.uniq.each do |w|
         unless @widgets.include? w
           if self.app
+            if w.relative
+              w.x += @x
+              w.y += @y
+              w.update_rect
+            end
             w.container = self
             w.parent = self
             w.app = self.app

@@ -8,7 +8,7 @@ module Rubygoo
     can_fire :clicked
     attr_accessor :enabled, :parent, :container, 
       :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed,
-      :focus_priority
+      :focus_priority, :relative
 
     DEFAULT_PARAMS = {
       :x => 0,
@@ -17,6 +17,7 @@ module Rubygoo
       :h => 1,
       :x_pad => 2,
       :y_pad => 2,
+      :relative => false,
     }
     def initialize(opts={})
       merged_opts = DEFAULT_PARAMS.merge opts
@@ -26,6 +27,7 @@ module Rubygoo
       @y_pad = merged_opts[:y_pad]
       @w = merged_opts[:w]
       @h = merged_opts[:h]
+      @relative = merged_opts[:relative]
       update_rect
     end
 
