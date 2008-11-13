@@ -523,7 +523,7 @@ class GosuAppAdapter
       mods << K_RCTRL if @main_window.button_down? KbRightControl
       left_shift = @main_window.button_down? KbLeftShift
       right_shift = @main_window.button_down? KbRightShift
-      mods << K_LSHIFT if right_shift
+      mods << K_LSHIFT if left_shift
       mods << K_RSHIFT if right_shift
 
       button_string = @main_window.button_id_to_char(id)
