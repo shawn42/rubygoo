@@ -1,3 +1,4 @@
+require 'publisher'
 module Rubygoo
   class Label < Widget
     def initialize(text, opts={})

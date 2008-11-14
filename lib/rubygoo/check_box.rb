@@ -31,12 +31,12 @@ module Rubygoo
 
     def check()
       @checked = true
-      fire :checked
+      fire :checked, self
     end
 
     def uncheck()
       @checked = false
-      fire :checked
+      fire :checked, self
     end
 
     # called when there is a mouse click
