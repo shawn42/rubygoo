@@ -296,6 +296,7 @@ module Rubygoo
 
       when *KEY2ASCII.keys
         # add regular text to the box
+        return if @text.size == @max_length
         if @caret_pos == @select_pos
           event_string = event.data[:string]
           unless event_string.nil? or event_string == ""

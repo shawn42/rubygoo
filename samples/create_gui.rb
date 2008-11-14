@@ -42,7 +42,7 @@ module CreateGui
     end
 
     grp = RadioGroup.new :x=>10, :y=>380, :x_pad=>20, :y_pad=>20, :w=> 500, :h=>80
-    grp_label = Label.new "On a scale of one to three", :x=>40, :y=>10, :w=>20, :h=>20, :relative=>true
+    grp_label = Label.new "RadioGroups are fun!", :x=>40, :y=>10, :w=>20, :h=>20, :relative=>true
     grp_radio_one = RadioButton.new :x=>40, :y=>40, :w=>20, :h=>20, :relative=>true
     grp_radio_two = RadioButton.new :x=>90, :y=>40, :w=>20, :h=>20, :relative=>true
     grp_radio_three = RadioButton.new :x=>140, :y=>40, :w=>20, :h=>20, :relative=>true
