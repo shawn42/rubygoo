@@ -4,7 +4,7 @@ require 'rubygems'
 require 'hoe'
 
 module Rubygoo
-  VERSION = '0.0.5'
+  VERSION = '0.0.6'
 end
 Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.developer('Shawn Anderson', 'shawn42@gmail.com')
@@ -13,10 +13,11 @@ Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.email = 'boss@topfunky.com'
   p.summary = "Beautiful graphs for one or multiple datasets."
   p.url = "http://rubygoo.googlecode.com"
-  p.changes = p.paragraphs_of('History.txt', 0..2).join("\n\n")
+  p.changes = p.paragraphs_of('History.txt', 6..7).join("\n\n")
   p.remote_rdoc_dir = '' # Release to root
   p.extra_deps << ['constructor']
   p.extra_deps << ['publisher']
+  p.extra_deps << ['rspec']
 end
 
 # run rubygame_app

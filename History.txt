@@ -17,3 +17,11 @@
 
 * Minor API tweaks
   * fixing gem deps
+
+=== 0.0.6 / 2008-11-13
+
+* Getting closer to a 1.0 release
+  * Better TextField support for Gosu
+  * small rendering bugs fixed
+  * added relative positioning of widgets
+  * added RadioButton and RadioGroup
