@@ -1,4 +1,5 @@
 require 'rubygems'
+#require 'unprof'
 $: << './lib'
 $: << File.dirname(__FILE__)
 require 'rubygoo'

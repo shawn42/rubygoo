@@ -4,16 +4,16 @@ require 'rubygems'
 require 'hoe'
 
 module Rubygoo
-  VERSION = '0.0.6'
+  VERSION = '0.0.7'
 end
 Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.developer('Shawn Anderson', 'shawn42@gmail.com')
   p.author = "Shawn Anderson"
   p.description = "GUI library for use with Gosu or Rubygame"
-  p.email = 'boss@topfunky.com'
-  p.summary = "Beautiful graphs for one or multiple datasets."
+  p.email = 'shawn42@gmail.com'
+  p.summary = "Easy to use gui library for Rubygame or Gosu."
   p.url = "http://rubygoo.googlecode.com"
-  p.changes = p.paragraphs_of('History.txt', 6..7).join("\n\n")
+  p.changes = p.paragraphs_of('History.txt', 8..8).join("\n\n")
   p.remote_rdoc_dir = '' # Release to root
   p.extra_deps << ['constructor']
   p.extra_deps << ['publisher']

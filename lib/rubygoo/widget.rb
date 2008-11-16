@@ -121,6 +121,7 @@ module Rubygoo
         if class_theme
           class_prop = class_theme[prop_key]
           if class_prop
+            return nil if class_prop == :none
             prop = class_prop
             break
           end

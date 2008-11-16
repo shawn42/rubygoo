@@ -1,4 +1,5 @@
 require 'rubygems'
+#require 'unprof'
 $: << './lib'
 $: << File.dirname(__FILE__)
 require 'rubygoo'
@@ -26,7 +27,7 @@ if $0 == __FILE__
     JoyHatEvent, JoyUpEvent, ResizeEvent 
   ]
   clock = Clock.new
-  clock.target_framerate = 20
+  clock.target_framerate = 40
 
   catch(:rubygame_quit) do
     loop do

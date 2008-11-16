@@ -25,3 +25,8 @@
   * small rendering bugs fixed
   * added relative positioning of widgets
   * added RadioButton and RadioGroup
+
+=== 0.0.7 / 2008-11-16
+
+* Getting closer to a 1.0 release
+  * added none options in themes
