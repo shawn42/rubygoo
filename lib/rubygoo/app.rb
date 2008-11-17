@@ -1,5 +1,10 @@
+require 'publisher'
+
 module Rubygoo
   class App < Container
+    extend Publisher
+
+    can_fire :evented
 
     DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:mouse_cursor => true}
     attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer, :tab_groups
@@ -65,6 +70,7 @@ module Rubygoo
     end
 
     def on_event(event)
+      fire :evented, event
       case event.event_type
       when :key_released
         modal_keyboard_call :key_released, event

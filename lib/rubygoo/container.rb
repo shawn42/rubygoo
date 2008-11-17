@@ -1,7 +1,5 @@
-require 'publisher'
 module Rubygoo
   class Container < Widget
-    extend Publisher
     attr_accessor :widgets, :bg_color, :rect, :queued_widgets
 
     def initialize(opts={})

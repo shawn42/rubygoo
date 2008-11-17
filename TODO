@@ -6,3 +6,4 @@ TODO
    - can still tab through other widgets when modal dialog is up
  - make clicking on a component focus it
  - add more listener types (when mouse_enter, mouse_leave, mouse_click, focus, key_pressed...)
+ - add key-call backs (alt-h, shift-L, ESC)
