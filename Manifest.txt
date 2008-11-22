@@ -3,9 +3,7 @@ Manifest.txt
 README.txt
 Rakefile
 TODO
-docs/.DS_Store
 docs/Picture 1.png
-docs/ui/.DS_Store
 docs/ui/UI.hpp
 docs/ui/abutton.png
 docs/ui/background.png
