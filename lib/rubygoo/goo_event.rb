@@ -9,5 +9,9 @@ module Rubygoo
       @data = event_data
     end
 
+    def handled?()
+      @handled
+    end
+
   end
 end
