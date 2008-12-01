@@ -7,7 +7,7 @@ module Rubygoo
     can_fire :evented
 
     DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:mouse_cursor => true}
-    attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer, :tab_groups
+    attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer, :tab_groups, :mouse
 
     def initialize(opts={})
       merged_opts = DEFAULT_PARAMS.merge opts
@@ -45,7 +45,7 @@ module Rubygoo
     def draw(screen)
       @renderer.start_drawing
       _draw @renderer
-      @mouse._draw @renderer if @mouse_cursor
+      @mouse._draw @renderer if @mouse
       @renderer.finish_drawing
     end
 
@@ -109,7 +109,7 @@ module Rubygoo
         else
           modal_mouse_call :_mouse_motion, event
         end
-        @mouse._mouse_motion event if @mouse_cursor
+        @mouse._mouse_motion event if @mouse
       end
     end
 
