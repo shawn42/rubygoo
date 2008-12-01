@@ -9,11 +9,11 @@ module Rubygoo
     # fire resized whenever a dimensional variable changes
     can_fire :resized, :mouse_enter, :mouse_exit, :focus, :unfocus,
       :key_pressed, :key_released, :mouse_down, :mouse_up, :mouse_drag, 
-      :mouse_dragging, :mouse_motion
+      :mouse_dragging, :mouse_motion, :enable, :disable, :hide, :show
 
     attr_accessor :enabled, :parent, :container, 
       :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed,
-      :focus_priority, :relative, :mouse_over
+      :focus_priority, :relative, :mouse_over, :visible
 
     DEFAULT_PARAMS = {
       :x => 0,
@@ -23,6 +23,8 @@ module Rubygoo
       :x_pad => 2,
       :y_pad => 2,
       :relative => false,
+      :enabled => true,
+      :visible => true,
     }
     def initialize(opts={})
       merged_opts = DEFAULT_PARAMS.merge opts
@@ -33,6 +35,9 @@ module Rubygoo
       @w = merged_opts[:w]
       @h = merged_opts[:h]
       @relative = merged_opts[:relative]
+      @enabled = merged_opts[:enabled]
+      @visible = merged_opts[:visible]
+
       update_rect
     end
 
@@ -42,10 +47,6 @@ module Rubygoo
 
     def contains?(x, y)
       @rect.collide_point? x, y
-    end
-
-    def enabled?()
-      @enabled
     end
 
     def mouse_over?()
@@ -155,6 +156,46 @@ module Rubygoo
     def y_pad=(val)
       @y_pad = val
       fire :resized, self
+    end
+
+    def enabled?()
+      @enabled
+    end
+
+    # called when the widget is disabled
+    def disable()
+      if enabled?
+        fire :disable
+        @enabled = false
+      end
+    end
+
+    # called when the widget is enabled
+    def enable()
+      unless enabled?
+        fire :enable
+        @enabled = true
+      end
+    end
+
+    def visible?()
+      @visible
+    end
+
+    # called when the widget is hidden
+    def hide()
+      if visible?
+        fire :hide
+        @visible = false
+      end
+    end
+
+    # called when the widget is shown
+    def show()
+      unless visible?
+        fire :show
+        @visible = true
+      end
     end
 
     def _update(time) #:nodoc:

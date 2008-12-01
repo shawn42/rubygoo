@@ -135,7 +135,10 @@ module Rubygoo
     def modal_mouse_call(meth, event)
       if @modal_widgets.empty?
         @widgets.each do |w|
-          w.send meth, event if w.contains? event.data[:x],event.data[:y] or meth == :_mouse_motion
+          if w.enabled? and 
+            (w.contains? event.data[:x],event.data[:y] or meth == :_mouse_motion)
+            w.send meth, event 
+          end
         end
       else
         @modal_widgets.last.send meth, event
@@ -146,7 +149,9 @@ module Rubygoo
     def modal_keyboard_call(meth, event)
       if @modal_widgets.empty?
         @widgets.each do |w|
-          w.send meth, event if w.focussed?
+          if w.enabled? and w.focussed?
+            w.send meth, event 
+          end
         end
       else
         @modal_widgets.last.send meth, event

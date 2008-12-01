@@ -78,49 +78,49 @@ module Rubygoo
 
       # draw kiddies 
       @widgets.each do |w|
-        w._draw adapter
+        w._draw adapter if w.visible?
       end
     end
 
     # called when there is a mouse motion
     def _mouse_motion(event)
       @widgets.each do |w|
-        w._mouse_motion event #if w.contains? event.data[:x],event.data[:y]
+        w._mouse_motion event if w.enabled?
       end
     end
 
     # called when there is a mouse click
     def _mouse_down(event)
       @widgets.each do |w|
-        w._mouse_down event if w.contains? event.data[:x],event.data[:y]
+        w._mouse_down event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
     end
 
     # called when there is a mouse release
     def _mouse_up(event)
       @widgets.each do |w|
-        w._mouse_up event if w.contains? event.data[:x],event.data[:y]
+        w._mouse_up event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
     end
 
     # called when there is a mouse release after dragging
     def _mouse_drag(event)
       @widgets.each do |w|
-        w._mouse_drag event if w.contains? event.data[:x],event.data[:y]
+        w._mouse_drag event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
     end
 
     # pass on the key press to our widgets
     def _key_pressed(event)
       @widgets.each do |w|
-        w._key_pressed event if w.focussed?
+        w._key_pressed event if w.focussed? and w.enabled?
       end
     end
 
     # pass on the key release to our widgets
     def _key_released(event)
       @widgets.each do |w|
-        w._key_released event if w.focussed?
+        w._key_released event if w.focussed? and w.enabled?
       end
     end
 
@@ -128,7 +128,7 @@ module Rubygoo
     # for animations, etc
     def _update(time)
       @widgets.each do |w|
-        w._update time
+        w._update time and w.enabled?
       end
     end
 

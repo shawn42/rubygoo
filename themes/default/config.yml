@@ -9,6 +9,7 @@ Rubygoo::Widget: # fonts should live in the theme's dir
   :color: :Tomato
   :focus_color: :LightSlateGray
   :bg_color: :WhiteSmoke
+  :disabled_color: :WhiteSmoke
   :border_color: :DarkSlateBlue
   :hover_color: # can specify a color by r,g,b,a as well
    - 55

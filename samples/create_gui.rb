@@ -4,7 +4,7 @@ module CreateGui
 
     label = Label.new "click the button to set the time", :x=>20, :y=>30
 
-    button = Button.new "Click Me!", :x=>70, :y=>80, :x_pad=>20, :y_pad=>20, :icon => icon
+    button = Button.new "Click Me!", :x=>70, :y=>80, :x_pad=>20, :y_pad=>20, :icon => icon, :enabled => false
     button.on :pressed do |*opts|
       label.set_text(Time.now.to_s)
     end
@@ -19,6 +19,11 @@ module CreateGui
 
     check.on :checked do
       label.set_text("CHECKED [#{check.checked?}]")
+      if check.checked?
+        button.enable
+      else
+        button.disable
+      end
     end
 
     text_field = TextField.new "initial text", :x => 70, :y => 170, :max_length => 20, :min_length => 6
@@ -27,7 +32,7 @@ module CreateGui
       puts "BOO-YAH"
     end
 
-    modal_button = Button.new "Modal dialogs", :x=>270, :y=>280, :x_pad=>20, :y_pad=>20
+    modal_button = Button.new "Modal dialogs", :x=>270, :y=>240, :x_pad=>20, :y_pad=>20
     modal_button.on :pressed do |*opts|
       # TODO make some of this stuff relative and/or make Dialog's
       # constructor take a layout to use
@@ -56,11 +61,20 @@ module CreateGui
 
     grp.add grp_label, grp_radio_one, grp_radio_two, grp_radio_three
 
+    hide_button = Button.new "Hide the radios!", :x=>170, :y=>330, :x_pad=>10, :y_pad=>10
+    hide_button.on :pressed do |*opts|
+      if grp.visible?
+        grp.hide
+      else
+        grp.show
+      end
+    end
+
     # implicit tab ordering based on order of addition, can
     # specify if you want on widget creation
 
     # can add many or one at a time
-    app.add text_field, label, button, modal_button, grp
+    app.add text_field, label, button, modal_button, grp, hide_button
     app.add check
 
   #  pulldown = Pulldown.new {:x=>70, :y=>80}

@@ -1,10 +1,10 @@
 TODO
- - add enabled?/disabled?
+ - enabled?/disabled? effect on tabbing?
+ - add show/hide effect on tabbing?
+ - tool tips
 
  - KEYTOASCII in gosu adapter
  - image icons for buttons
    - create GooImage for agnostic access to image sizes, have renderer handle loading of images?
- - double-check the tab focus stuff on modal dialogs (tab focus of containers?)
-   - can still tab through other widgets when modal dialog is up
  - make clicking on a component focus it
  - add key-call backs (alt-h, shift-L, ESC)

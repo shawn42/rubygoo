@@ -17,6 +17,7 @@ module Rubygoo
       @border_color = theme_property :border_color
       @focus_color = theme_property :focus_color
       @hover_color = theme_property :hover_color
+      @disabled_color = theme_property :disabled_color
 
       @font_file = File.join(@app.theme_dir,font)
       @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color
@@ -65,6 +66,10 @@ module Rubygoo
 
       if mouse_over? and @hover_color
         adapter.fill x1, y1, x2, y2, @hover_color
+      end
+
+      if @disabled_color and !enabled?
+        adapter.fill x1, y1, x2, y2, @disabled_color
       end
 
       if @icon
