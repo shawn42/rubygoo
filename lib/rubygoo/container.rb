@@ -75,69 +75,69 @@ module Rubygoo
           adapter.fill x1, y1, x2, y2, @bg_color
         end
       end
+      draw adapter unless app == self
 
       # draw kiddies 
       @widgets.each do |w|
         w._draw adapter if w.visible?
       end
-      draw adapter unless app == self
     end
 
     # called when there is a mouse motion
     def _mouse_motion(event)
+      mouse_motion event
       @widgets.each do |w|
         w._mouse_motion event if w.enabled?
       end
-      mouse_motion event
     end
 
     # called when there is a mouse click
     def _mouse_down(event)
+      mouse_down event
       @widgets.each do |w|
         w._mouse_down event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
-      mouse_down event
     end
 
     # called when there is a mouse release
     def _mouse_up(event)
+      mouse_up event
       @widgets.each do |w|
         w._mouse_up event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
-      mouse_up event
     end
 
     # called when there is a mouse release after dragging
     def _mouse_drag(event)
+      mouse_drag event
       @widgets.each do |w|
         w._mouse_drag event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
-      mouse_drag event
     end
 
     # pass on the key press to our widgets
     def _key_pressed(event)
+      key_pressed event
       @widgets.each do |w|
         w._key_pressed event if w.focussed? and w.enabled?
       end
-      key_pressed event
     end
 
     # pass on the key release to our widgets
     def _key_released(event)
+      key_released event
       @widgets.each do |w|
         w._key_released event if w.focussed? and w.enabled?
       end
-      key_released event
     end
 
     # called each update cycle with the amount of time that has passed.  useful
     # for animations, etc
     def _update(time)
+      update time unless app == self
       @widgets.each do |w|
         w._update time and w.enabled?
       end
-      update time unless app == self
     end
 
     # does this widget want tabbed focus? Containers don't usually
