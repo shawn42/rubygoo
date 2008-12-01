@@ -10,6 +10,13 @@ module CreateGui
     end
 
     check = CheckBox.new :x=>370, :y=>70, :w=>20, :h=>20
+    check.on :mouse_enter do
+      puts "ENTERING #{self.class}"
+    end
+    check.on :mouse_exit do
+      puts "EXITING #{self.class}"
+    end
+
     check.on :checked do
       label.set_text("CHECKED [#{check.checked?}]")
     end

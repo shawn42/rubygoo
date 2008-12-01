@@ -135,7 +135,7 @@ module Rubygoo
     def modal_mouse_call(meth, event)
       if @modal_widgets.empty?
         @widgets.each do |w|
-          w.send meth, event if w.contains? [event.data[:x],event.data[:y]] 
+          w.send meth, event #if w.contains? [event.data[:x],event.data[:y]] 
         end
       else
         @modal_widgets.last.send meth, event

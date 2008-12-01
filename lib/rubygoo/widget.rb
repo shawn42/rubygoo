@@ -7,11 +7,11 @@ module Rubygoo
     extend Publisher
 
     # fire resized whenever a dimensional variable changes
-    can_fire :clicked, :resized
+    can_fire :clicked, :resized, :mouse_enter, :mouse_exit
 
     attr_accessor :enabled, :parent, :container, 
       :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed,
-      :focus_priority, :relative
+      :focus_priority, :relative, :mouse_over
 
     DEFAULT_PARAMS = {
       :x => 0,
@@ -67,6 +67,17 @@ module Rubygoo
 
     # called when there is a mouse motion and no button pressed
     def mouse_motion(event)
+      if contains?([event.data[:x],event.data[:y]])
+        unless @mouse_over
+          @mouse_over = true
+          fire :mouse_enter, self
+        end
+      else
+        if @mouse_over
+          @mouse_over = false
+          fire :mouse_exit, self
+        end
+      end
     end
     #
     # called when there is a mouse motion and a button pressed
@@ -128,7 +139,7 @@ module Rubygoo
         end
         parent = parent.superclass
       end
-      if prop_key.to_s.match /color/i
+      if prop_key.to_s.match(/color/i)
         get_color prop
       else
         prop
@@ -142,7 +153,7 @@ module Rubygoo
           new_color = color
         else
           # fill in zeros for all other colors
-          3-color.size.times do
+          (3 - color.size).times do
             color << 0
           end
           # fill in alpha as 255
