@@ -1,5 +1,4 @@
 TODO
- - add more listener types (when mouse_enter, mouse_leave, mouse_click, focus, key_pressed...)
  - add enabled?/disabled?
 
  - KEYTOASCII in gosu adapter

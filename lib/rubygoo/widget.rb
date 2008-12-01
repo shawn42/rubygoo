@@ -7,7 +7,9 @@ module Rubygoo
     extend Publisher
 
     # fire resized whenever a dimensional variable changes
-    can_fire :clicked, :resized, :mouse_enter, :mouse_exit
+    can_fire :resized, :mouse_enter, :mouse_exit, :focus, :unfocus,
+      :key_pressed, :key_released, :mouse_down, :mouse_up, :mouse_drag, 
+      :mouse_dragging, :mouse_motion
 
     attr_accessor :enabled, :parent, :container, 
       :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed,
@@ -54,14 +56,17 @@ module Rubygoo
       if contains?(event.data[:x],event.data[:y])
         unless @mouse_over
           @mouse_over = true
+          fire :mouse_enter, event
           mouse_enter event
         end
       else
         if @mouse_over
           @mouse_over = false
+          fire :mouse_exit, event
           mouse_exit event
         end
       end
+      fire :mouse_motion, event
       mouse_motion event
     end
 
@@ -157,40 +162,49 @@ module Rubygoo
     end
 
     def _focus() #:nodoc:
+      fire :focus
       @focussed = true
       focus
     end
 
     def _unfocus() #:nodoc:
+      fire :unfocus
       @focussed = false
       unfocus
     end
 
     def _mouse_down(event) #:nodoc:
+      fire :mouse_down, event
       mouse_down event
     end
 
     def _mouse_dragging(event) #:nodoc:
+      fire :mouse_dragging, event
       mouse_dragging event
     end
 
     def _mouse_up(event) #:nodoc:
+      fire :mouse_up, event
       mouse_up event
     end
 
     def _mouse_down(event) #:nodoc:
+      fire :mouse_down, event
       mouse_down event
     end
 
     def _mouse_drag(event) #:nodoc:
+      fire :mouse_drag, event
       mouse_drag event
     end
 
     def _key_pressed(event) #:nodoc:
+      fire :key_pressed, event
       key_pressed event
     end
 
     def _key_released(event) #:nodoc:
+      fire :key_released, event
       key_released event
     end
 
