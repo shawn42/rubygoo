@@ -80,6 +80,7 @@ module Rubygoo
       @widgets.each do |w|
         w._draw adapter if w.visible?
       end
+      draw adapter unless app == self
     end
 
     # called when there is a mouse motion
@@ -87,6 +88,7 @@ module Rubygoo
       @widgets.each do |w|
         w._mouse_motion event if w.enabled?
       end
+      mouse_motion event
     end
 
     # called when there is a mouse click
@@ -94,6 +96,7 @@ module Rubygoo
       @widgets.each do |w|
         w._mouse_down event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
+      mouse_down event
     end
 
     # called when there is a mouse release
@@ -101,6 +104,7 @@ module Rubygoo
       @widgets.each do |w|
         w._mouse_up event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
+      mouse_up event
     end
 
     # called when there is a mouse release after dragging
@@ -108,6 +112,7 @@ module Rubygoo
       @widgets.each do |w|
         w._mouse_drag event if w.contains? event.data[:x],event.data[:y] and w.enabled?
       end
+      mouse_drag event
     end
 
     # pass on the key press to our widgets
@@ -115,6 +120,7 @@ module Rubygoo
       @widgets.each do |w|
         w._key_pressed event if w.focussed? and w.enabled?
       end
+      key_pressed event
     end
 
     # pass on the key release to our widgets
@@ -122,6 +128,7 @@ module Rubygoo
       @widgets.each do |w|
         w._key_released event if w.focussed? and w.enabled?
       end
+      key_released event
     end
 
     # called each update cycle with the amount of time that has passed.  useful
@@ -130,6 +137,7 @@ module Rubygoo
       @widgets.each do |w|
         w._update time and w.enabled?
       end
+      update time unless app == self
     end
 
     # does this widget want tabbed focus? Containers don't usually

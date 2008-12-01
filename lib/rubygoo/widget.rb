@@ -92,7 +92,7 @@ module Rubygoo
         end
         parent = parent.superclass
       end
-      if prop_key.to_s.match(/color/i)
+      if prop_key.to_s.match(/color/i) and prop
         get_color prop
       else
         prop
