@@ -26,6 +26,7 @@ lib/rubygoo/css_colors.rb
 lib/rubygoo/dialog.rb
 lib/rubygoo/goo_color.rb
 lib/rubygoo/goo_event.rb
+lib/rubygoo/icon.rb
 lib/rubygoo/label.rb
 lib/rubygoo/mouse_cursor.rb
 lib/rubygoo/radio_button.rb
