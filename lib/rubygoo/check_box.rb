@@ -13,6 +13,7 @@ module Rubygoo
       @border_color = theme_property :border_color
       @focus_color = theme_property :focus_color
       @checked_color = theme_property :checked_color
+      @hover_color = theme_property :hover_color
 
       @rect = Rect.new [@x-@x_pad,@y-@y_pad,@w+2*@x_pad,@h+2*@y_pad]
     end
@@ -75,6 +76,10 @@ module Rubygoo
         cx2 = rect[2] + x1
         cy2 = rect[3] + y1
         adapter.fill cx1, cy1, cx2, cy2, @checked_color
+      end
+
+      if mouse_over? and @hover_color
+        adapter.fill x1, y1, x2, y2, @hover_color
       end
 
       if @border_color

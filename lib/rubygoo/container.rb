@@ -62,7 +62,7 @@ module Rubygoo
     end
 
     # draw ourself and our children
-    def draw(adapter)
+    def _draw(adapter)
       # any container specific code here (border_colors?)
       if @bg_color
         if app == self
@@ -78,58 +78,57 @@ module Rubygoo
 
       # draw kiddies 
       @widgets.each do |w|
-        w.draw adapter
+        w._draw adapter
       end
     end
 
     # called when there is a mouse motion
-    def mouse_motion(event)
+    def _mouse_motion(event)
       @widgets.each do |w|
-        w.mouse_motion event #if w.contains? [event.data[:x],event.data[:y]] 
+        w._mouse_motion event #if w.contains? event.data[:x],event.data[:y]
       end
     end
 
     # called when there is a mouse click
-    def mouse_down(event)
+    def _mouse_down(event)
       @widgets.each do |w|
-        w.mouse_down event if w.contains? [event.data[:x],event.data[:y]] 
+        w._mouse_down event if w.contains? event.data[:x],event.data[:y]
       end
     end
 
     # called when there is a mouse release
-    def mouse_up(event)
+    def _mouse_up(event)
       @widgets.each do |w|
-        w.mouse_up event if w.contains? [event.data[:x],event.data[:y]] 
+        w._mouse_up event if w.contains? event.data[:x],event.data[:y]
       end
     end
 
     # called when there is a mouse release after dragging
-    def mouse_drag(event)
+    def _mouse_drag(event)
       @widgets.each do |w|
-        w.mouse_drag event if w.contains? [event.data[:x],event.data[:y]] 
+        w._mouse_drag event if w.contains? event.data[:x],event.data[:y]
       end
     end
 
     # pass on the key press to our widgets
-    def key_pressed(event)
+    def _key_pressed(event)
       @widgets.each do |w|
-        w.key_pressed event if w.focussed?
+        w._key_pressed event if w.focussed?
       end
     end
 
     # pass on the key release to our widgets
-    def key_released(event)
+    def _key_released(event)
       @widgets.each do |w|
-        w.key_released event if w.focussed?
+        w._key_released event if w.focussed?
       end
     end
 
-
     # called each update cycle with the amount of time that has passed.  useful
     # for animations, etc
-    def update(time)
+    def _update(time)
       @widgets.each do |w|
-        w.update time
+        w._update time
       end
     end
 

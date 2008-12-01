@@ -44,8 +44,8 @@ module Rubygoo
 
     def draw(screen)
       @renderer.start_drawing
-      super @renderer
-      @mouse.draw @renderer if @mouse_cursor
+      _draw @renderer
+      @mouse._draw @renderer if @mouse_cursor
       @renderer.finish_drawing
     end
 
@@ -73,7 +73,7 @@ module Rubygoo
       fire :evented, event
       case event.event_type
       when :key_released
-        modal_keyboard_call :key_released, event
+        modal_keyboard_call :_key_released, event
       when :key_pressed
         case event.data[:key]
         when K_TAB
@@ -83,10 +83,10 @@ module Rubygoo
             focus_forward
           end
         else
-          modal_keyboard_call :key_pressed, event
+          modal_keyboard_call :_key_pressed, event
         end
       when :mouse_down
-        modal_mouse_call :mouse_down, event
+        modal_mouse_call :_mouse_down, event
         # TODO: I know this is simplistic and doesn't account for which button
         # is being pressed/released
         @mouse_start_x = event.data[:x]
@@ -95,9 +95,9 @@ module Rubygoo
         x = event.data[:x]
         y = event.data[:y]
         if @mouse_start_x == x and @mouse_start_y == y
-          modal_mouse_call :mouse_up, event
+          modal_mouse_call :_mouse_up, event
         else
-          modal_mouse_call :mouse_drag, event
+          modal_mouse_call :_mouse_drag, event
         end
         @mouse_start_x = nil
         @mouse_start_y = nil
@@ -105,11 +105,11 @@ module Rubygoo
         x = event.data[:x]
         y = event.data[:y]
         if @mouse_start_x
-          modal_mouse_call :mouse_dragging, event
+          modal_mouse_call :_mouse_dragging, event
         else
-          modal_mouse_call :mouse_motion, event
+          modal_mouse_call :_mouse_motion, event
         end
-        @mouse.mouse_motion event if @mouse_cursor
+        @mouse._mouse_motion event if @mouse_cursor
       end
     end
 
@@ -135,7 +135,7 @@ module Rubygoo
     def modal_mouse_call(meth, event)
       if @modal_widgets.empty?
         @widgets.each do |w|
-          w.send meth, event #if w.contains? [event.data[:x],event.data[:y]] 
+          w.send meth, event if w.contains? event.data[:x],event.data[:y] or meth == :_mouse_motion
         end
       else
         @modal_widgets.last.send meth, event
@@ -152,6 +152,11 @@ module Rubygoo
         @modal_widgets.last.send meth, event
       end
     end
+
+    def update(time)
+      _update(time)
+    end
+      
 
   end
 end

@@ -20,6 +20,10 @@ module Rubygoo
         adapter.draw_circle_filled @rect.centerx, @rect.centery, radius-@x_pad, @checked_color
       end
 
+      if mouse_over? and @hover_color
+        adapter.draw_circle_filled @rect.centerx, @rect.centery, radius-@x_pad, @hover_color
+      end
+
       if @border_color
         adapter.draw_circle @rect.centerx, @rect.centery, radius, @border_color
       end

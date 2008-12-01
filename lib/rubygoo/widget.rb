@@ -38,86 +38,33 @@ module Rubygoo
       @rect = Rect.new [@x,@y,@w,@h]
     end
 
-    # called when the widget is added to a container
-    def added()
-    end
-
-    # called when the widget is removed from a container
-    def removed()
-    end
-
-    def contains?(pos)
-      @rect.collide_point? pos[0], pos[1]
+    def contains?(x, y)
+      @rect.collide_point? x, y
     end
 
     def enabled?()
       @enabled
     end
 
-    def update(millis)
+    def mouse_over?()
+      @mouse_over
     end
 
-    # draw ourself on the screen
-    def draw(screen)
-    end
-
-    # called when there is a mouse click
-    def mouse_down(event)
-    end
-
-    # called when there is a mouse motion and no button pressed
-    def mouse_motion(event)
-      if contains?([event.data[:x],event.data[:y]])
+    def _mouse_motion(event) #:nodoc:
+      if contains?(event.data[:x],event.data[:y])
         unless @mouse_over
           @mouse_over = true
-          fire :mouse_enter, self
+          mouse_enter event
         end
       else
         if @mouse_over
           @mouse_over = false
-          fire :mouse_exit, self
+          mouse_exit event
         end
       end
-    end
-    #
-    # called when there is a mouse motion and a button pressed
-    def mouse_dragging(event)
+      mouse_motion event
     end
 
-    # called when there is a mouse release w/o drag
-    def mouse_up(event)
-    end
-
-    # called when there is a mouse release at the end of a drag
-    def mouse_drag(event)
-    end
-
-    # called when a key press is sent to us
-    def key_pressed(event)
-    end
-
-    # called when a key release is sent to us
-    def key_released(event)
-    end
-
-    # called when the widget receives focus
-    def on_focus()
-    end
-
-    def focus()
-      @focussed = true
-      on_focus
-    end
-
-    # called when the widget loses focus
-    def on_unfocus()
-    end
-
-    def unfocus()
-      @focussed = false
-      on_unfocus
-    end
-    
     def focussed?()
       @focussed
     end
@@ -146,6 +93,7 @@ module Rubygoo
       end
     end
 
+    # converts theme property to a GooColor
     def get_color(color)
       new_color = nil
       if color.is_a? Array
@@ -168,6 +116,92 @@ module Rubygoo
       GooColor.new *new_color 
     end
 
+    # sets x and fires resized event
+    def x=(val)
+      @x = val
+      fire :resized, self
+    end
+
+    # sets y and fires resized event
+    def y=(val)
+      @y = val
+      fire :resized, self
+    end
+
+    # sets width and fires resized event
+    def w=(val)
+      @w = val
+      fire :resized, self
+    end
+
+    # sets height and fires resized event
+    def h=(val)
+      @h = val
+      fire :resized, self
+    end
+
+    # sets x padding and fires resized event
+    def x_pad=(val)
+      @x_pad = val
+      fire :resized, self
+    end
+
+    # sets y padding and fires resized event
+    def y_pad=(val)
+      @y_pad = val
+      fire :resized, self
+    end
+
+    def _update(time) #:nodoc:
+      update time
+    end
+
+    def _focus() #:nodoc:
+      @focussed = true
+      focus
+    end
+
+    def _unfocus() #:nodoc:
+      @focussed = false
+      unfocus
+    end
+
+    def _mouse_down(event) #:nodoc:
+      mouse_down event
+    end
+
+    def _mouse_dragging(event) #:nodoc:
+      mouse_dragging event
+    end
+
+    def _mouse_up(event) #:nodoc:
+      mouse_up event
+    end
+
+    def _mouse_down(event) #:nodoc:
+      mouse_down event
+    end
+
+    def _mouse_drag(event) #:nodoc:
+      mouse_drag event
+    end
+
+    def _key_pressed(event) #:nodoc:
+      key_pressed event
+    end
+
+    def _key_released(event) #:nodoc:
+      key_released event
+    end
+
+    def _draw(screen) #:nodoc:
+      draw screen
+    end
+
+    #
+    # STUFF TO OVER RIDE
+    #
+
     # does this widget want tabbed focus? Widget do usually
     def tab_to?()
       true
@@ -176,35 +210,69 @@ module Rubygoo
     def modal?()
       false
     end
+
+    # called when the widget is added to a container
+    def added()
+    end
+
+    # called when the widget is removed from a container
+    def removed()
+    end
     
     # called each update cycle with the amount of time that has
     # passed.  useful for animations, etc
     def update(time)
     end
 
-    def x=(val)
-      @x = val
-      fire :resized, self
+    # called when there is a mouse motion and a button pressed
+    def mouse_dragging(event)
     end
-    def y=(val)
-      @y = val
-      fire :resized, self
+
+    # called when there is a mouse release w/o drag
+    def mouse_up(event)
     end
-    def w=(val)
-      @w = val
-      fire :resized, self
+
+    # called when there is a mouse click
+    def mouse_down(event)
     end
-    def h=(val)
-      @h = val
-      fire :resized, self
+
+    # called when there is a mouse release at the end of a drag
+    def mouse_drag(event)
     end
-    def x_pad=(val)
-      @x_pad = val
-      fire :resized, self
+
+    # called when the mouse first enters a widget
+    def mouse_enter(event)
+      fire :mouse_enter, event
     end
-    def y_pad=(val)
-      @y_pad = val
-      fire :resized, self
+
+    # called when the mouse exits a widget
+    def mouse_exit(event)
+      fire :mouse_exit, event
     end
+
+    # called when there is a mouse motion and no button pressed
+    def mouse_motion(event)
+    end
+    
+    # called when a key press is sent to us
+    def key_pressed(event)
+    end
+
+    # called when a key release is sent to us
+    def key_released(event)
+    end
+
+    # draw ourself on the screen
+    def draw(screen)
+    end
+
+    # called when the widget receives focus
+    def focus()
+    end
+
+    # called when the widget loses focus
+    def unfocus()
+    end
+
   end
 end

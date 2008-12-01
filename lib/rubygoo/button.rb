@@ -16,8 +16,11 @@ module Rubygoo
       @bg_color = theme_property :bg_color
       @border_color = theme_property :border_color
       @focus_color = theme_property :focus_color
+      @hover_color = theme_property :hover_color
+
       @font_file = File.join(@app.theme_dir,font)
       @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color
+
       @w = @rendered_text.width+2*@x_pad
       @h = @rendered_text.height+2*@y_pad
       @x = @x - @x_pad
@@ -59,6 +62,11 @@ module Rubygoo
       if @border_color
         adapter.draw_box x1, y1, x2, y2, @border_color
       end
+
+      if mouse_over? and @hover_color
+        adapter.fill x1, y1, x2, y2, @hover_color
+      end
+
       if @icon
         # TODO center icon
         ix = x1#+((x2-x1)-@icon.w)

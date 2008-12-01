@@ -48,18 +48,18 @@ module Rubygoo
     def focus(w)
       index = @widgets.index w
       if index
-        @widgets[@selected_index].unfocus if @widgets[@selected_index]
+        @widgets[@selected_index]._unfocus if @widgets[@selected_index]
         @selected_index = index
-        @widgets[@selected_index].focus
+        @widgets[@selected_index]._focus
       end
     end
 
     def rotate(dir)
       if @widgets.size > 0
-        @widgets[@selected_index].unfocus if @widgets[@selected_index]
+        @widgets[@selected_index]._unfocus if @widgets[@selected_index]
         @selected_index += dir
         @selected_index %= @widgets.size
-        @widgets[@selected_index].focus
+        @widgets[@selected_index]._focus
       end
     end
 
