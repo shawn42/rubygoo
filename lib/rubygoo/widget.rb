@@ -187,6 +187,7 @@ module Rubygoo
       if visible?
         fire :hide
         @visible = false
+        disable
       end
     end
 
@@ -195,6 +196,7 @@ module Rubygoo
       unless visible?
         fire :show
         @visible = true
+        enable
       end
     end
 
