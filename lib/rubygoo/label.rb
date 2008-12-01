@@ -2,18 +2,19 @@ require 'publisher'
 module Rubygoo
   class Label < Widget
     def initialize(text, opts={})
+      @font_size = opts[:font_size]
       super opts
       @text = text
     end
 
     def added()
       font = theme_property :font
-      @font_size = theme_property :font_size
+      @font_size ||= theme_property :font_size
       @color = theme_property :color
       @bg_color = theme_property :bg_color
       @focus_color = theme_property :focus_color
       @border_color = theme_property :border_color
-      @font_file = File.join(@app.theme_dir,font)
+      @font_file ||= File.join(@app.theme_dir,font)
 
       set_text @text
     end

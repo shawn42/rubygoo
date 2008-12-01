@@ -9,6 +9,8 @@ module CreateGui
       label.set_text(Time.now.to_s)
     end
 
+    icon_widget = Icon.new :x => 280, :y => 80, :icon => icon
+
     check = CheckBox.new :x=>370, :y=>70, :w=>20, :h=>20
     check.on :mouse_enter do
       puts "ENTERING #{self.class}"
@@ -74,7 +76,7 @@ module CreateGui
     # specify if you want on widget creation
 
     # can add many or one at a time
-    app.add text_field, label, button, modal_button, grp, hide_button
+    app.add text_field, label, button, modal_button, grp, hide_button, icon_widget
     app.add check
 
   #  pulldown = Pulldown.new {:x=>70, :y=>80}
