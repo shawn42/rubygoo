@@ -29,6 +29,11 @@ module Rubygoo
       @modal_target.add_modal self
     end
 
+    # close this modal dialog
+    def close()
+      @modal_target.remove_modal self
+    end
+
   end
 end
 

@@ -48,7 +48,7 @@ module CreateGui
 
       ok_butt = Button.new("OK", :x=>70, :y=>180, :x_pad=>20, :y_pad=>20,:relative=>true)
       ok_butt.on :pressed do |*opts|
-        app.remove_modal(modal)
+        modal.close
       end
       modal.add ok_butt, resize_me
 
