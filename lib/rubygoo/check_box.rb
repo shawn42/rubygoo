@@ -1,10 +1,36 @@
+require 'label'
 module Rubygoo
   class CheckBox < Widget
     attr_accessor :checked
     can_fire :checked
+    DEFAULT_PARAMS = {:align=>:right}
     def initialize(opts={})
+      opts = DEFAULT_PARAMS.merge opts
       super opts
       @checked = opts[:checked]
+
+      # only supports label on the right
+      # TODO maybe I should do this in added
+      label_text = opts[:label]
+      label_alignment = opts[:align]
+      unless label_text.nil? or label_text.empty?
+        case label_alignment
+        when :right
+          lx = @x+2*@x_pad+@w
+          ly = @y
+        when :left
+          lx = @x
+          ly = @y
+
+          # how do I get the width of this label?
+          # and how before it's added, cause that's when
+          # it has access to the font stuff
+          label_width = 100
+          @x = @x+2*@x_pad+label_width
+          update_rect
+        end
+        @label = Label.new label_text, :x=>lx,:y=>ly, :relative=>opts[:relative]
+      end
     end
 
     def added()
@@ -16,6 +42,7 @@ module Rubygoo
       @hover_color = theme_property :hover_color
 
       @rect = Rect.new [@x-@x_pad,@y-@y_pad,@w+2*@x_pad,@h+2*@y_pad]
+      parent.add @label if @label
     end
 
     def checked?()

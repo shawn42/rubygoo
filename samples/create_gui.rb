@@ -11,7 +11,7 @@ module CreateGui
 
     icon_widget = Icon.new :x => 280, :y => 80, :icon => icon
 
-    check = CheckBox.new :x=>370, :y=>70, :w=>20, :h=>20
+    check = CheckBox.new :x=>370, :y=>70, :w=>20, :h=>20, :label=> "Check me out!"
     check.on :mouse_enter do
       puts "ENTERING #{self.class}"
     end
