@@ -4,10 +4,10 @@ module Rubygoo
     can_fire :checked
     def initialize(opts={})
       super opts
+      @checked = opts[:checked]
     end
 
     def added()
-      @checked = false
       @color = theme_property :color
       @bg_color = theme_property :bg_color
       @border_color = theme_property :border_color
