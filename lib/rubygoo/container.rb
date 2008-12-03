@@ -78,56 +78,56 @@ module Rubygoo
       draw adapter unless app == self
 
       # draw kiddies 
-      @widgets.each do |w|
-        w._draw adapter if w.visible?
+      @widgets.select{|w|w.visible?}.each do |w|
+        w._draw adapter
       end
     end
 
     # called when there is a mouse motion
     def _mouse_motion(event)
       mouse_motion event
-      @widgets.each do |w|
-        w._mouse_motion event if w.enabled?
+      @widgets.select{|w|w.enabled?}.each do |w|
+        w._mouse_motion event
       end
     end
 
     # called when there is a mouse click
     def _mouse_down(event)
       mouse_down event
-      @widgets.each do |w|
-        w._mouse_down event if w.contains? event.data[:x],event.data[:y] and w.enabled?
+      @widgets.select{|w|w.enabled? and w.contains? event.data[:x],event.data[:y] }.each do |w|
+        w._mouse_down event
       end
     end
 
     # called when there is a mouse release
     def _mouse_up(event)
       mouse_up event
-      @widgets.each do |w|
-        w._mouse_up event if w.contains? event.data[:x],event.data[:y] and w.enabled?
+      @widgets.select{|w| w.contains? event.data[:x],event.data[:y] and w.enabled?}.each do |w|
+        w._mouse_up event 
       end
     end
 
     # called when there is a mouse release after dragging
     def _mouse_drag(event)
       mouse_drag event
-      @widgets.each do |w|
-        w._mouse_drag event if w.contains? event.data[:x],event.data[:y] and w.enabled?
+      @widgets.select{|w| w.contains? event.data[:x],event.data[:y] and w.enabled?}.each do |w|
+        w._mouse_drag event
       end
     end
 
     # pass on the key press to our widgets
     def _key_pressed(event)
       key_pressed event
-      @widgets.each do |w|
-        w._key_pressed event if w.focussed? and w.enabled?
+      @widgets.select{|w| w.enabled? and w.focussed?}.each do |w|
+        w._key_pressed event
       end
     end
 
     # pass on the key release to our widgets
     def _key_released(event)
       key_released event
-      @widgets.each do |w|
-        w._key_released event if w.focussed? and w.enabled?
+      @widgets.select{|w| w.enabled? and w.focussed?}.each do |w|
+        w._key_released event 
       end
     end
 
@@ -135,8 +135,8 @@ module Rubygoo
     # for animations, etc
     def _update(time)
       update time unless app == self
-      @widgets.each do |w|
-        w._update time and w.enabled?
+      @widgets.select{|w|w.enabled?}.each do |w|
+        w._update time
       end
     end
 

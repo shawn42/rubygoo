@@ -4,7 +4,6 @@ module Rubygoo
   class RadioGroup < Container
 
     def initialize(opts={})
-      # TODO add label, border
       super opts
     end
 
@@ -24,13 +23,9 @@ module Rubygoo
     end
 
     def update_group_selection(selected_widget)
-      @widgets.each do |w|
-        if w.respond_to? :checked?
-          if w.checked?
-            unless selected_widget == w
-              w.uncheck
-            end
-          end
+      @widgets.select{|w| w.respond_to? :checked? and w.checked?}.each do |w|
+        unless selected_widget == w
+          w.uncheck
         end
       end
     end
