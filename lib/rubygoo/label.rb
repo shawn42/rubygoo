@@ -22,7 +22,9 @@ module Rubygoo
     def set_text(text)
       @text = text
       @rendered_text = @app.renderer.render_text @text, @font_file, @font_size, @color
-      @rect = Rect.new [@x,@y,@rendered_text.width+@x_pad,@rendered_text.height+@y_pad]
+      @w = @rendered_text.width
+      @h = @rendered_text.height
+      update_rect
     end
 
     def draw(adapter)

@@ -125,36 +125,42 @@ module Rubygoo
     # sets x and fires resized event
     def x=(val)
       @x = val
+      update_rect
       fire :resized, self
     end
 
     # sets y and fires resized event
     def y=(val)
       @y = val
+      update_rect
       fire :resized, self
     end
 
     # sets width and fires resized event
     def w=(val)
       @w = val
+      update_rect
       fire :resized, self
     end
 
     # sets height and fires resized event
     def h=(val)
       @h = val
+      update_rect
       fire :resized, self
     end
 
     # sets x padding and fires resized event
     def x_pad=(val)
       @x_pad = val
+      update_rect
       fire :resized, self
     end
 
     # sets y padding and fires resized event
     def y_pad=(val)
       @y_pad = val
+      update_rect
       fire :resized, self
     end
 
