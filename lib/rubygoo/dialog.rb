@@ -1,9 +1,8 @@
 module Rubygoo
   class Dialog < Container
 
-    def initialize(opts, &close_callback)
+    def initialize(opts)
       super opts
-      @close_callback = close_callback if block_given?
       @modal_target = opts[:modal]
     end
     
@@ -15,8 +14,6 @@ module Rubygoo
 
       @border_color = theme_property :border_color
       @focus_color = theme_property :focus_color
-
-      @rect = Rect.new [@x-@x_pad,@y-@y_pad,@w+2*@x_pad,@h+2*@y_pad]
     end
 
     def modal?()
@@ -25,7 +22,7 @@ module Rubygoo
 
     # show the dialog by adding it to the @modal_target and
     # intercepting all of its events
-    def show()
+    def display()
       @modal_target.add_modal self
     end
 

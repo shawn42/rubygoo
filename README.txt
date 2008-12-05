@@ -66,7 +66,7 @@ Rubygoo is a theme-able gui framework for use with rubygame and soon gosu. It ha
       end
       modal.add ok_butt
 
-      modal.show
+      modal.display
     end
 
     grp = RadioGroup.new :x=>10, :y=>380, :x_pad=>20, :y_pad=>20, :w=> 500, :h=>80
