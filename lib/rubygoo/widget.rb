@@ -11,7 +11,7 @@ module Rubygoo
       :key_pressed, :key_released, :mouse_down, :mouse_up, :mouse_drag, 
       :mouse_dragging, :mouse_motion, :enable, :disable, :hide, :show
 
-    attr_accessor :enabled, :parent, :container, 
+    attr_accessor :enabled, :parent, :container, :opts,
       :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed,
       :focus_priority, :relative, :mouse_over, :visible
 
@@ -37,6 +37,8 @@ module Rubygoo
       @relative = merged_opts[:relative]
       @enabled = merged_opts[:enabled]
       @visible = merged_opts[:visible]
+
+      @opts = merged_opts
 
       update_rect
     end

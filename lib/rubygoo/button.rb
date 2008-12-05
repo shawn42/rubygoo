@@ -11,7 +11,8 @@ module Rubygoo
 
     def added()
       font = theme_property :font
-      @font_size = theme_property :font_size
+      @font_size = @opts[:font_size]
+      @font_size ||= theme_property :font_size 
       @color = theme_property :color
       @bg_color = theme_property :bg_color
       @border_color = theme_property :border_color
