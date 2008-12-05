@@ -97,6 +97,8 @@ module Rubygoo
         if @mouse_start_x == x and @mouse_start_y == y
           modal_mouse_call :_mouse_up, event
         else
+          event.data[:start_x] = @mouse_start_x
+          event.data[:start_y] = @mouse_start_y
           modal_mouse_call :_mouse_drag, event
         end
         @mouse_start_x = nil
@@ -105,6 +107,8 @@ module Rubygoo
         x = event.data[:x]
         y = event.data[:y]
         if @mouse_start_x
+          event.data[:start_x] = @mouse_start_x
+          event.data[:start_y] = @mouse_start_y
           modal_mouse_call :_mouse_dragging, event
         else
           modal_mouse_call :_mouse_motion, event

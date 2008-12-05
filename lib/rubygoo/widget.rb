@@ -1,5 +1,4 @@
 require 'publisher'
-require 'css_colors'
 require 'goo_color'
 require 'rect'
 module Rubygoo
@@ -116,7 +115,7 @@ module Rubygoo
           color << 255
         end
       elsif color.is_a? Symbol
-        new_color = CSS_COLORS[color]
+        new_color = COLORS[color]
       else
         raise "invalid color"
       end
@@ -224,14 +223,14 @@ module Rubygoo
       unfocus
     end
 
-    def _mouse_down(event) #:nodoc:
-      fire :mouse_down, event
-      mouse_down event
-    end
-
     def _mouse_dragging(event) #:nodoc:
       fire :mouse_dragging, event
       mouse_dragging event
+    end
+
+    def _mouse_drag(event) #:nodoc:
+      fire :mouse_drag, event
+      mouse_drag event
     end
 
     def _mouse_up(event) #:nodoc:
@@ -242,11 +241,6 @@ module Rubygoo
     def _mouse_down(event) #:nodoc:
       fire :mouse_down, event
       mouse_down event
-    end
-
-    def _mouse_drag(event) #:nodoc:
-      fire :mouse_drag, event
-      mouse_drag event
     end
 
     def _key_pressed(event) #:nodoc:
@@ -307,12 +301,10 @@ module Rubygoo
 
     # called when the mouse first enters a widget
     def mouse_enter(event)
-      fire :mouse_enter, event
     end
 
     # called when the mouse exits a widget
     def mouse_exit(event)
-      fire :mouse_exit, event
     end
 
     # called when there is a mouse motion and no button pressed

@@ -1,7 +1,7 @@
 
 module Rubygoo
   # colors from: http://www.w3schools.com/css/css_colornames.asp
-  CSS_COLORS = {
+  new_colors = {
     :AliceBlue => [240,248,255,255],
     :AntiqueWhite => [250,235,215,255],
     :Aqua => [0,255,255,255],
@@ -150,4 +150,5 @@ module Rubygoo
     :Yellow => [255,255,0],
     :YellowGreen => [154,205,50,255]
   }
+  COLORS.merge! new_colors
 end
