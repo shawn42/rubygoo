@@ -13,7 +13,7 @@ Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.email = 'shawn42@gmail.com'
   p.summary = "Easy to use gui library for Rubygame or Gosu."
   p.url = "http://rubygoo.googlecode.com"
-  p.changes = p.paragraphs_of('History.txt', 8..8).join("\n\n")
+  p.changes = p.paragraphs_of('History.txt', 8..9).join("\n\n")
   p.remote_rdoc_dir = '' # Release to root
   p.extra_deps << ['constructor']
   p.extra_deps << ['publisher']
