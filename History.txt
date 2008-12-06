@@ -26,7 +26,14 @@
   * added relative positioning of widgets
   * added RadioButton and RadioGroup
 
-=== 0.0.7 / 2008-11-16
+=== 0.0.7 / 2008-12-6
 
 * Getting closer to a 1.0 release
   * added none options in themes
+  * added Icon widget
+  * cleaned up internals
+  * added show/hide and enable/disable to widgets
+  * added :label option to checkboxes
+  * added mouse_enter/exit events and hover states for button/checkboxes
+  * new color theme from nedric
+  * bug fixes
