@@ -37,3 +37,8 @@
   * added mouse_enter/exit events and hover states for button/checkboxes
   * new color theme from nedric
   * bug fixes
+
+=== 0.0.8 / 2008-12-6
+
+* Getting closer to a 1.0 release
+  * bug fixes

@@ -4,6 +4,7 @@ module Rubygoo
 
     def initialize(opts={})
       super opts
+      @auto_resize = opts[:auto_resize]
       # cannot get this if we don't have an app yet
       @bg_color = theme_property :bg_color if self.app
       @queued_widgets = []
@@ -36,8 +37,10 @@ module Rubygoo
             end
             w.added
 
-            w.when :resized do |resized_widget|
-              resize resized_widget
+            if @auto_resize
+              w.when :resized do |resized_widget|
+                resize resized_widget
+              end
             end
 
             @widgets << w
