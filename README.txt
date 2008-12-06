@@ -11,7 +11,7 @@ Rubygoo is a theme-able gui framework for use with rubygame and soon gosu. It ha
 * theme-able gui widgets
 * named css colors
 * works with rubygame and gosu
-* containers, labels, buttons, checkboxes, radio buttons, radio groups
+* containers, labels, buttons, checkboxes, radio buttons, radio groups, icons
 * tabbing focus of widgets
 * modal dialogs
 
@@ -83,13 +83,6 @@ Rubygoo is a theme-able gui framework for use with rubygame and soon gosu. It ha
     # can add many or one at a time
     app.add text_field, label, button, modal_button, grp
     app.add check
-
-    #  pulldown = Pulldown.new {:x=>70, :y=>80}
-    #  pulldown.on :changed do |*opts|
-    #    label.set_text(opts.first)
-    #  end
-    #
-    #  app.add pulldown
 
     app_adapter = factory.app_for :rubygame, app
     
