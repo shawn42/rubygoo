@@ -36,8 +36,22 @@ module Rubygoo
       @screen.flip
     end
 
-    def draw_image(img, x, y, color=nil)
-      img.blit @screen, [x,y]
+    def draw_image(img, to_x, to_y, color=nil)
+      img.blit @screen, [to_x,to_y]
+    end
+
+    def draw_partial_image(img, to_x, to_y,
+                   from_x=nil,from_y=nil,from_w=nil,from_h=nil, color=nil)
+      if from_x
+        if from_w
+          from = [from_x,from_y,from_w,from_h]
+        else
+          from = [from_x,from_y]
+        end
+        img.blit @screen, [to_x,to_y], from
+      else
+        img.blit @screen, [to_x,to_y]
+      end
     end
 
     def size_text(text, font_file, font_size)

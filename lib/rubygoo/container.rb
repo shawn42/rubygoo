@@ -118,6 +118,14 @@ module Rubygoo
       end
     end
 
+    # called when there is motion w/ the mouse button down
+    def _mouse_dragging(event)
+      mouse_dragging event
+      @widgets.select{|w| w.contains? event.data[:x],event.data[:y] and w.enabled?}.each do |w|
+        w._mouse_dragging event
+      end
+    end
+
     # pass on the key press to our widgets
     def _key_pressed(event)
       key_pressed event

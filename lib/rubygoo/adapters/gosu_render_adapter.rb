@@ -72,6 +72,23 @@ module Rubygoo
       end
     end
 
+    # untested in Gosu
+    def draw_partial_image(img, to_x, to_y,
+                   from_x=nil,from_y=nil,from_w=nil,from_h=nil, color=nil)
+
+      if from_x
+        if from_w
+          from = [from_x,from_y,from_w,from_h]
+          image = Image.new @screen, img, false, from
+        else
+          raise "not supported in gosu"
+        end
+        image.draw x, y, 0
+      else
+        draw_image img,to_x,to_y,color
+      end
+    end
+
     def size_text(text, font_file, font_size)
       @font_cache ||= {}
       @font_cache[font_file] ||= {}
