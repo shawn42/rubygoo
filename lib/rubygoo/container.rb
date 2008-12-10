@@ -64,6 +64,17 @@ module Rubygoo
       end
     end
 
+    # Remove all our children from the container.
+    def clear()
+      death_widgets = @widgets + @queued_widgets + @modal_widgets
+      @widgets = []
+      @queued_widgets = []
+      @modal_widgets = []
+      death_widgets.each do |w|
+        w.removed
+      end
+    end
+
     # draw ourself and our children
     def _draw(adapter)
       # any container specific code here (border_colors?)

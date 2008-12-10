@@ -42,3 +42,4 @@
 
 * Getting closer to a 1.0 release
   * bug fixes
+  * added clear method to containers to remove all children

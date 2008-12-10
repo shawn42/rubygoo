@@ -4,7 +4,7 @@ require 'rubygems'
 require 'hoe'
 
 module Rubygoo
-  VERSION = '0.0.7'
+  VERSION = '0.0.8'
 end
 Hoe.new('rubygoo', Rubygoo::VERSION) do |p|
   p.developer('Shawn Anderson', 'shawn42@gmail.com')
