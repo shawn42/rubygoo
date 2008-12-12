@@ -1,9 +1,11 @@
 require 'publisher'
 require 'goo_color'
 require 'rect'
+require 'inflector'
 module Rubygoo
   class Widget
     extend Publisher
+    include Inflector
 
     # fire resized whenever a dimensional variable changes
     can_fire :resized, :mouse_enter, :mouse_exit, :focus, :unfocus,
@@ -25,7 +27,7 @@ module Rubygoo
       :enabled => true,
       :visible => true,
     }
-    def initialize(opts={})
+    def initialize(opts={}, &block)
       merged_opts = DEFAULT_PARAMS.merge opts
       @x = merged_opts[:x]
       @y = merged_opts[:y]
@@ -40,6 +42,20 @@ module Rubygoo
       @opts = merged_opts
 
       update_rect
+
+      block.call(binding) if block_given?
+    end
+
+    def self.inherited(by_obj)
+      meth = Inflector.underscore(Inflector.demodulize(by_obj)).to_sym
+#      block = lambda do |*args|
+#        p args
+#        obj = by_obj.new(*args)
+#        add(obj) if self.respond_to? :add
+#        obj
+#      end
+#      Object.send(:define_method,meth, &block) 
+      Object.class_eval "def #{meth}(*args, &block);obj=#{by_obj}.new(*args,&block);add(obj) if self.respond_to?(:add);obj;end"
     end
 
     def update_rect()

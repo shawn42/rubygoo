@@ -182,6 +182,11 @@ module Rubygoo
       @h = max_h - @y + 2*@y_pad
       update_rect
     end
+
+    def self.inherited(by_obj)
+      p by_obj
+      Widget.inherited(by_obj)
+    end
   end
 end
 

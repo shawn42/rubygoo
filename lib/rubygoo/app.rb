@@ -9,7 +9,7 @@ module Rubygoo
     DEFAULT_PARAMS = {:theme=>'default',:x=>10,:y=>10,:data_dir=>File.join(File.dirname(__FILE__),"..","..","themes"),:mouse_cursor => true}
     attr_accessor :theme_name, :theme, :data_dir, :theme_dir, :renderer, :tab_groups, :mouse
 
-    def initialize(opts={})
+    def initialize(opts={}, &block)
       merged_opts = DEFAULT_PARAMS.merge opts
       @widgets = []
       @tab_groups = []
@@ -31,6 +31,8 @@ module Rubygoo
         @mouse.added
       end
       @mouse_dragging = false
+      block.call(binding) if block_given?
+#      instance_eval &block if block_given?
     end
 
     def app()
