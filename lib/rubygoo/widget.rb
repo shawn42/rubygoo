@@ -13,7 +13,7 @@ module Rubygoo
       :mouse_dragging, :mouse_motion, :enable, :disable, :hide, :show
 
     attr_accessor :enabled, :parent, :container, :opts,
-      :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed,
+      :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed, :goo_id,
       :focus_priority, :relative, :mouse_over, :visible
 
     DEFAULT_PARAMS = {
@@ -38,24 +38,22 @@ module Rubygoo
       @relative = merged_opts[:relative]
       @enabled = merged_opts[:enabled]
       @visible = merged_opts[:visible]
+      @goo_id = merged_opts[:id]
 
       @opts = merged_opts
 
       update_rect
 
-      block.call(binding) if block_given?
+      instance_eval &block if block_given?
     end
 
     def self.inherited(by_obj)
       meth = Inflector.underscore(Inflector.demodulize(by_obj)).to_sym
-#      block = lambda do |*args|
-#        p args
-#        obj = by_obj.new(*args)
-#        add(obj) if self.respond_to? :add
-#        obj
-#      end
-#      Object.send(:define_method,meth, &block) 
-      Object.class_eval "def #{meth}(*args, &block);obj=#{by_obj}.new(*args,&block);add(obj) if self.respond_to?(:add);obj;end"
+      if meth == :app
+        Object.class_eval "def goo_app(*args, &block);#{by_obj}.new(*args,&block);end"
+      else
+        Widget.class_eval "def #{meth}(*args, &block);obj=#{by_obj}.new(*args,&block);add(obj) if self.respond_to?(:add);obj;end"
+      end
     end
 
     def update_rect()
@@ -345,6 +343,57 @@ module Rubygoo
 
     # called when the widget loses focus
     def unfocus()
+    end
+
+
+    # XXX DSL methods, can these be autogen'd?
+    def x(new_val=nil)
+      @x = new_val if new_val
+      @x
+    end
+
+    def y(new_val=nil)
+      @y = new_val if new_val
+      @y
+    end
+
+    def w(new_val=nil)
+      @w = new_val if new_val
+      @w
+    end
+
+    def h(new_val=nil)
+      @h = new_val if new_val
+      @h
+    end
+
+    def x_pad(new_val=nil)
+      @x_pad = new_val if new_val
+      @x_pad
+    end
+
+    def y_pad(new_val=nil)
+      @y_pad = new_val if new_val
+      @y_pad
+    end
+
+    def relative(new_val=nil)
+      @relative = new_val if new_val
+      @relative
+    end
+
+    def enabled(new_val=nil)
+      @enabled = new_val if new_val
+      @enabled
+    end
+
+    def visible(new_val=nil)
+      @visible = new_val if new_val
+      @visible
+    end
+
+    def get(id)
+      @goo_id == id ? self : nil
     end
 
   end

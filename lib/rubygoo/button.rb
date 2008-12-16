@@ -2,11 +2,10 @@ module Rubygoo
   class Button < Widget
     can_fire :pressed
     def initialize(text, opts={})
-      super opts
-
       @icon = opts[:icon]
-
       @text = text
+
+      super opts
     end
 
     def added()
@@ -81,7 +80,12 @@ module Rubygoo
       end
 
       adapter.draw_image @rendered_text, @x+@x_pad, @y+@y_pad, @color
+    end
 
+    #DSL methods
+    def icon_image(new_val=nil)
+      @icon = new_val if new_val
+      @icon
     end
   end
 end

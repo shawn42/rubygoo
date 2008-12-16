@@ -20,7 +20,6 @@ module Rubygoo
       @theme_name = theme_name
       @theme = load_theme theme_name
       @renderer = merged_opts[:renderer]
-      super merged_opts
 
       # should this go here?
       @mouse_cursor = merged_opts[:mouse_cursor]
@@ -31,8 +30,8 @@ module Rubygoo
         @mouse.added
       end
       @mouse_dragging = false
-      block.call(binding) if block_given?
-#      instance_eval &block if block_given?
+
+      super merged_opts, &block
     end
 
     def app()
@@ -162,7 +161,11 @@ module Rubygoo
     def update(time)
       _update(time)
     end
-      
-
   end
 end
+#class Object
+#  p "DEFINING IN OBJECT"
+#  def app(*args, &block)
+#    ::Rubygoo::App.new(*args,&block)
+#  end
+#end

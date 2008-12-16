@@ -3,13 +3,14 @@ module Rubygoo
     attr_accessor :widgets, :bg_color, :rect, :queued_widgets
 
     def initialize(opts={})
-      super opts
       @auto_resize = opts[:auto_resize]
       # cannot get this if we don't have an app yet
       @bg_color = theme_property :bg_color if self.app
       @queued_widgets = []
       @widgets = []
       @modal_widgets = []
+
+      super opts
     end
 
     # called when we are added to another container
@@ -183,9 +184,16 @@ module Rubygoo
       update_rect
     end
 
-    def self.inherited(by_obj)
-      p by_obj
-      Widget.inherited(by_obj)
+#    def self.inherited(by_obj)
+#      Widget.inherited(by_obj)
+#    end
+
+    # returns the child widget with the id passed in
+    def get(id)
+      @widgets.each do |w|
+        found_w = w.get(id)
+        return found_w if found_w
+      end
     end
   end
 end

@@ -21,6 +21,14 @@ module Rubygoo
       iy = y1#+((y2-y1)-@icon.h)
       adapter.draw_image @icon, ix+@x_pad,iy+@y_pad
     end
+
+    #DSL methods
+    def icon_image(new_val=nil)
+      @icon = new_val if new_val
+      @icon
+    end
+
   end
+
 end
 

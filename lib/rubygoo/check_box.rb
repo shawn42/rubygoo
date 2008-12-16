@@ -6,13 +6,12 @@ module Rubygoo
     DEFAULT_PARAMS = {:align=>:right}
     def initialize(opts={})
       opts = DEFAULT_PARAMS.merge opts
-      super opts
       @checked = opts[:checked]
 
-      # only supports label on the right
-      # TODO maybe I should do this in added
-      @label_text = opts[:label]
+      @label_text = opts[:label_text]
       @label_alignment = opts[:align]
+
+      super opts
     end
 
     def added()
@@ -110,6 +109,13 @@ module Rubygoo
         adapter.draw_box x1, y1, x2, y2, @border_color
       end
     end
+
+    # DSL methods
+    def label_text(new_val=nil)
+      @label_text = new_val if new_val
+      @label_text
+    end
+
   end
 end
 
