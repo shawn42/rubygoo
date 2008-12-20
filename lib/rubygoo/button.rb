@@ -1,8 +1,13 @@
 module Rubygoo
   class Button < Widget
     can_fire :pressed
+
+    goo_prop :icon_image
+
     def initialize(text, opts={})
-      @icon = opts[:icon]
+      @icon_image = opts[:icon]
+      @image = opts[:image]
+      @hover_image = opts[:hover_image]
       @text = text
 
       super opts
@@ -20,12 +25,19 @@ module Rubygoo
       @disabled_color = theme_property :disabled_color
 
       @font_file = File.join(@app.theme_dir,font)
-      @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color
+      @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color if @text and !@text.empty?
 
-      @w = @rendered_text.width+2*@x_pad
-      @h = @rendered_text.height+2*@y_pad
-      @x = @x - @x_pad
-      @y = @y - @y_pad
+      if @image
+        @w = @image.width+2*@x_pad
+        @h = @image.height+2*@y_pad
+        @x = @x - @x_pad
+        @y = @y - @y_pad
+      else
+        @w = @rendered_text.width+2*@x_pad
+        @h = @rendered_text.height+2*@y_pad
+        @x = @x - @x_pad
+        @y = @y - @y_pad
+      end
 
       update_rect
     end
@@ -54,38 +66,42 @@ module Rubygoo
       x2 = @rect[2] + x1
       y2 = @rect[3] + y1
       
+      img = @image.nil? ? @rendered_text : @image
+      if @image
+        adapter.draw_image @image, @x+@x_pad, @y+@y_pad, @color
+      else
 
-      if @focussed
-        adapter.fill x1, y1, x2, y2, @focus_color
-      elsif @bg_color
-        adapter.fill x1, y1, x2, y2, @bg_color
+        if @focussed
+          adapter.fill x1, y1, x2, y2, @focus_color
+        elsif @bg_color
+          adapter.fill x1, y1, x2, y2, @bg_color
+        end
+        if @border_color
+          adapter.draw_box x1, y1, x2, y2, @border_color
+        end
+
+        if @disabled_color and !enabled?
+          adapter.fill x1, y1, x2, y2, @disabled_color
+        end
+
+        if @icon_image
+          # TODO center icon
+          ix = x1#+((x2-x1)-@icon.w)
+          iy = y1#+((y2-y1)-@icon.h)
+          adapter.draw_image @icon_image, ix+@x_pad,iy+@y_pad
+        end
+
+        adapter.draw_image @rendered_text, @x+@x_pad, @y+@y_pad, @color
       end
-      if @border_color
-        adapter.draw_box x1, y1, x2, y2, @border_color
+
+      if mouse_over? and (@hover_image or @hover_color)
+        if @hover_image
+          adapter.draw_image @hover_image, @x+@x_pad, @y+@y_pad, @color
+        else
+          adapter.fill x1, y1, x2, y2, @hover_color
+        end
       end
 
-      if mouse_over? and @hover_color
-        adapter.fill x1, y1, x2, y2, @hover_color
-      end
-
-      if @disabled_color and !enabled?
-        adapter.fill x1, y1, x2, y2, @disabled_color
-      end
-
-      if @icon
-        # TODO center icon
-        ix = x1#+((x2-x1)-@icon.w)
-        iy = y1#+((y2-y1)-@icon.h)
-        adapter.draw_image @icon, ix+@x_pad,iy+@y_pad
-      end
-
-      adapter.draw_image @rendered_text, @x+@x_pad, @y+@y_pad, @color
-    end
-
-    #DSL methods
-    def icon_image(new_val=nil)
-      @icon = new_val if new_val
-      @icon
     end
   end
 end

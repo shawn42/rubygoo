@@ -27,6 +27,21 @@ module Rubygoo
       :enabled => true,
       :visible => true,
     }
+
+
+    def self.goo_prop(k)
+      define_method k do |*args|
+        v = args.shift
+        ivar = "@#{k.to_s}"
+        instance_variable_set(ivar,v) if v
+        instance_variable_get(ivar)
+      end
+    end
+
+    DEFAULT_PARAMS.keys.each do |k|
+      goo_prop k
+    end
+
     def initialize(opts={}, &block)
       merged_opts = DEFAULT_PARAMS.merge opts
       @x = merged_opts[:x]
@@ -94,19 +109,40 @@ module Rubygoo
     # it will walk up the object hierarchy if needed
     def theme_property(prop_key)
       prop = nil
-      parent = self.class
-      until parent == Object
-        class_theme = app.theme[parent.to_s]
-        if class_theme
-          class_prop = class_theme[prop_key]
-          if class_prop
-            return nil if class_prop == :none
-            prop = class_prop
-            break
+      return @opts[prop_key] if @opts and @opts[prop_key]
+
+
+      # look up based on :id
+      if @goo_id
+        id_theme = app.theme[@goo_id]
+        if id_theme
+          id_prop = id_theme[prop_key]
+          if id_prop
+            return nil if id_prop == :none
+            prop = id_prop
           end
         end
-        parent = parent.superclass
+
       end
+
+      unless prop
+        # look up based on class
+        parent = self.class
+        until parent == Object
+          class_theme = app.theme[parent.to_s]
+          if class_theme
+            class_prop = class_theme[prop_key]
+            if class_prop
+              return nil if class_prop == :none
+              prop = class_prop
+              break
+            end
+          end
+          parent = parent.superclass
+        end
+      end
+
+      # replace colors w/ GooColor
       if prop_key.to_s.match(/color/i) and prop
         get_color prop
       else
@@ -343,53 +379,6 @@ module Rubygoo
 
     # called when the widget loses focus
     def unfocus()
-    end
-
-
-    # XXX DSL methods, can these be autogen'd?
-    def x(new_val=nil)
-      @x = new_val if new_val
-      @x
-    end
-
-    def y(new_val=nil)
-      @y = new_val if new_val
-      @y
-    end
-
-    def w(new_val=nil)
-      @w = new_val if new_val
-      @w
-    end
-
-    def h(new_val=nil)
-      @h = new_val if new_val
-      @h
-    end
-
-    def x_pad(new_val=nil)
-      @x_pad = new_val if new_val
-      @x_pad
-    end
-
-    def y_pad(new_val=nil)
-      @y_pad = new_val if new_val
-      @y_pad
-    end
-
-    def relative(new_val=nil)
-      @relative = new_val if new_val
-      @relative
-    end
-
-    def enabled(new_val=nil)
-      @enabled = new_val if new_val
-      @enabled
-    end
-
-    def visible(new_val=nil)
-      @visible = new_val if new_val
-      @visible
     end
 
     def get(id)

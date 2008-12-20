@@ -29,3 +29,5 @@ Rubygoo::TextField:
 Rubygoo::MouseCursor:
   :color: :DarkSlateGray
   :mouse_cursor: cursor.png
+:clicky: # can do theming by id
+  :bg_color: :Violet

@@ -3,7 +3,12 @@ module Rubygoo
   class CheckBox < Widget
     attr_accessor :checked
     can_fire :checked
+
     DEFAULT_PARAMS = {:align=>:right}
+    DEFAULT_PARAMS.keys.each do |k|
+      goo_prop k
+    end
+
     def initialize(opts={})
       opts = DEFAULT_PARAMS.merge opts
       @checked = opts[:checked]

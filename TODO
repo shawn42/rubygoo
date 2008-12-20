@@ -1,4 +1,5 @@
 TODO
+ - change contructor chaining to a setup callback (setup, that can be overridden in subclasses)
  - write some unit tests!
  - enabled?/disabled? effect on tabbing?
  - add show/hide effect on tabbing?

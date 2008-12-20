@@ -37,29 +37,12 @@ task :stats do
 end
 
 begin
+  require 'rake'
   require 'spec/rake/spectask'
 
-  desc "Run all specs (tests)"
-  Spec::Rake::SpecTask.new do |t|
-    t.spec_files = FileList['test/*_spec.rb']
-    t.spec_opts = ["--format", "specdoc"]
-  end
-
-  rule(/spec:.+/) do |t|
-    name = t.name.gsub("spec:","")
-
-    path = File.join( File.dirname(__FILE__),'test','%s_spec.rb'%name )
-
-    if File.exist? path
-      Spec::Rake::SpecTask.new(name) do |t|
-      t.spec_files = [path]
-    end
-
-    puts "\nRunning spec/%s_spec.rb"%[name]
-      Rake::Task[name].invoke
-    else
-      puts "File does not exist: %s"%path
-    end
+  desc "Run all specs"
+  Spec::Rake::SpecTask.new('specs') do |t|
+      t.spec_files = FileList['test/*_spec.rb']
   end
 
 rescue LoadError
