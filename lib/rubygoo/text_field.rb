@@ -58,14 +58,14 @@ module Rubygoo
 
     def render()
       if @text.empty?
-        w = [@w,@min_w].max + @x_pad
-        h = [@h,@min_h].max + @y_pad
+        w = [@w,@min_w].max + @padding_left
+        h = [@h,@min_h].max + @padding_top
         @rendered_text = nil
         @rect = Rect.new [@x,@y,w,h]
       else
         @rendered_text = @app.renderer.render_text @text, @font_file, @font_size, @color
-        w = [@rendered_text.width,@min_w].max + @x_pad
-        h = [@rendered_text.height,@min_h].max + @y_pad
+        w = [@rendered_text.width,@min_w].max + @padding_left
+        h = [@rendered_text.height,@min_h].max + @padding_top
         if @max_length
           w = [w,@max_w].min
           h = [h,@max_h].min

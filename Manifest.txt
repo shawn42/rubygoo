@@ -3,13 +3,6 @@ Manifest.txt
 README.txt
 Rakefile
 TODO
-docs/Picture 1.png
-docs/ui/UI.hpp
-docs/ui/abutton.png
-docs/ui/background.png
-docs/ui/button.png
-docs/ui/moveable.png
-docs/ui/textbutton.png
 lib/code_statistics.rb
 lib/platform.rb
 lib/rubygoo.rb

@@ -13,7 +13,7 @@ module Rubygoo
       :mouse_dragging, :mouse_motion, :enable, :disable, :hide, :show
 
     attr_accessor :enabled, :parent, :container, :opts,
-      :x, :y, :w, :h, :app, :x_pad, :y_pad, :focussed, :goo_id,
+      :x, :y, :w, :h, :app, :padding_left, :padding_top, :focussed, :goo_id,
       :focus_priority, :relative, :mouse_over, :visible
 
     DEFAULT_PARAMS = {
@@ -21,20 +21,24 @@ module Rubygoo
       :y => 0,
       :w => 1,
       :h => 1,
-      :x_pad => 2,
-      :y_pad => 2,
+      :padding_left => 2,
+      :padding_right => 2,
+      :padding_top => 2,
+      :padding_bottom => 2,
       :relative => false,
       :enabled => true,
       :visible => true,
     }
 
 
-    def self.goo_prop(k)
-      define_method k do |*args|
-        v = args.shift
-        ivar = "@#{k.to_s}"
-        instance_variable_set(ivar,v) if v
-        instance_variable_get(ivar)
+    def self.goo_prop(*keys)
+      for k in keys
+        define_method k do |*args|
+          v = args.shift
+          ivar = "@#{k.to_s}"
+          instance_variable_set(ivar,v) if v
+          instance_variable_get(ivar)
+        end
       end
     end
 
@@ -46,8 +50,10 @@ module Rubygoo
       merged_opts = DEFAULT_PARAMS.merge opts
       @x = merged_opts[:x]
       @y = merged_opts[:y]
-      @x_pad = merged_opts[:x_pad]
-      @y_pad = merged_opts[:y_pad]
+      @padding_left = merged_opts[:padding_left]
+      @padding_right = merged_opts[:padding_right]
+      @padding_top = merged_opts[:padding_top]
+      @padding_bottom = merged_opts[:padding_bottom]
       @w = merged_opts[:w]
       @h = merged_opts[:h]
       @relative = merged_opts[:relative]
@@ -202,15 +208,15 @@ module Rubygoo
     end
 
     # sets x padding and fires resized event
-    def x_pad=(val)
-      @x_pad = val
+    def padding_left=(val)
+      @padding_left = val
       update_rect
       fire :resized, self
     end
 
     # sets y padding and fires resized event
-    def y_pad=(val)
-      @y_pad = val
+    def padding_top=(val)
+      @padding_top = val
       update_rect
       fire :resized, self
     end

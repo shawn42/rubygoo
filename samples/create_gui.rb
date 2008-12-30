@@ -4,7 +4,7 @@ module CreateGui
 
     label = Label.new "click the button to set the time", :x=>20, :y=>30
 
-    button = Button.new "Click Me!", :x=>70, :y=>80, :x_pad=>20, :y_pad=>20, :icon => icon, :enabled => false
+    button = Button.new "Click Me!", :x=>70, :y=>80, :padding_left=>20, :padding_top=>20, :icon => icon, :enabled => false
     button.on :pressed do |*opts|
       label.set_text(Time.now.to_s)
     end
@@ -34,17 +34,17 @@ module CreateGui
       puts "BOO-YAH"
     end
 
-    modal_button = Button.new "Modal dialogs", :x=>270, :y=>240, :x_pad=>20, :y_pad=>20
+    modal_button = Button.new "Modal dialogs", :x=>270, :y=>240, :padding_left=>20, :padding_top=>20
     modal_button.on :pressed do |*opts|
       modal = Dialog.new :modal => app, :x=>60, :y=>110, :w=>250, :h=>250
 
-      modal.add Label.new("Message Here", :x=>20, :y=>70, :x_pad=>20, :y_pad=>20, :relative=>true)
+      modal.add Label.new("Message Here", :x=>20, :y=>70, :padding_left=>20, :padding_top=>20, :relative=>true)
       resize_me = Button.new "resize", :relative=>true, :x=>170, :y=>180
       resize_me.on :pressed do |*opts|
         modal.resize opts.first
       end
 
-      ok_butt = Button.new("OK", :x=>70, :y=>180, :x_pad=>20, :y_pad=>20,:relative=>true)
+      ok_butt = Button.new("OK", :x=>70, :y=>180, :padding_left=>20, :padding_top=>20,:relative=>true)
       ok_butt.on :pressed do |*opts|
         modal.close
       end
@@ -53,7 +53,7 @@ module CreateGui
       modal.display
     end
 
-    grp = RadioGroup.new :x=>10, :y=>380, :x_pad=>20, :y_pad=>20, :w=> 500, :h=>80
+    grp = RadioGroup.new :x=>10, :y=>380, :padding_left=>20, :padding_top=>20, :w=> 500, :h=>80
     grp_label = Label.new "RadioGroups are fun!", :x=>40, :y=>10, :w=>20, :h=>20, :relative=>true
     grp_radio_one = RadioButton.new :x=>40, :y=>40, :w=>20, :h=>20, :relative=>true
     grp_radio_two = RadioButton.new :x=>90, :y=>40, :w=>20, :h=>20, :relative=>true
@@ -61,7 +61,7 @@ module CreateGui
 
     grp.add grp_label, grp_radio_one, grp_radio_two, grp_radio_three
 
-    hide_button = Button.new "Hide the radios!", :x=>170, :y=>330, :x_pad=>10, :y_pad=>10
+    hide_button = Button.new "Hide the radios!", :x=>170, :y=>330, :padding_left=>10, :padding_top=>10
     hide_button.on :pressed do |*opts|
       if grp.visible?
         grp.hide

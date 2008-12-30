@@ -10,8 +10,8 @@ module CreateGui
       button "Click Me!", :id => :clicky do 
         x 70
         y 80
-        x_pad 20
-        y_pad 20
+        padding_left 20
+        padding_top 20
         icon_image joystick_icon
         enabled false
       end

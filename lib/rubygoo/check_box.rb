@@ -27,18 +27,18 @@ module Rubygoo
       @checked_color = theme_property :checked_color
       @hover_color = theme_property :hover_color
 
-      @rect = Rect.new [@x-@x_pad,@y-@y_pad,@w+2*@x_pad,@h+2*@y_pad]
+      @rect = Rect.new [@x-@padding_left,@y-@padding_top,@w+2*@padding_left,@h+2*@padding_top]
       unless @label_text.nil? or @label_text.empty?
         @label = Label.new @label_text, :x=>0,:y=>0, :relative=>@relative, :visible=>false
         @parent.add @label
 
         case @label_alignment
         when :right
-          lx = @x+2*@x_pad+@w
+          lx = @x+2*@padding_left+@w
           ly = @y
         when :left
           ly = @y
-          lx = @x-2*@x_pad-@label.w
+          lx = @x-2*@padding_left-@label.w
         end
         @label.x = lx
         @label.y = ly
@@ -98,7 +98,7 @@ module Rubygoo
       end
 
       if @checked
-        rect = @rect.inflate(-@x_pad,-@y_pad)
+        rect = @rect.inflate(-@padding_left,-@padding_top)
         cx1 = rect[0]
         cy1 = rect[1]
         cx2 = rect[2] + x1

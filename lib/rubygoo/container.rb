@@ -179,8 +179,8 @@ module Rubygoo
         max_w = w_width if w_width > max_w
         max_h = w_height if w_height > max_h
       end
-      @w = max_w - @x + 2*@x_pad
-      @h = max_h - @y + 2*@y_pad
+      @w = max_w - @x + 2*@padding_left
+      @h = max_h - @y + 2*@padding_top
       update_rect
     end
 

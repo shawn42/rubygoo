@@ -2,13 +2,13 @@ module Rubygoo
   class Button < Widget
     can_fire :pressed
 
-    goo_prop :icon_image
+    goo_prop :icon_image, :image, :hover_image
 
-    def initialize(text, opts={})
+    def initialize(new_text, opts={})
       @icon_image = opts[:icon]
       @image = opts[:image]
       @hover_image = opts[:hover_image]
-      @text = text
+      @text = new_text
 
       super opts
     end
@@ -28,15 +28,15 @@ module Rubygoo
       @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color if @text and !@text.empty?
 
       if @image
-        @w = @image.width+2*@x_pad
-        @h = @image.height+2*@y_pad
-        @x = @x - @x_pad
-        @y = @y - @y_pad
+        @w = @image.width+2*@padding_left
+        @h = @image.height+2*@padding_top
+        @x = @x - @padding_left
+        @y = @y - @padding_top
       else
-        @w = @rendered_text.width+2*@x_pad
-        @h = @rendered_text.height+2*@y_pad
-        @x = @x - @x_pad
-        @y = @y - @y_pad
+        @w = @rendered_text.width+2*@padding_left
+        @h = @rendered_text.height+2*@padding_top
+        @x = @x - @padding_left
+        @y = @y - @padding_top
       end
 
       update_rect
@@ -68,7 +68,7 @@ module Rubygoo
       
       img = @image.nil? ? @rendered_text : @image
       if @image
-        adapter.draw_image @image, @x+@x_pad, @y+@y_pad, @color
+        adapter.draw_image @image, @x+@padding_left, @y+@padding_top, @color
       else
 
         if @focussed
@@ -88,15 +88,15 @@ module Rubygoo
           # TODO center icon
           ix = x1#+((x2-x1)-@icon.w)
           iy = y1#+((y2-y1)-@icon.h)
-          adapter.draw_image @icon_image, ix+@x_pad,iy+@y_pad
+          adapter.draw_image @icon_image, ix+@padding_left,iy+@padding_top
         end
 
-        adapter.draw_image @rendered_text, @x+@x_pad, @y+@y_pad, @color
+        adapter.draw_image @rendered_text, @x+@padding_left, @y+@padding_top, @color
       end
 
       if mouse_over? and (@hover_image or @hover_color)
         if @hover_image
-          adapter.draw_image @hover_image, @x+@x_pad, @y+@y_pad, @color
+          adapter.draw_image @hover_image, @x+@padding_left, @y+@padding_top, @color
         else
           adapter.fill x1, y1, x2, y2, @hover_color
         end

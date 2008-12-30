@@ -4,7 +4,8 @@ $: << './lib'
 $: << File.dirname(__FILE__)
 require 'rubygoo'
 require 'rubygame'
-require 'create_gui_pretty'
+#require 'create_gui_pretty'
+require 'create_gui'
 include Rubygame
 include Rubygoo
 include CreateGui

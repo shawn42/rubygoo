@@ -19,7 +19,7 @@ module Rubygoo
       # TODO center icon
       ix = x1#+((x2-x1)-@icon.w)
       iy = y1#+((y2-y1)-@icon.h)
-      adapter.draw_image @icon, ix+@x_pad,iy+@y_pad
+      adapter.draw_image @icon, ix+@padding_left,iy+@padding_top
     end
 
     #DSL methods
