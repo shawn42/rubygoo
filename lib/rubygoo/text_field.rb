@@ -2,6 +2,7 @@ module Rubygoo
   class TextField < Widget
     SPACE = " "
 
+    attr_reader :text
     def initialize(text, opts={})
       super opts
       @text = text
