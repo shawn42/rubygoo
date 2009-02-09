@@ -4,6 +4,8 @@ README.txt
 Rakefile
 TODO
 lib/code_statistics.rb
+lib/inflections.rb
+lib/inflector.rb
 lib/platform.rb
 lib/rubygoo.rb
 lib/rubygoo/adapters/adapter_factory.rb

@@ -288,9 +288,9 @@ module Rubygoo
         end
 
       when K_DELETE
-        if @select_pos != @caret_pos:
+        if @select_pos != @caret_pos
           delete_selected()
-        elsif @caret_pos < @text.length:
+        elsif @caret_pos < @text.length
           @text = @text.slice(0,@caret_pos) + @text.slice(@caret_pos+1,@text.length-@caret_pos-1)
           @select_pos = @caret_pos
         end

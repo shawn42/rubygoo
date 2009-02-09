@@ -2,6 +2,7 @@ require 'label'
 module Rubygoo
   class CheckBox < Widget
     attr_accessor :checked
+    attr_reader  :label_text
     can_fire :checked
 
     DEFAULT_PARAMS = {:align=>:right}

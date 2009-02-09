@@ -26,6 +26,11 @@ module Rubygoo
       @window.draw_line x1, y2, c, x1, y1, c
     end
 
+    def draw_line(x1,y1,x2,y2,color)
+      c = convert_color(color)
+      @window.draw_line x1, y1, c, x1, y2, c
+    end
+
     CIRCLE_STEP = 10
     def draw_circle(cx,cy,r,color)
       c_color = convert_color(color)

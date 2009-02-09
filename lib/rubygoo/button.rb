@@ -2,6 +2,7 @@ module Rubygoo
   class Button < Widget
     can_fire :pressed
 
+    attr_reader :text
     goo_prop :icon_image, :image, :hover_image
 
     def initialize(new_text, opts={})

@@ -10,6 +10,11 @@ module Rubygoo
       @screen.draw_box [x1,y1], [x2,y2], convert_color(color)
     end
 
+    def draw_line(x1,y1,x2,y2,color)
+      c = convert_color(color)
+      @screen.draw_line_a [x1, y1], [x2, y2], c
+    end
+
     def draw_circle(cx,cy,radius,color)
       @screen.draw_circle_a [cx,cy],radius,convert_color(color)
     end

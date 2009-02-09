@@ -1,6 +1,7 @@
 require 'publisher'
 module Rubygoo
   class Label < Widget
+    attr_reader  :text
     def initialize(text, opts={})
       @font_size = opts[:font_size]
       super opts
