@@ -71,7 +71,7 @@ module CreateGui
       end
     end
 
-    scroller = ScrollableContainer.new :x=>440, :y=>100, :padding_left=>20, :padding_top=>20, :w=> 150, :h=>300
+    scroller = ScrollableContainer.new :x=>440, :y=>100, :padding_left=>20, :padding_top=>20, :w=> 150, :h=>300, :scroll_bars=>true
 
     9.times do |i|
       tmp_h = 50

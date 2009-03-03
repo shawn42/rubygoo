@@ -28,11 +28,15 @@ if $0 == __FILE__
     JoyHatEvent, JoyUpEvent, ResizeEvent 
   ]
   clock = Clock.new
-  clock.target_framerate = 40
+  clock.target_framerate = 20
 
   catch(:rubygame_quit) do
+    tick = 0
     loop do
+      clean = true
+
       queue.each do |event|
+        clean = false
         case event
         when KeyDownEvent
           case event.key
@@ -46,9 +50,13 @@ if $0 == __FILE__
         # pass on our events to the GUI
         app_adapter.on_event event
       end
+      tick += clock.tick
 
-      app_adapter.update clock.tick
-      app_adapter.draw render_adapter
+      unless clean
+        app_adapter.update tick
+        app_adapter.draw render_adapter
+        tick = 0
+      end
     end
   end
 end
