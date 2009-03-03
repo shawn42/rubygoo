@@ -27,13 +27,33 @@ if $0 == __FILE__
     ActiveEvent, JoyAxisEvent, JoyBallEvent, JoyDownEvent,
     JoyHatEvent, JoyUpEvent, ResizeEvent 
   ]
+  class Clock
+    def tick()
+        passed = Clock.runtime() - @last_tick  # how long since the last tick?
+        if @target_frametime
+          wait = @target_frametime - passed
+          if wait > 0
+            return Clock.wait(@target_frametime - passed) + passed
+          else
+            return passed
+          end
+#          return Clock.delay(@target_frametime - passed, 1) + passed
+        end
+        return passed
+      ensure
+        @last_tick = Clock.runtime()
+        @ticks += 1
+    end
+  end
+
+
   clock = Clock.new
-  clock.target_framerate = 20
+  clock.target_framerate = 30
 
   catch(:rubygame_quit) do
-    tick = 0
+#    tick = 0
     loop do
-      clean = true
+#      clean = true
 
       queue.each do |event|
         clean = false
@@ -50,13 +70,13 @@ if $0 == __FILE__
         # pass on our events to the GUI
         app_adapter.on_event event
       end
-      tick += clock.tick
+#      tick += clock.tick
 
-      unless clean
-        app_adapter.update tick
+#      unless clean
+        app_adapter.update clock.tick
         app_adapter.draw render_adapter
-        tick = 0
-      end
+#        tick = 0
+#      end
     end
   end
 end
