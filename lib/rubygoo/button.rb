@@ -26,14 +26,13 @@ module Rubygoo
       @disabled_color = theme_property :disabled_color
 
       @font_file = File.join(@app.theme_dir,font)
-      @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color if @text and !@text.empty?
-
       if @image
         @w = @image.width+2*@padding_left
         @h = @image.height+2*@padding_top
         @x = @x - @padding_left
         @y = @y - @padding_top
       else
+        @rendered_text ||= @app.renderer.render_text @text, @font_file, @font_size, @color if @text and !@text.empty?
         @w = @rendered_text.width+2*@padding_left
         @h = @rendered_text.height+2*@padding_top
         @x = @x - @padding_left

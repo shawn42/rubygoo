@@ -78,6 +78,9 @@ module Rubygoo
 
     # draw ourself and our children
     def _draw(adapter)
+      return unless visible?
+      clip = adapter.apply_clip self unless app == self
+
       # any container specific code here (border_colors?)
       if @bg_color
         if app == self
@@ -93,49 +96,73 @@ module Rubygoo
       draw adapter unless app == self
 
       # draw kiddies 
+      trans = adapter.apply_trans self unless app == self
       @widgets.select{|w|w.visible?}.each do |w|
         w._draw adapter
       end
+      adapter.remove_trans trans unless app == self
+
+      adapter.remove_clip clip unless app == self
     end
 
     # called when there is a mouse motion
     def _mouse_motion(event)
+      event.data[:x] -= @tx
+      event.data[:y] -= @ty
       mouse_motion event
       @widgets.select{|w|w.enabled?}.each do |w|
         w._mouse_motion event
       end
+      event.data[:x] += @tx
+      event.data[:y] += @ty
     end
 
     # called when there is a mouse click
     def _mouse_down(event)
+      event.data[:x] -= @tx
+      event.data[:y] -= @ty
       mouse_down event
       @widgets.select{|w|w.enabled? and w.contains? event.data[:x],event.data[:y] }.each do |w|
         w._mouse_down event
       end
+      event.data[:x] += @tx
+      event.data[:y] += @ty
     end
 
     # called when there is a mouse release
     def _mouse_up(event)
+      event.data[:x] -= @tx
+      event.data[:y] -= @ty
       mouse_up event
       @widgets.select{|w| w.contains? event.data[:x],event.data[:y] and w.enabled?}.each do |w|
         w._mouse_up event 
       end
+      event.data[:x] += @tx
+      event.data[:y] += @ty
     end
 
     # called when there is a mouse release after dragging
     def _mouse_drag(event)
+      event.data[:x] -= @tx
+      event.data[:y] -= @ty
       mouse_drag event
       @widgets.select{|w| w.contains? event.data[:x],event.data[:y] and w.enabled?}.each do |w|
         w._mouse_drag event
       end
+      event.data[:x] += @tx
+      event.data[:y] += @ty
     end
 
     # called when there is motion w/ the mouse button down
     def _mouse_dragging(event)
+      event.data[:x] -= @tx
+      event.data[:y] -= @ty
       mouse_dragging event
       @widgets.select{|w| w.contains? event.data[:x],event.data[:y] and w.enabled?}.each do |w|
         w._mouse_dragging event
       end
+      event.data[:x] += @tx
+      event.data[:y] += @ty
     end
 
     # pass on the key press to our widgets
@@ -170,6 +197,13 @@ module Rubygoo
 
     # called when we need to update our size
     def resize(w)
+      @w, @h = required_lot_size
+      update_rect
+    end
+
+    # returns the full size of all the elements within itself.
+    # This could be larger than the w or h (scrolling)
+    def required_lot_size()
       # check the rects of all our children?
       max_w = 1
       max_h = 1
@@ -179,9 +213,9 @@ module Rubygoo
         max_w = w_width if w_width > max_w
         max_h = w_height if w_height > max_h
       end
-      @w = max_w - @x + 2*@padding_left
-      @h = max_h - @y + 2*@padding_top
-      update_rect
+      w = max_w - @x + @padding_left + @padding_right
+      h = max_h - @y + @padding_top + @padding_bottom
+      [w,h]
     end
 
 #    def self.inherited(by_obj)

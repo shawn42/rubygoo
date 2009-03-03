@@ -21,6 +21,11 @@ module Rubygoo
       @theme = load_theme theme_name
       @renderer = merged_opts[:renderer]
 
+      self.x = 0
+      self.y = 0
+      self.w = @renderer.width
+      self.h = @renderer.height
+
       # should this go here?
       @mouse_cursor = merged_opts[:mouse_cursor]
       if @mouse_cursor
@@ -46,6 +51,11 @@ module Rubygoo
     def draw(screen)
       @renderer.start_drawing
       _draw @renderer
+
+      # XXX resets the clipping range, shouldn't need this if we
+      # unwound correctly
+      @renderer.start_drawing
+
       @mouse._draw @renderer if @mouse
       @renderer.finish_drawing
     end

@@ -12,13 +12,15 @@ module Rubygoo
       :key_pressed, :key_released, :mouse_down, :mouse_up, :mouse_drag, 
       :mouse_dragging, :mouse_motion, :enable, :disable, :hide, :show
 
-    attr_accessor :enabled, :parent, :container, :opts,
-      :x, :y, :w, :h, :app, :padding_left, :padding_top, :focussed, :goo_id,
-      :focus_priority, :relative, :mouse_over, :visible
+    attr_accessor :enabled, :parent, :container, :opts, :focussed, 
+      :x, :y, :w, :h, :tx, :ty, :app, :padding_left, :padding_top, 
+      :goo_id, :focus_priority, :relative, :mouse_over, :visible
 
     DEFAULT_PARAMS = {
       :x => 0,
       :y => 0,
+      :tx => 0,
+      :ty => 0,
       :w => 1,
       :h => 1,
       :padding_left => 2,
@@ -60,6 +62,8 @@ module Rubygoo
       @enabled = merged_opts[:enabled]
       @visible = merged_opts[:visible]
       @goo_id = merged_opts[:id]
+      @tx = merged_opts[:tx]
+      @ty = merged_opts[:ty]
 
       @opts = merged_opts
 
@@ -309,8 +313,9 @@ module Rubygoo
       key_released event
     end
 
-    def _draw(screen) #:nodoc:
-      draw screen
+    def _draw(adapter) #:nodoc:
+      return unless visible?
+      draw adapter
     end
 
     #
@@ -375,8 +380,8 @@ module Rubygoo
     def key_released(event)
     end
 
-    # draw ourself on the screen
-    def draw(screen)
+    # draw ourself on the adapter
+    def draw(adapter)
     end
 
     # called when the widget receives focus
@@ -389,6 +394,10 @@ module Rubygoo
 
     def get(id)
       @goo_id == id ? self : nil
+    end
+
+    def inspect
+      "#{self.class} [#{@x},#{@y},#{@w},#{@h},#{@tx},#{@ty}]\nvisible: #{visible?}\nenabled?: #{enabled?}"
     end
 
   end

@@ -9,8 +9,8 @@ module Rubygoo
       @size = 4
     end
 
-    def draw(screen)
-      screen.draw_box @x, @y, @x+@size, @y+@size, @color
+    def draw(adapter)
+      adapter.draw_box @x, @y, @x+@size, @y+@size, @color
     end
 
     def mouse_motion(event)

@@ -16,6 +16,7 @@ lib/rubygoo/adapters/rubygame_render_adapter.rb
 lib/rubygoo/app.rb
 lib/rubygoo/button.rb
 lib/rubygoo/check_box.rb
+lib/rubygoo/clipper.rb
 lib/rubygoo/container.rb
 lib/rubygoo/css_colors.rb
 lib/rubygoo/dialog.rb
@@ -27,6 +28,7 @@ lib/rubygoo/mouse_cursor.rb
 lib/rubygoo/radio_button.rb
 lib/rubygoo/radio_group.rb
 lib/rubygoo/rect.rb
+lib/rubygoo/scrollable_container.rb
 lib/rubygoo/tab_group.rb
 lib/rubygoo/text_field.rb
 lib/rubygoo/widget.rb

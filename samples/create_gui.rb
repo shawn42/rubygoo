@@ -53,7 +53,8 @@ module CreateGui
       modal.display
     end
 
-    grp = RadioGroup.new :x=>10, :y=>380, :padding_left=>20, :padding_top=>20, :w=> 500, :h=>80
+    grp = RadioGroup.new :x=>10, :y=>380, :padding_left=>20, :padding_top=>20, :w=> 300, :h=>80
+
     grp_label = Label.new "RadioGroups are fun!", :x=>40, :y=>10, :w=>20, :h=>20, :relative=>true
     grp_radio_one = RadioButton.new :x=>40, :y=>40, :w=>20, :h=>20, :relative=>true
     grp_radio_two = RadioButton.new :x=>90, :y=>40, :w=>20, :h=>20, :relative=>true
@@ -70,11 +71,18 @@ module CreateGui
       end
     end
 
+    scroller = ScrollableContainer.new :x=>440, :y=>100, :padding_left=>20, :padding_top=>20, :w=> 150, :h=>300
+
+    9.times do |i|
+      tmp_h = 50
+      scroller.add Button.new("#{i} button", :relative=>true, :x=>10,:y=>tmp_h*i)
+    end
+
     # implicit tab ordering based on order of addition, can
     # specify if you want on widget creation
 
     # can add many or one at a time
-    app.add text_field, label, button, modal_button, grp, hide_button, icon_widget
+    app.add text_field, label, button, modal_button, grp, hide_button, icon_widget, scroller
     app.add check
 
     app

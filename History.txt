@@ -46,3 +46,9 @@
   * added clear method to containers to remove all children
   * added readers for some widgets
   * added draw_line to adapter
+
+=== 0.1.0 / 2009-3-3
+
+* Getting closer to a 1.0 release
+  * added scrollable container
+  * all widgets properly clip now
